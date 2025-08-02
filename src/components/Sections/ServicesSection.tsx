@@ -45,13 +45,13 @@ const services = [
 
 export function ServicesSection() {
   return (
-    <section className="py-20">
+    <section className="py-6">
       <div className="container mx-auto px-4">
         {/* Section Header */}
-        <div className="text-center mb-16 animate-in slide-in-from-bottom-10 duration-1000">
-          <Badge variant="outline" className="mb-4">
-            Our Services
-          </Badge>
+        <div className="text-center mb-8 animate-in slide-in-from-bottom-10 duration-1000">
+          <Badge variant="outline" className="mb-4 text-primary border-primary/20">
+              Our Services
+            </Badge>
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Choose EcoShop?</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             We provide exceptional services to ensure your shopping experience is smooth and enjoyable
@@ -63,7 +63,7 @@ export function ServicesSection() {
           {services.map((service, index) => (
             <Card
               key={index}
-              className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 animate-in slide-in-from-bottom-10"
+              className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 animate-in slide-in-from-bottom-10 p-0"
               style={{ animationDelay: `${index * 150}ms` }}
             >
               <CardContent className="p-8 text-center">

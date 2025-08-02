@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { CheckCircle, Award, Users, Globe } from "lucide-react"
+import { CheckCircle, Award, Users, Globe, ArrowRight, Star } from "lucide-react"
 import Image from "next/image"
 
 const features = [
@@ -11,95 +11,160 @@ const features = [
     icon: CheckCircle,
     title: "Quality Guaranteed",
     description: "Every product is carefully selected and tested for quality",
+    color: "text-green-600 dark:text-green-400",
   },
   {
     icon: Award,
     title: "Award Winning",
     description: "Recognized as the best ecommerce platform of 2024",
+    color: "text-yellow-600 dark:text-yellow-400",
   },
   {
     icon: Users,
     title: "Customer First",
     description: "Our customers are at the heart of everything we do",
+    color: "text-blue-600 dark:text-blue-400",
   },
   {
     icon: Globe,
     title: "Global Reach",
     description: "Serving customers in over 50 countries worldwide",
+    color: "text-purple-600 dark:text-purple-400",
   },
+]
+
+const stats = [
+  { value: "10K+", label: "Happy Customers" },
+  { value: "5K+", label: "Products Sold" },
+  { value: "50+", label: "Countries Served" },
+  { value: "4+", label: "Years Experience" },
 ]
 
 export function AboutSection() {
   return (
-    <section className="py-20 bg-muted/30">
+    <section className="py-6 bg-gradient-to-br from-background to-muted/30">
       <div className="container mx-auto px-4">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left Content */}
-          <div className="space-y-8 animate-in slide-in-from-left-10 duration-1000">
-            <div>
-              <Badge variant="outline" className="mb-4">
-                About EcoShop
-              </Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">Your Trusted Shopping Partner Since 2020</h2>
-              <p className="text-lg text-muted-foreground mb-6">
-                We started with a simple mission: to make quality products accessible to everyone. Today, we're proud to
-                serve thousands of happy customers with our carefully curated selection of premium products.
-              </p>
-              <p className="text-muted-foreground mb-8">
-                Our commitment to excellence, sustainability, and customer satisfaction has made us a leader in the
-                ecommerce space. We believe in building lasting relationships with our customers through trust, quality,
-                and exceptional service.
-              </p>
-            </div>
+        {/* Section Header */}
+        <div className="text-center mb-12 animate-in slide-in-from-bottom-10 duration-1000">
+          <Badge variant="outline" className="mb-4 border-primary/20 text-primary">
+            About EcoShop
+          </Badge>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent">
+            Your Trusted Shopping Partner Since 2020
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            We started with a simple mission: to make quality products accessible to everyone. Today, we're proud to
+            serve thousands of happy customers worldwide.
+          </p>
+        </div>
 
-            {/* Stats */}
-            <div className="grid grid-cols-2 gap-6">
-              <div className="text-center p-4 rounded-lg bg-background border">
-                <div className="text-3xl font-bold text-primary mb-2">10K+</div>
-                <div className="text-sm text-muted-foreground">Happy Customers</div>
-              </div>
-              <div className="text-center p-4 rounded-lg bg-background border">
-                <div className="text-3xl font-bold text-primary mb-2">5K+</div>
-                <div className="text-sm text-muted-foreground">Products Sold</div>
-              </div>
-            </div>
+        {/* Main Content Grid */}
+        <div className="grid lg:grid-cols-3 gap-8 items-start">
+          {/* Left Content - Story */}
+          <div className="lg:col-span-1 space-y-6 animate-in slide-in-from-left-10 duration-1000 delay-300">
+            <Card className="bg-card/50 backdrop-blur-sm border-border/50 p-0">
+              <CardContent className="p-4">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center">
+                    <Star className="h-6 w-6 text-primary-foreground" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-lg">Our Mission</h3>
+                    <p className="text-sm text-muted-foreground">Excellence in every product</p>
+                  </div>
+                </div>
+                <p className="text-muted-foreground">
+                  Our commitment to excellence, sustainability, and customer satisfaction has made us a leader in the
+                  ecommerce space.We believe in providing not just products, but solutions that enhance your life.
+                </p>
+              </CardContent>
+            </Card>
 
-            <Button size="lg">Learn More About Us</Button>
-          </div>
-
-          {/* Right Content */}
-          <div className="space-y-8 animate-in slide-in-from-right-10 duration-1000 delay-300">
-            {/* Main Image */}
-            <div className="relative">
-              <Image
-                src="/placeholder.svg?height=400&width=500"
-                alt="About Us"
-                width={500}
-                height={400}
-                className="rounded-2xl shadow-2xl"
-              />
-              <div className="absolute -bottom-6 -left-6 bg-primary text-primary-foreground p-6 rounded-xl shadow-lg">
-                <div className="text-2xl font-bold">4+ Years</div>
-                <div className="text-sm opacity-90">of Excellence</div>
-              </div>
-            </div>
-
-            {/* Features Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {features.map((feature, index) => (
+            {/* Stats Grid */}
+            <div className="grid grid-cols-2 gap-3">
+              {stats.map((stat, index) => (
                 <Card
                   key={index}
-                  className="hover:shadow-md transition-shadow duration-300 animate-in slide-in-from-bottom-10"
-                  style={{ animationDelay: `${(index + 4) * 200}ms` }}
+                  className="bg-gradient-to-br from-primary/5 to-accent/5 border-primary/10 animate-in slide-in-from-bottom-10 p-0"
+                  style={{ animationDelay: `${(index + 2) * 150}ms` }}
                 >
-                  <CardContent className="p-4">
-                    <feature.icon className="h-8 w-8 text-primary mb-3" />
-                    <h4 className="font-semibold mb-2">{feature.title}</h4>
-                    <p className="text-sm text-muted-foreground">{feature.description}</p>
+                  <CardContent className="p-4 text-center">
+                    <div className="text-2xl font-bold text-primary mb-1">{stat.value}</div>
+                    <div className="text-xs text-muted-foreground">{stat.label}</div>
                   </CardContent>
                 </Card>
               ))}
             </div>
+          </div>
+
+          {/* Center Content - Image */}
+          <div className="lg:col-span-1 animate-in slide-in-from-bottom-10 duration-1000 delay-500">
+            <div className="relative">
+              <Card className="overflow-hidden border-0 shadow-2xl p-0">
+                <CardContent className="p-0">
+                  <Image
+                    src="https://st.depositphotos.com/1038076/4908/i/450/depositphotos_49080337-stock-photo-about-us.jpg"
+                    alt="About EcoShop"
+                    width={400}
+                    height={400}
+                    className="w-full h-80 object-cover"
+                  />
+                </CardContent>
+              </Card>
+
+              {/* Floating Badge */}
+              <div className="absolute -bottom-4 -right-4 bg-gradient-to-r from-accent to-accent/80 text-accent-foreground p-4 rounded-xl shadow-lg">
+                <div className="text-xl font-bold">4.9★</div>
+                <div className="text-xs opacity-90">Customer Rating</div>
+              </div>
+
+              {/* Decorative Elements */}
+              <div className="absolute -top-4 -left-4 w-8 h-8 bg-primary/20 rounded-full animate-float"></div>
+              <div className="absolute top-1/2 -right-2 w-6 h-6 bg-accent/30 rounded-full animate-float delay-1000"></div>
+            </div>
+          </div>
+
+          {/* Right Content - Features */}
+          <div className="lg:col-span-1 space-y-4 animate-in slide-in-from-right-10 duration-1000 delay-700">
+            <h3 className="text-xl font-semibold mb-4 text-center lg:text-left">Why Choose Us?</h3>
+            {features.map((feature, index) => (
+              <Card
+                key={index}
+                className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-card/50 backdrop-blur-sm border-border/50 animate-in slide-in-from-right-10 p-0"
+                style={{ animationDelay: `${(index + 8) * 100}ms` }}
+              >
+                <CardContent className="p-4">
+                  <div className="flex items-start gap-3">
+                    <div className={`p-2 rounded-lg bg-muted group-hover:scale-110 transition-transform duration-300`}>
+                      <feature.icon className={`h-5 w-5 ${feature.color}`} />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-sm mb-1 group-hover:text-primary transition-colors">
+                        {feature.title}
+                      </h4>
+                      <p className="text-xs text-muted-foreground leading-relaxed">{feature.description}</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+
+        {/* Bottom CTA */}
+        <div className="text-center mt-12 animate-in slide-in-from-bottom-10 duration-1000 delay-1000">
+          <div className="inline-flex items-center gap-2 text-sm text-muted-foreground mb-4">
+            <div className="flex -space-x-2">
+              {[...Array(4)].map((_, i) => (
+                <div
+                  key={i}
+                  className="w-8 h-8 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 border-2 border-background flex items-center justify-center text-xs font-bold"
+                >
+                  {String.fromCharCode(65 + i)}
+                </div>
+              ))}
+            </div>
+            <span>Trusted by thousands of customers worldwide</span>
           </div>
         </div>
       </div>
