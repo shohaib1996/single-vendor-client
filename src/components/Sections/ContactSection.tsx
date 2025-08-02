@@ -1,153 +1,206 @@
 "use client"
 
 import type React from "react"
-
+import { useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { MapPin, Phone, Mail, Clock, Send, MessageCircle } from "lucide-react"
+import { toast } from "sonner"
+import emailjs from "@emailjs/browser"
 
 const contactInfo = [
   {
     icon: MapPin,
-    title: "Visit Our Store",
-    details: ["123 Commerce Street", "New York, NY 10001"],
+    title: "Visit Us",
+    detail: "123 Commerce St, NY 10001",
     color: "text-blue-600 dark:text-blue-400",
   },
   {
     icon: Phone,
     title: "Call Us",
-    details: ["+1 (555) 123-4567", "+1 (555) 987-6543"],
+    detail: "+1 (555) 123-4567",
     color: "text-green-600 dark:text-green-400",
   },
   {
     icon: Mail,
     title: "Email Us",
-    details: ["support@ecoshop.com", "sales@ecoshop.com"],
+    detail: "support@ecoshop.com",
     color: "text-purple-600 dark:text-purple-400",
   },
   {
     icon: Clock,
-    title: "Business Hours",
-    details: ["Mon - Fri: 9:00 AM - 6:00 PM", "Sat - Sun: 10:00 AM - 4:00 PM"],
+    title: "Hours",
+    detail: "Mon - Fri: 9 AM - 6 PM",
     color: "text-orange-600 dark:text-orange-400",
   },
 ]
 
 export function ContactSection() {
-  const handleSubmit = (e: React.FormEvent) => {
+  const form = useRef<HTMLFormElement>(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [formData, setFormData] = useState({
+    user_name: "",
+    user_email: "",
+    phone: "",
+    to_subject: "",
+    message: "",
+  })
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission
-    console.log("Contact form submitted")
+    setIsSubmitting(true)
+
+    try {
+      if (form.current) {
+        await emailjs.sendForm(
+          process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+          process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+          form.current,
+          { publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY! }
+        )
+        setTimeout(() => {
+          toast.success("Message sent successfully!")
+        }, 2000)
+        setFormData({
+          user_name: "",
+          user_email: "",
+          phone: "",
+          to_subject: "",
+          message: "",
+        })
+        form.current.reset()
+      }
+    } catch (error) {
+      console.error("Failed to send message:", error)
+      toast.error("Failed to send message. Please try again.")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
-    <section className="py-20 bg-muted/30">
+    <section className="py-12 bg-muted/30">
       <div className="container mx-auto px-4">
-        {/* Section Header */}
-        <div className="text-center mb-16 animate-in slide-in-from-bottom-10 duration-1000">
-          <Badge variant="outline" className="mb-4">
-            <MessageCircle className="w-4 h-4 mr-2" />
+        <div className="text-center mb-8">
+          <Badge variant="outline" className="mb-2">
+            <MessageCircle className="w-3 h-3 mr-1" />
             Contact Us
           </Badge>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Get in Touch</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+          <h2 className="text-2xl md:text-3xl font-bold mb-2">Let's Connect</h2>
+          <p className="text-base text-muted-foreground max-w-xl mx-auto">
+            Got questions? Reach out, and we'll get back to you quickly!
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-16">
-          {/* Contact Information */}
-          <div className="space-y-8 animate-in slide-in-from-left-10 duration-1000">
-            <div>
-              <h3 className="text-2xl font-semibold mb-6">Let's Start a Conversation</h3>
-              <p className="text-muted-foreground mb-8">
-                We're here to help and answer any question you might have. We look forward to hearing from you.
-              </p>
-            </div>
+        <div className="grid lg:grid-cols-2 gap-8">
+          <div className="space-y-6">
+            <Card className="bg-gradient-to-br from-primary/10 to-muted p-0">
+              <CardContent className="p-6 text-center">
+                <h3 className="text-xl font-semibold mb-3">We're Here for You</h3>
+                <p className="text-sm text-muted-foreground mb-4">
+                  At EcoShop, we value your feedback and inquiries. Whether it's about our products, services, or just a friendly hello, we're excited to hear from you!
+                </p>
+                <Button variant="outline" className="text-sm">
+                  <Mail className="mr-2 h-3 w-3" />
+                  Email Support
+                </Button>
+              </CardContent>
+            </Card>
 
-            {/* Contact Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {contactInfo.map((info, index) => (
-                <Card
-                  key={index}
-                  className="hover:shadow-md transition-shadow duration-300 animate-in slide-in-from-bottom-10"
-                  style={{ animationDelay: `${index * 150}ms` }}
-                >
-                  <CardContent className="p-6">
-                    <div className="flex items-start space-x-4">
-                      <div className={`p-2 rounded-lg bg-muted ${info.color}`}>
-                        <info.icon className="h-5 w-5" />
-                      </div>
-                      <div>
-                        <h4 className="font-semibold mb-2">{info.title}</h4>
-                        {info.details.map((detail, i) => (
-                          <p key={i} className="text-sm text-muted-foreground">
-                            {detail}
-                          </p>
-                        ))}
-                      </div>
+                <Card key={index} className="hover:shadow-md transition-shadow duration-300 p-0">
+                  <CardContent className="p-4 flex items-center space-x-3">
+                    <div className={`p-1.5 rounded-lg bg-muted ${info.color}`}>
+                      <info.icon className="h-4 w-4" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-sm mb-1">{info.title}</h4>
+                      <p className="text-xs text-muted-foreground">{info.detail}</p>
                     </div>
                   </CardContent>
                 </Card>
               ))}
             </div>
-
-            {/* Map Placeholder */}
-            <Card className="animate-in slide-in-from-bottom-10 duration-1000 delay-700">
-              <CardContent className="p-0">
-                <div className="h-64 bg-muted rounded-lg flex items-center justify-center">
-                  <div className="text-center">
-                    <MapPin className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                    <p className="text-muted-foreground">Interactive Map Coming Soon</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
           </div>
 
-          {/* Contact Form */}
-          <div className="animate-in slide-in-from-right-10 duration-1000 delay-300">
-            <Card>
-              <CardContent className="p-8">
-                <h3 className="text-2xl font-semibold mb-6">Send us a Message</h3>
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="text-sm font-medium mb-2 block">First Name</label>
-                      <Input placeholder="John" required />
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium mb-2 block">Last Name</label>
-                      <Input placeholder="Doe" required />
-                    </div>
+          <div>
+            <Card className="p-0">
+              <CardContent className="p-6">
+                <h3 className="text-xl font-semibold mb-4">Send a Message</h3>
+                <form ref={form} onSubmit={handleSubmit} className="space-y-4">
+                  <div>
+                    <label className="text-xs font-medium mb-1 block">Name</label>
+                    <Input
+                      name="user_name"
+                      placeholder="John Doe"
+                      value={formData.user_name}
+                      onChange={handleChange}
+                      required
+                      className="text-sm"
+                    />
                   </div>
 
                   <div>
-                    <label className="text-sm font-medium mb-2 block">Email Address</label>
-                    <Input type="email" placeholder="john@example.com" required />
+                    <label className="text-xs font-medium mb-1 block">Email</label>
+                    <Input
+                      type="email"
+                      name="user_email"
+                      placeholder="john@example.com"
+                      value={formData.user_email}
+                      onChange={handleChange}
+                      required
+                      className="text-sm"
+                    />
                   </div>
 
                   <div>
-                    <label className="text-sm font-medium mb-2 block">Phone Number</label>
-                    <Input type="tel" placeholder="+1 (555) 123-4567" />
+                    <label className="text-xs font-medium mb-1 block">Phone</label>
+                    <Input
+                      type="tel"
+                      name="phone"
+                      placeholder="+1 (555) 123-4567"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      className="text-sm"
+                    />
                   </div>
 
                   <div>
-                    <label className="text-sm font-medium mb-2 block">Subject</label>
-                    <Input placeholder="How can we help you?" required />
+                    <label className="text-xs font-medium mb-1 block">Subject</label>
+                    <Input
+                      name="to_subject"
+                      placeholder="Your inquiry"
+                      value={formData.to_subject}
+                      onChange={handleChange}
+                      required
+                      className="text-sm"
+                    />
                   </div>
 
                   <div>
-                    <label className="text-sm font-medium mb-2 block">Message</label>
-                    <Textarea placeholder="Tell us more about your inquiry..." rows={5} required />
+                    <label className="text-xs font-medium mb-1 block">Message</label>
+                    <Textarea
+                      name="message"
+                      placeholder="Tell us more..."
+                      value={formData.message}
+                      onChange={handleChange}
+                      rows={4}
+                      required
+                      className="text-sm"
+                    />
                   </div>
 
-                  <Button type="submit" className="w-full group">
-                    <Send className="mr-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                    Send Message
+                  <Button type="submit" className="w-full group text-sm" disabled={isSubmitting}>
+                    <Send className="mr-2 h-3 w-3 transition-transform group-hover:translate-x-1" />
+                    {isSubmitting ? "Sending..." : "Send"}
                   </Button>
                 </form>
               </CardContent>

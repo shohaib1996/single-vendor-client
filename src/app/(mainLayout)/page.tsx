@@ -23,7 +23,7 @@ export default function HomePage() {
       <ServicesSection />
       <StatsSection />
       <TestimonialsSection />
-      <BlogSection />
+      {/* <BlogSection /> */}
       <NewsletterSection />
       <ContactSection />
     </div>
