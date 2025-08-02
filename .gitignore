@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/single-vendor-backend
 /.pnp
 .pnp.*
 .yarn/*
