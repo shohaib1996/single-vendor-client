@@ -18,13 +18,21 @@ export const userApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.USER],
     }),
-    createUser: builder.mutation({
+    userRegister: builder.mutation({
       query: (data) => ({
-        url: '/users',
+        url: 'users/signup', // Assuming a specific endpoint for registration
         method: 'POST',
         data,
       }),
       invalidatesTags: [tagTypes.USER],
+    }),
+    userLogin: builder.mutation({
+      query: (data) => ({
+        url: '/users/signin', // Common endpoint for login
+        method: 'POST',
+        data,
+      }),
+      // No invalidatesTags here as login doesn't invalidate user data directly
     }),
     updateUser: builder.mutation({
       query: ({ id, data }) => ({
@@ -44,4 +52,4 @@ export const userApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetUsersQuery, useGetUserQuery, useCreateUserMutation, useUpdateUserMutation, useDeleteUserMutation } = userApi;
+export const { useGetUsersQuery, useGetUserQuery, useUserRegisterMutation, useUserLoginMutation, useUpdateUserMutation, useDeleteUserMutation } = userApi;
