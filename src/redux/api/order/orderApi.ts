@@ -1,5 +1,5 @@
-import { baseApi } from '../api/baseApi';
-import { tagTypes } from '../tagTypes/tagTypes';
+import { tagTypes } from "@/redux/tagTypes/tagTypes";
+import { baseApi } from "../baseApi";
 
 export const orderApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -43,4 +43,4 @@ export const orderApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useCreateOrderMutation, useGetAllOrdersQuery, useUseGetSingleOrderQuery, useUpdateOrderMutation, useDeleteOrderMutation } = orderApi;
+export const { useCreateOrderMutation, useGetAllOrdersQuery, useUpdateOrderMutation, useDeleteOrderMutation } = orderApi;

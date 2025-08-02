@@ -73,11 +73,11 @@ export function HeroSection() {
   };
 
   return (
-    <section className="bg-gradient-to-br from-background to-muted/30 py-4 sm:py-6 lg:py-8">
+    <section className="bg-gradient-to-br from-background to-muted/30 py-4 sm:py-4 lg:py-6">
       <div className="container mx-auto px-4">
         <div className="flex flex-col lg:flex-row gap-4 sm:gap-6">
           {/* Main Hero Carousel - 70% */}
-          <div className="lg:w-7/10 w-full h-[300px] sm:h-[60vh] md:h-[70vh] lg:h-[60vh]">
+          <div className="lg:w-7/10 w-full h-[300px] sm:h-[60vh] md:h-[70vh] lg:h-[460px]">
             <Card className="relative h-full overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border-0 p-0">
               <CardContent className="p-0 h-full">
                 {/* Carousel Container */}
@@ -144,7 +144,7 @@ export function HeroSection() {
           </div>
 
           {/* Sidebar Sections - 30% */}
-          <div className="lg:w-3/10 w-full flex flex-col gap-4 sm:gap-6 lg:h-[60vh] lg:min-h-[300px] lg:overflow-y-auto">
+          <div className="lg:w-3/10 w-full flex flex-col gap-4 sm:gap-6 lg:h-[460px] lg:min-h-[300px]">
             {/* Career Section */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}

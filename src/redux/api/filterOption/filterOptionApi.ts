@@ -1,5 +1,5 @@
-import { baseApi } from '../api/baseApi';
-import { tagTypes } from '../tagTypes/tagTypes';
+import { tagTypes } from "@/redux/tagTypes/tagTypes";
+import { baseApi } from "../baseApi";
 
 export const filterOptionApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({

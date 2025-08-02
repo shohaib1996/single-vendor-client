@@ -55,7 +55,7 @@ const featuredProducts = [
 
 export function FeaturedProducts() {
   return (
-    <section className="py-20 bg-muted/30">
+    <section className="py-6 bg-muted/30">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="text-center mb-16 animate-in slide-in-from-bottom-10 duration-1000">

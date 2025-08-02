@@ -1,7 +1,8 @@
-import { baseApi } from '../api/baseApi';
-import { tagTypes } from '../tagTypes/tagTypes';
+import { tagTypes } from "@/redux/tagTypes/tagTypes";
+import { baseApi } from "../baseApi";
 
-export export const brandApi = baseApi.injectEndpoints({
+
+export const brandApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     createBrand: builder.mutation({
       query: (data) => ({

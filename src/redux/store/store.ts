@@ -1,22 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from '../rootReducer';
-import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+import { baseApi } from '../api/baseApi';
 
-const persistConfig = {
-  key: 'root',
-  storage,
+// This function creates a new store for each request.
+export const makeStore = () => {
+  return configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(baseApi.middleware),
+  });
 };
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-
-export const store = configureStore({
-  reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({ serializableCheck: false }),
-});
-
-export const persistor = persistStore(store);
-
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+// Infer the type of makeStore
+export type AppStore = ReturnType<typeof makeStore>;
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type RootState = ReturnType<AppStore['getState']>;
+export type AppDispatch = AppStore['dispatch'];
