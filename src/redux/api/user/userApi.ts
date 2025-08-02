@@ -2,7 +2,7 @@ import { tagTypes } from "@/redux/tagTypes/tagTypes";
 import { baseApi } from "../baseApi";
 
 
-const userApi = baseApi.injectEndpoints({
+export const userApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getUsers: builder.query({
       query: () => ({

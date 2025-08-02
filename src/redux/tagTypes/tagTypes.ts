@@ -1,7 +1,33 @@
 export enum tagTypes {
     USER = 'user',
+    BRAND = 'brand',
+    CART = 'cart',
+    CATEGORY = 'category',
+    FILTER_OPTION = 'filterOption',
+    ORDER = 'order',
+    PAYMENT = 'payment',
+    PRODUCT = 'product',
+    PRODUCT_ANSWER = 'productAnswer',
+    PRODUCT_QUESTION = 'productQuestion',
+    PRODUCT_SPECIFICATION = 'productSpecification',
+    REVIEW = 'review',
+    UPLOADER = 'uploader',
+    WISHLIST = 'wishlist',
 }
 
 export const tagTypesList = [
     tagTypes.USER,
+    tagTypes.BRAND,
+    tagTypes.CART,
+    tagTypes.CATEGORY,
+    tagTypes.FILTER_OPTION,
+    tagTypes.ORDER,
+    tagTypes.PAYMENT,
+    tagTypes.PRODUCT,
+    tagTypes.PRODUCT_ANSWER,
+    tagTypes.PRODUCT_QUESTION,
+    tagTypes.PRODUCT_SPECIFICATION,
+    tagTypes.REVIEW,
+    tagTypes.UPLOADER,
+    tagTypes.WISHLIST,
 ];
