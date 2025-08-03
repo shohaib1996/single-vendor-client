@@ -11,9 +11,9 @@ export const userApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.USER],
     }),
-    getUser: builder.query({
-      query: (id) => ({
-        url: `/users/${id}`,
+    getUserProfile: builder.query({
+      query: () => ({
+        url: `/users/profile`,
         method: 'GET',
       }),
       providesTags: [tagTypes.USER],
@@ -52,4 +52,4 @@ export const userApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetUsersQuery, useGetUserQuery, useUserRegisterMutation, useUserLoginMutation, useUpdateUserMutation, useDeleteUserMutation } = userApi;
+export const { useGetUsersQuery, useGetUserProfileQuery, useUserRegisterMutation, useUserLoginMutation, useUpdateUserMutation, useDeleteUserMutation } = userApi;
