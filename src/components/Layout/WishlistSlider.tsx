@@ -111,7 +111,7 @@ const WishlistSlider = ({ isOpen, onClose }: WishlistSliderProps) => {
                             src={item.product.images[0] || "/placeholder.svg"}
                             alt={item.product.name}
                             fill
-                            className="object-cover rounded-md"
+                            className="object-contain rounded-md"
                           />
                         </div>
 

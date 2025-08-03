@@ -127,8 +127,8 @@ const CartSlider = ({ isOpen, onClose }: CartSliderProps) => {
             ) : (
               <div className="space-y-4">
                 {cartItems.map((item) => (
-                  <Card key={item.id} className="overflow-hidden">
-                    <CardContent className="p-4">
+                  <Card key={item.id} className="overflow-hidden p-0">
+                    <CardContent className="p-3">
                       <div className="flex gap-3">
                         {/* Product Image */}
                         <div className="relative w-20 h-20 flex-shrink-0">
@@ -136,7 +136,7 @@ const CartSlider = ({ isOpen, onClose }: CartSliderProps) => {
                             src={item.product.images[0] || "/placeholder.svg"}
                             alt={item.product.name}
                             fill
-                            className="object-cover rounded-md"
+                            className="object-contain rounded-md"
                           />
                         </div>
 
@@ -183,7 +183,7 @@ const CartSlider = ({ isOpen, onClose }: CartSliderProps) => {
                               <Button
                                 variant="ghost"
                                 size="icon"
-                                className="h-7 w-7"
+                                className="h-7 w-7" 
                                 onClick={() => updateQuantity(item.id, item.quantity + 1)}
                                 disabled={updateQuantityLoading}
                               >

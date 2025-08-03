@@ -5,22 +5,23 @@ export const paymentApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     createCheckoutSession: builder.mutation({
       query: (data) => ({
-        url: '/payments/create-checkout-session',
+        url: '/payment/create-checkout-session',
         method: 'POST',
         data,
       }),
       invalidatesTags: [tagTypes.PAYMENT],
     }),
     paymentSuccess: builder.query({
-      query: () => ({
-        url: '/payments/success',
+      query: (arg) => ({
+        url: '/payment/success',
         method: 'GET',
+        params: arg
       }),
       providesTags: [tagTypes.PAYMENT],
     }),
     paymentCancel: builder.query({
       query: () => ({
-        url: '/payments/cancel',
+        url: '/payment/cancel',
         method: 'GET',
       }),
       providesTags: [tagTypes.PAYMENT],

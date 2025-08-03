@@ -53,7 +53,7 @@ export type ISingleProduct = {
   questions?: IQuestion[];
 };
 
-export type ICategory = {
+type ICategory = {
   id: string;
   name: string;
   slug: string;

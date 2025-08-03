@@ -23,6 +23,8 @@ import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import CartSlider from "./CartSlider"
 import WishlistSlider from "./WishlistSlider"
+import { useGetWishlistQuery } from "@/redux/api/wishlist/wishlistApi"
+import { useGetCartQuery } from "@/redux/api/cart/cartApi"
 
 export function Navbar() {
   const router = useRouter()
@@ -31,6 +33,8 @@ export function Navbar() {
   const [searchQuery, setSearchQuery] = useState("")
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [isWishlistOpen, setIsWishlistOpen] = useState(false)
+  const {data: cartData} = useGetCartQuery({})
+  const {data: wishlist} = useGetWishlistQuery({})
 
   // Redux state
   const { user, token } = useAppSelector((state) => state.auth)
@@ -90,7 +94,7 @@ export function Navbar() {
       <header
         className={cn(
           "sticky top-0 z-50 w-full border-b transition-all duration-300",
-          isScrolled ? "bg-background/95 backdrop-blur-md shadow-lg" : "bg-background",
+          isScrolled ? "bg-primary/90 backdrop-blur-md shadow-lg" : "bg-background",
         )}
       >
         <div className="container mx-auto px-2 sm:px-4">
@@ -144,7 +148,7 @@ export function Navbar() {
               <Button variant="ghost" size="icon" className="relative group p-1 sm:p-2" onClick={handleWishlistClick}>
                 <Heart className="h-4 sm:h-5 w-4 sm:w-5 transition-colors group-hover:text-primary" />
                 <span className="absolute -top-1 -right-1 h-3 sm:h-4 w-3 sm:w-4 rounded-full bg-gradient-to-r from-primary to-accent text-primary-foreground text-[0.6rem] sm:text-xs flex items-center justify-center shadow-md">
-                  2
+                  {wishlist?.data.length}
                 </span>
               </Button>
 
@@ -152,7 +156,7 @@ export function Navbar() {
               <Button variant="ghost" size="icon" className="relative group p-1 sm:p-2" onClick={handleCartClick}>
                 <ShoppingCart className="h-4 sm:h-5 w-4 sm:w-5 transition-colors group-hover:text-primary" />
                 <span className="absolute -top-1 -right-1 h-3 sm:h-4 w-3 sm:w-4 rounded-full bg-gradient-to-r from-accent to-accent/80 text-accent-foreground text-[0.6rem] sm:text-xs flex items-center justify-center shadow-md">
-                  3
+                  {cartData?.data?.items.length}
                 </span>
               </Button>
 
