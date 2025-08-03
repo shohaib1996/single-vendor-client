@@ -9,7 +9,10 @@ export const productQuestionApi = baseApi.injectEndpoints({
         method: 'POST',
         data,
       }),
-      invalidatesTags: [tagTypes.PRODUCT_QUESTION],
+      invalidatesTags: (result, error, arg) => [
+        tagTypes.PRODUCT_QUESTION,
+        { type: tagTypes.PRODUCT, id: arg.productId },
+      ],
     }),
     getAllProductQuestions: builder.query({
       query: () => ({

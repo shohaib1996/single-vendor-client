@@ -26,6 +26,8 @@ import { Eye, EyeOff, Mail, Lock, ArrowRight, Home } from 'lucide-react'
 import loginAnimation from "@/assets/lottie/Login.json"
 import dynamic from "next/dynamic"
 import { ModeToggle } from "@/components/ModeToggle/ModeToggle"
+import { useAppDispatch } from "@/redux/hooks/hooks"
+import { login } from "@/redux/features/auth/authSlice"
 
 // Dynamically import Lottie to avoid SSR issues
 const Lottie = dynamic(() => import("lottie-react"), { ssr: false })
@@ -46,7 +48,7 @@ type SignInFormValues = z.infer<typeof signInSchema>
 
 export default function SignInPage() {
   const [showPassword, setShowPassword] = useState(false)
-
+  const dispatch = useAppDispatch();
   const [userLogin, { isLoading }] = useUserLoginMutation()
   const router = useRouter()
 
@@ -63,6 +65,7 @@ export default function SignInPage() {
       const res = await userLogin(data).unwrap()
       if (res.data.accessToken) {
         localStorage.setItem("accessToken", res.data.accessToken)
+        dispatch(login({ user: res.data.user, token: res.data.accessToken }));
         toast.success("Login successful!")
         router.push("/")
       } else {

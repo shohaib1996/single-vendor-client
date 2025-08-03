@@ -9,7 +9,10 @@ export const reviewApi = baseApi.injectEndpoints({
         method: 'POST',
         data,
       }),
-      invalidatesTags: [tagTypes.REVIEW],
+      invalidatesTags: (result, error, arg) => [
+        tagTypes.REVIEW,
+        { type: tagTypes.PRODUCT, id: arg.productId },
+      ],
     }),
     getAllReviews: builder.query({
       query: () => ({

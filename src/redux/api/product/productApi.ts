@@ -24,7 +24,10 @@ export const productApi = baseApi.injectEndpoints({
         url: `/products/${id}`,
         method: 'GET',
       }),
-      providesTags: [tagTypes.PRODUCT],
+      providesTags: (result, error, id) => [{
+        type: tagTypes.PRODUCT,
+        id,
+      }],
     }),
     updateProduct: builder.mutation({
       query: ({ id, data }) => ({

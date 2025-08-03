@@ -154,7 +154,7 @@ export function FeaturedProducts() {
                 </div>
 
                 {/* Product Info */}
-                <div className="p-6">
+                <div className="p-3">
                   {/* Brand & Category */}
                   <div className="flex items-center justify-between mb-2">
                     {product.brand && (
@@ -196,16 +196,6 @@ export function FeaturedProducts() {
                       </div>
                     )}
                   </div>
-
-                  {/* Add to Cart Button */}
-                  <Button
-                    className="w-full group/btn"
-                    disabled={product.stock === 0}
-                    variant={product.stock === 0 ? "secondary" : "default"}
-                  >
-                    <ShoppingCart className="mr-2 h-4 w-4 transition-transform group-hover/btn:scale-110" />
-                    {product.stock === 0 ? "Out of Stock" : "Add to Cart"}
-                  </Button>
                 </div>
               </CardContent>
             </Card>
