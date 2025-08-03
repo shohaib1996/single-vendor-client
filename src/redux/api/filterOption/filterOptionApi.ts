@@ -12,9 +12,10 @@ export const filterOptionApi = baseApi.injectEndpoints({
       invalidatesTags: [tagTypes.FILTER_OPTION],
     }),
     getFilterOptions: builder.query({
-      query: () => ({
+      query: (arg) => ({
         url: '/filter-options',
         method: 'GET',
+        params: arg
       }),
       providesTags: [tagTypes.FILTER_OPTION],
     }),
