@@ -72,7 +72,7 @@ const CategoriesSection = () => {
         {/* Categories Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4 md:gap-6">
           {categoryList.map((category: ICategory, index: number) => (
-            <Link href={`/category/${category.slug}~${category.id}`}>
+            <Link href={`/category/${category.slug}~${category.id}`} key={category.id}>
               <Card
                 key={category.id}
                 className="group cursor-pointer hover:shadow-xl transition-all duration-300 hover:-translate-y-2 bg-card/50 backdrop-blur-sm border-border/50 animate-in slide-in-from-bottom-10 p-0"
@@ -81,7 +81,7 @@ const CategoriesSection = () => {
                 <CardContent className="p-2 text-center">
                   <div className="mb-4">
                     <Image
-                      src={category.icon}
+                      src={category.icon!}
                       alt={category.name}
                       width={64}
                       height={64}

@@ -12,9 +12,10 @@ export const wishlistApi = baseApi.injectEndpoints({
       invalidatesTags: [tagTypes.WISHLIST],
     }),
     getWishlist: builder.query({
-      query: () => ({
+      query: (arg) => ({
         url: '/wishlist',
         method: 'GET',
+        params: arg
       }),
       providesTags: [tagTypes.WISHLIST],
     }),

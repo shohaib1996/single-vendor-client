@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useState, useEffect } from "react"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import type React from "react";
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,40 +13,51 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { ShoppingCart, Heart, User, Search, Menu, X, LogOut, Settings, Package, LayoutDashboard } from "lucide-react"
-import { cn } from "@/lib/utils"
-import { logout } from "@/redux/features/auth/authSlice"
-import { ModeToggle } from "../ModeToggle/ModeToggle"
-import { useAppDispatch, useAppSelector } from "@/redux/hooks/hooks"
-import { toast } from "sonner"
-import { useRouter } from "next/navigation"
-import CartSlider from "./CartSlider"
-import WishlistSlider from "./WishlistSlider"
-import { useGetWishlistQuery } from "@/redux/api/wishlist/wishlistApi"
-import { useGetCartQuery } from "@/redux/api/cart/cartApi"
+} from "@/components/ui/dropdown-menu";
+import {
+  ShoppingCart,
+  Heart,
+  User,
+  Search,
+  Menu,
+  X,
+  LogOut,
+  Settings,
+  Package,
+  LayoutDashboard,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+import { logout } from "@/redux/features/auth/authSlice";
+import { ModeToggle } from "../ModeToggle/ModeToggle";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks/hooks";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import CartSlider from "./CartSlider";
+import WishlistSlider from "./WishlistSlider";
+import { useGetWishlistQuery } from "@/redux/api/wishlist/wishlistApi";
+import { useGetCartQuery } from "@/redux/api/cart/cartApi";
 
 export function Navbar() {
-  const router = useRouter()
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [searchQuery, setSearchQuery] = useState("")
-  const [isCartOpen, setIsCartOpen] = useState(false)
-  const [isWishlistOpen, setIsWishlistOpen] = useState(false)
-  const {data: cartData} = useGetCartQuery({})
-  const {data: wishlist} = useGetWishlistQuery({})
+  const router = useRouter();
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isWishlistOpen, setIsWishlistOpen] = useState(false);
+  const { data: cartData } = useGetCartQuery({});
+  const { data: wishlist } = useGetWishlistQuery({});
 
   // Redux state
-  const { user, token } = useAppSelector((state) => state.auth)
-  const dispatch = useAppDispatch()
+  const { user, token } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0)
-    }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+      setIsScrolled(window.scrollY > 0);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const navItems = [
     { name: "Home", href: "/" },
@@ -54,19 +65,19 @@ export function Navbar() {
     { name: "Categories", href: "/categories" },
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
-  ]
+  ];
 
   const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log("Search query:", searchQuery)
+    e.preventDefault();
+    console.log("Search query:", searchQuery);
     // Handle search functionality
-  }
+  };
 
   const handleLogout = () => {
-    dispatch(logout())
-    router.push("/signin")
-    toast.success("Logged out successfully!")
-  }
+    dispatch(logout());
+    router.push("/signin");
+    toast.success("Logged out successfully!");
+  };
 
   const getInitials = (name: string) => {
     return name
@@ -74,35 +85,42 @@ export function Navbar() {
       .map((word) => word.charAt(0))
       .join("")
       .toUpperCase()
-      .slice(0, 2)
-  }
+      .slice(0, 2);
+  };
 
   const handleCartClick = () => {
-    setIsCartOpen(true)
-    setIsWishlistOpen(false) // Close wishlist if open
-  }
+    setIsCartOpen(true);
+    setIsWishlistOpen(false); // Close wishlist if open
+  };
 
   const handleWishlistClick = () => {
-    setIsWishlistOpen(true)
-    setIsCartOpen(false) // Close cart if open
-  }
+    setIsWishlistOpen(true);
+    setIsCartOpen(false); // Close cart if open
+  };
 
-  const isAuthenticated = user && token
+  const isAuthenticated = user && token;
 
   return (
     <>
       <header
         className={cn(
           "sticky top-0 z-50 w-full border-b transition-all duration-300",
-          isScrolled ? "bg-primary/90 backdrop-blur-md shadow-lg" : "bg-background",
+          isScrolled
+            ? "bg-primary/90 backdrop-blur-md shadow-lg"
+            : "bg-background"
         )}
       >
         <div className="container mx-auto px-2 sm:px-4">
           <div className="flex h-14 sm:h-16 items-center justify-between gap-2 sm:gap-4">
             {/* Logo */}
-            <Link href="/" className="flex items-center space-x-2 flex-shrink-0">
+            <Link
+              href="/"
+              className="flex items-center space-x-2 flex-shrink-0"
+            >
               <div className="h-7 sm:h-8 w-7 sm:w-8 rounded-lg bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-md">
-                <span className="text-primary-foreground font-bold text-base sm:text-lg">E</span>
+                <span className="text-primary-foreground font-bold text-base sm:text-lg">
+                  E
+                </span>
               </div>
               <span className="font-bold text-lg sm:text-xl bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                 EcoShop
@@ -140,23 +158,45 @@ export function Navbar() {
             {/* Right Side Actions */}
             <div className="flex items-center space-x-1 sm:space-x-2">
               {/* Mobile Search */}
-              <Button variant="ghost" size="icon" className="sm:hidden p-1 sm:p-2">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="sm:hidden p-1 sm:p-2"
+              >
                 <Search className="h-4 sm:h-5 w-4 sm:w-5" />
               </Button>
 
               {/* Wishlist */}
-              <Button variant="ghost" size="icon" className="relative group p-1 sm:p-2" onClick={handleWishlistClick}>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="relative group p-1 sm:p-2"
+                onClick={handleWishlistClick}
+              >
                 <Heart className="h-4 sm:h-5 w-4 sm:w-5 transition-colors group-hover:text-primary" />
                 <span className="absolute -top-1 -right-1 h-3 sm:h-4 w-3 sm:w-4 rounded-full bg-gradient-to-r from-primary to-accent text-primary-foreground text-[0.6rem] sm:text-xs flex items-center justify-center shadow-md">
-                  {wishlist?.data.length}
+                  {user?.role === "ADMIN" ? (
+                    0
+                  ) : (
+                    <span> {wishlist?.data.length}</span>
+                  )}
                 </span>
               </Button>
 
               {/* Cart */}
-              <Button variant="ghost" size="icon" className="relative group p-1 sm:p-2" onClick={handleCartClick}>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="relative group p-1 sm:p-2"
+                onClick={handleCartClick}
+              >
                 <ShoppingCart className="h-4 sm:h-5 w-4 sm:w-5 transition-colors group-hover:text-primary" />
                 <span className="absolute -top-1 -right-1 h-3 sm:h-4 w-3 sm:w-4 rounded-full bg-gradient-to-r from-accent to-accent/80 text-accent-foreground text-[0.6rem] sm:text-xs flex items-center justify-center shadow-md">
-                  {cartData?.data?.items.length}
+                  {user?.role === "ADMIN" ? (
+                    0
+                  ) : (
+                    <span> {cartData?.data.length}</span>
+                  )}
                 </span>
               </Button>
 
@@ -164,9 +204,15 @@ export function Navbar() {
               {isAuthenticated ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="relative h-8 w-8 rounded-full p-0">
+                    <Button
+                      variant="ghost"
+                      className="relative h-8 w-8 rounded-full p-0"
+                    >
                       <Avatar className="h-8 w-8">
-                        <AvatarImage src={user.avatarUrl || "/placeholder.svg"} alt={user?.name} />
+                        <AvatarImage
+                          src={user.avatarUrl || "/placeholder.svg"}
+                          alt={user?.name}
+                        />
                         <AvatarFallback className="bg-gradient-to-br from-primary to-accent text-primary-foreground text-xs font-semibold">
                           {getInitials(user?.name)}
                         </AvatarFallback>
@@ -176,8 +222,12 @@ export function Navbar() {
                   <DropdownMenuContent className="w-56" align="end" forceMount>
                     <DropdownMenuLabel className="font-normal">
                       <div className="flex flex-col space-y-1">
-                        <p className="text-sm font-medium leading-none">{user?.name}</p>
-                        <p className="text-xs leading-none text-muted-foreground">{user?.email}</p>
+                        <p className="text-sm font-medium leading-none">
+                          {user?.name}
+                        </p>
+                        <p className="text-xs leading-none text-muted-foreground">
+                          {user?.email}
+                        </p>
                       </div>
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
@@ -188,16 +238,23 @@ export function Navbar() {
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                     {user?.role === "ADMIN" ?  <Link href="/admin" className="cursor-pointer">
-                        <LayoutDashboard className="mr-2 h-4 w-4" />
-                        <span>Dashboard</span>
-                      </Link>:  <Link href="/orders" className="cursor-pointer">
-                        <Package className="mr-2 h-4 w-4" />
-                        <span>My Orders</span>
-                      </Link>}
+                      {user?.role === "ADMIN" ? (
+                        <Link href="/admin" className="cursor-pointer">
+                          <LayoutDashboard className="mr-2 h-4 w-4" />
+                          <span>Dashboard</span>
+                        </Link>
+                      ) : (
+                        <Link href="/orders" className="cursor-pointer">
+                          <Package className="mr-2 h-4 w-4" />
+                          <span>My Orders</span>
+                        </Link>
+                      )}
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-red-600 focus:text-red-600">
+                    <DropdownMenuItem
+                      onClick={handleLogout}
+                      className="cursor-pointer text-red-600 focus:text-red-600"
+                    >
                       <LogOut className="mr-2 h-4 w-4" />
                       <span>Logout</span>
                     </DropdownMenuItem>
@@ -205,7 +262,11 @@ export function Navbar() {
                 </DropdownMenu>
               ) : (
                 <Link href="/signin" className="relative group">
-                  <Button variant="ghost" size="icon" className="group p-1 sm:p-2 cursor-pointer">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="group p-1 sm:p-2 cursor-pointer"
+                  >
                     <User className="h-4 sm:h-5 w-4 sm:w-5 transition-colors group-hover:text-primary" />
                   </Button>
                 </Link>
@@ -265,14 +326,19 @@ export function Navbar() {
                     <div className="border-t pt-3 mt-3">
                       <div className="flex items-center space-x-3 px-2 py-2">
                         <Avatar className="h-8 w-8">
-                          <AvatarImage src={user.avatarUrl || "/placeholder.svg"} alt={user.name} />
+                          <AvatarImage
+                            src={user.avatarUrl || "/placeholder.svg"}
+                            alt={user.name}
+                          />
                           <AvatarFallback className="bg-gradient-to-br from-primary to-accent text-primary-foreground text-xs font-semibold">
                             {getInitials(user.name)}
                           </AvatarFallback>
                         </Avatar>
                         <div className="flex flex-col">
                           <p className="text-sm font-medium">{user.name}</p>
-                          <p className="text-xs text-muted-foreground">{user.email}</p>
+                          <p className="text-xs text-muted-foreground">
+                            {user.email}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -294,8 +360,8 @@ export function Navbar() {
                     </Link>
                     <button
                       onClick={() => {
-                        handleLogout()
-                        setIsMobileMenuOpen(false)
+                        handleLogout();
+                        setIsMobileMenuOpen(false);
                       }}
                       className="text-xs sm:text-sm font-medium transition-colors hover:text-red-600 px-2 py-1 flex items-center text-red-600 w-full text-left"
                     >
@@ -314,7 +380,10 @@ export function Navbar() {
       <CartSlider isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
 
       {/* Wishlist Slider */}
-      <WishlistSlider isOpen={isWishlistOpen} onClose={() => setIsWishlistOpen(false)} />
+      <WishlistSlider
+        isOpen={isWishlistOpen}
+        onClose={() => setIsWishlistOpen(false)}
+      />
     </>
-  )
+  );
 }

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Calendar, Home, Inbox, Search, Settings, Package, MessageSquare, Boxes, ChevronDown, ChevronRight, Box, ListOrdered, Package2Icon } from "lucide-react"
+import { Calendar, Home, Inbox, Search, Settings, Package, MessageSquare, Boxes, ChevronDown, ChevronRight, Box, ListOrdered, Package2Icon, ShoppingBag, User2 } from "lucide-react"
 
 import {
   Sidebar,
@@ -84,14 +84,34 @@ const items: MenuItem[] = [
     ]
   },
   {
-    title: "Search",
-    url: "#",
+    title: "Cart&Wishlist",
     icon: Search,
+    children: [
+      {
+        title: "Cart Items",
+        icon: ShoppingBag,
+        url: "/admin/cart-wishlist/cart-items"
+      },
+      {
+        title: "All Wishlist",
+        icon: ShoppingBag,
+        url: "/admin/cart-wishlist/wishlists"
+      }
+    ]
   },
   {
     title: "Settings",
     url: "#",
     icon: Settings,
+  },
+  {
+    title: "User Management",
+    icon: Settings,
+    children: [{
+      title: "All Users",
+      icon: User2,
+      url: "/admin/users"
+    }]
   },
 ]
 
@@ -100,7 +120,9 @@ export function AppSidebar() {
   const [openMenus, setOpenMenus] = useState<{ [key: string]: boolean }>({
     "Product Management": false, 
     "Categoy&Brand": false,
-    "Order&Payment": false
+    "Order&Payment": false,
+    "Cart&Wishlist": false,
+    "User Management": false
   })
 
   const toggleMenu = (title: string) => {

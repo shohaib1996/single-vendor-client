@@ -25,7 +25,7 @@ import { useGetSingleProductQuery } from "@/redux/api/product/productApi";
 import { useAppSelector } from "@/redux/hooks/hooks";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
-import { useCreateCartMutation } from "@/redux/api/cart/cartApi"
+import { useCreateCartMutation } from "@/redux/api/cart/cartApi";
 import { useCreateWishlistMutation } from "@/redux/api/wishlist/wishlistApi";
 import ReviewForm from "./ReviewForm";
 import QuestionForm from "./QuestionForm";
@@ -43,7 +43,8 @@ const ProductDetailsPage = ({ id }: ProductDetailsPageProps) => {
   const { data: productData, isLoading, error } = useGetSingleProductQuery(id);
   const { user } = useAppSelector((state) => state.auth || { user: null });
   const [createCart, { isLoading: cartLoading }] = useCreateCartMutation();
-  const [addToWishlist, {isLoading: wishlistLoading}] = useCreateWishlistMutation()
+  const [addToWishlist, { isLoading: wishlistLoading }] =
+    useCreateWishlistMutation();
 
   const product: ISingleProduct = productData?.data;
 
@@ -59,6 +60,11 @@ const ProductDetailsPage = ({ id }: ProductDetailsPageProps) => {
     if (!user) {
       toast.error("Please login to add items to cart");
       return;
+    }
+
+    if (user?.role === "ADMIN") {
+      toast.error("You are admin not allowed to add.");
+      return
     }
 
     if (!product?.stock || product.stock === 0) {
@@ -80,16 +86,20 @@ const ProductDetailsPage = ({ id }: ProductDetailsPageProps) => {
     }
   };
 
-  const handleAddToWishlist = async() => {
+  const handleAddToWishlist = async () => {
     if (!user) {
       toast.error("Please login to add items to wishlist");
       return;
     }
-    const wilshListData = {
-      productId: product.id
+    if (user?.role === "ADMIN") {
+      toast.error("You are admin not allowed to add.");
+      return
     }
+    const wilshListData = {
+      productId: product.id,
+    };
 
-    await addToWishlist(wilshListData).unwrap()
+    await addToWishlist(wilshListData).unwrap();
     // Add to wishlist logic here
     toast.success(`Added ${product?.name} to wishlist`);
   };
@@ -364,8 +374,18 @@ const ProductDetailsPage = ({ id }: ProductDetailsPageProps) => {
 
             {/* Action Buttons */}
             <div className="flex gap-4">
-              {cartLoading && <Button size="lg" className="flex-1 h-12"> <ShoppingCart className="mr-2 h-5 w-5" /> Adding to Cart ...</Button>}
-               <Button onClick={handleAddToCart} disabled={product.stock === 0} className={`flex-1 h-12 ${cartLoading && "hidden"}`} size="lg">
+              {cartLoading && (
+                <Button size="lg" className="flex-1 h-12">
+                  {" "}
+                  <ShoppingCart className="mr-2 h-5 w-5" /> Adding to Cart ...
+                </Button>
+              )}
+              <Button
+                onClick={handleAddToCart}
+                disabled={product.stock === 0}
+                className={`flex-1 h-12 ${cartLoading && "hidden"}`}
+                size="lg"
+              >
                 <ShoppingCart className="mr-2 h-5 w-5" />
                 {product.stock === 0 ? "Out of Stock" : "Add to Cart"}
               </Button>
@@ -375,7 +395,11 @@ const ProductDetailsPage = ({ id }: ProductDetailsPageProps) => {
                 className="h-12 px-6 bg-transparent"
                 size="lg"
               >
-                {wishlistLoading ? <Loader className="animate-spin" /> : <Heart className="h-5 w-5" />}
+                {wishlistLoading ? (
+                  <Loader className="animate-spin" />
+                ) : (
+                  <Heart className="h-5 w-5" />
+                )}
               </Button>
             </div>
           </div>

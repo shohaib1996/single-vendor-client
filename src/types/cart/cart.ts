@@ -14,3 +14,15 @@ export interface ICartItem {
     images: string[]
   }
 }
+
+
+export interface ICart {
+  id: string;
+  userId: string;
+  user: {
+    name: string;
+    email: string;
+    phone: string;
+  };
+  items: ICartItem[];
+}
