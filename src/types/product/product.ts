@@ -72,6 +72,10 @@ export type IProductSpecification = {
   productId: string;
   key: string;
   value: string;
+  product: {
+    name: string,
+    price: number
+  }
 };
 
 export type IReview = {

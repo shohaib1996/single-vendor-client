@@ -12,9 +12,10 @@ export const productSpecificationApi = baseApi.injectEndpoints({
       invalidatesTags: [tagTypes.PRODUCT_SPECIFICATION],
     }),
     getProductSpecifications: builder.query({
-      query: () => ({
+      query: (arg) => ({
         url: '/product-specifications',
         method: 'GET',
+        params: arg
       }),
       providesTags: [tagTypes.PRODUCT_SPECIFICATION],
     }),

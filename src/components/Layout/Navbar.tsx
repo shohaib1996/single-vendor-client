@@ -14,7 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { ShoppingCart, Heart, User, Search, Menu, X, LogOut, Settings, Package } from "lucide-react"
+import { ShoppingCart, Heart, User, Search, Menu, X, LogOut, Settings, Package, LayoutDashboard } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { logout } from "@/redux/features/auth/authSlice"
 import { ModeToggle } from "../ModeToggle/ModeToggle"
@@ -188,10 +188,13 @@ export function Navbar() {
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link href="/orders" className="cursor-pointer">
+                     {user?.role === "ADMIN" ?  <Link href="/admin" className="cursor-pointer">
+                        <LayoutDashboard className="mr-2 h-4 w-4" />
+                        <span>Dashboard</span>
+                      </Link>:  <Link href="/orders" className="cursor-pointer">
                         <Package className="mr-2 h-4 w-4" />
                         <span>My Orders</span>
-                      </Link>
+                      </Link>}
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-red-600 focus:text-red-600">
