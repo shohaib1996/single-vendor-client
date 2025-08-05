@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useGetAllCategoriesQuery } from "@/redux/api/category/categoryApi";
 import { CategorySkeleton } from "../Skeletons/CategorySkeleton";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "../ui/card";
 import { ICategory } from "@/types";

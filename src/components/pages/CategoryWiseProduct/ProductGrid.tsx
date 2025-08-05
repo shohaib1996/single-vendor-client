@@ -113,8 +113,8 @@ const ProductGrid = ({
           : "grid-cols-1"
       )}
     >
-      {products.map((product, index) => (
-        <Link href={`/products/${product.id}`}>
+      {products.map((product) => (
+        <Link href={`/products/${product.id}`} key={product.id}>
           <Card
             key={product.id}
             className={cn(

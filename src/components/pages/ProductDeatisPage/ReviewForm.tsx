@@ -32,7 +32,7 @@ const ReviewForm = ({ productId }: ReviewFormProps) => {
   const [hoveredRating, setHoveredRating] = useState(0)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { user } = useAppSelector((state) => state.auth)
-  const [createReview, {isLoading}] = useCreateReviewMutation()
+  const [createReview] = useCreateReviewMutation()
 
   const form = useForm<ReviewFormValues>({
     resolver: zodResolver(reviewSchema),

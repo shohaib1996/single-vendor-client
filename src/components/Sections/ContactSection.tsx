@@ -93,9 +93,9 @@ export function ContactSection() {
             <MessageCircle className="w-3 h-3 mr-1" />
             Contact Us
           </Badge>
-          <h2 className="text-2xl md:text-3xl font-bold mb-2">Let's Connect</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-2">Let&apos;s Connect</h2>
           <p className="text-base text-muted-foreground max-w-xl mx-auto">
-            Got questions? Reach out, and we'll get back to you quickly!
+            Got questions? Reach out, and we&apos;ll get back to you quickly!
           </p>
         </div>
 
@@ -103,9 +103,9 @@ export function ContactSection() {
           <div className="space-y-6">
             <Card className="bg-gradient-to-br from-primary/10 to-muted p-0">
               <CardContent className="p-6 text-center">
-                <h3 className="text-xl font-semibold mb-3">We're Here for You</h3>
+                <h3 className="text-xl font-semibold mb-3">We&apos;re Here for You</h3>
                 <p className="text-sm text-muted-foreground mb-4">
-                  At EcoShop, we value your feedback and inquiries. Whether it's about our products, services, or just a friendly hello, we're excited to hear from you!
+                  At EcoShop, we value your feedback and inquiries. Whether it&apos;s about our products, services, or just a friendly hello, we&apos;re excited to hear from you!
                 </p>
                 <Button variant="outline" className="text-sm">
                   <Mail className="mr-2 h-3 w-3" />

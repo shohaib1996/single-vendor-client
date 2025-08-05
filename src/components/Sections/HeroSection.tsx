@@ -5,9 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
-  ArrowRight,
-  Play,
-  Star,
   ChevronLeft,
   ChevronRight,
   Users,

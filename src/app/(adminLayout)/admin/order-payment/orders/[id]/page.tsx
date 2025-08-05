@@ -20,6 +20,7 @@ import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { AlertCircle, Package, User, CreditCard } from 'lucide-react';
 import { IOrder } from '@/types/order/order';
+import Image from 'next/image';
 
 const OrderDetails = () => {
   const { id } = useParams();
@@ -185,10 +186,12 @@ const OrderDetails = () => {
                   <TableCell>
                     <div className="flex items-center gap-2">
                       {item.product?.images && item.product.images.length > 0 && (
-                        <img
+                        <Image
                           src={item.product.images[0]}
                           alt={item.product.name || 'Product'}
                           className="w-12 h-12 object-cover rounded"
+                          width={48}
+                          height={48}
                         />
                       )}
                       <div>

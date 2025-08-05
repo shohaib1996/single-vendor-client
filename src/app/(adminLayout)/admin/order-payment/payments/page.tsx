@@ -10,7 +10,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useGetAllPaymentQuery, useUpdatePaymentMutation } from "@/redux/api/payment/paymentApi";
+import {
+  useGetAllPaymentQuery,
+  useUpdatePaymentMutation,
+} from "@/redux/api/payment/paymentApi";
 import { useDebounced } from "@/redux/hooks/hooks";
 import { IPayment, PaymentStatus } from "@/types/order/order";
 import { PaginationControls } from "@/components/common/PaginationControls";
@@ -41,14 +44,19 @@ const PaymentsPage = () => {
     searchTerm: debouncedSearchTerm,
   });
 
-  const [updatePayment, { isLoading: updateLoading }] = useUpdatePaymentMutation();
+  const [updatePayment, { isLoading: updateLoading }] =
+    useUpdatePaymentMutation();
 
-  const handleStatusChange = async (paymentId: string, status: PaymentStatus) => {
+  const handleStatusChange = async (
+    paymentId: string,
+    status: PaymentStatus
+  ) => {
     setUpdatingId(paymentId);
     try {
       await updatePayment({ id: paymentId, data: { status } }).unwrap();
       toast.success("Payment status updated successfully");
     } catch (error) {
+      console.log(error);
       toast.error("Failed to update payment status");
     } finally {
       setUpdatingId(null);
@@ -96,8 +104,12 @@ const PaymentsPage = () => {
             <TableBody>
               {payments.map((payment: IPayment) => (
                 <TableRow key={payment.id}>
-                  <TableCell className="truncate max-w-[100px]">{payment.id}</TableCell>
-                  <TableCell className="truncate max-w-[100px]">{payment.orderId}</TableCell>
+                  <TableCell className="truncate max-w-[100px]">
+                    {payment.id}
+                  </TableCell>
+                  <TableCell className="truncate max-w-[100px]">
+                    {payment.orderId}
+                  </TableCell>
                   <TableCell>{payment.order.user.name}</TableCell>
                   <TableCell>{payment.order.user.email}</TableCell>
                   <TableCell>
@@ -121,7 +133,9 @@ const PaymentsPage = () => {
                   </TableCell>
                   <TableCell>{payment.method}</TableCell>
                   <TableCell>
-                    {payment.paidAt ? new Date(payment.paidAt).toLocaleDateString() : "N/A"}
+                    {payment.paidAt
+                      ? new Date(payment.paidAt).toLocaleDateString()
+                      : "N/A"}
                   </TableCell>
                 </TableRow>
               ))}

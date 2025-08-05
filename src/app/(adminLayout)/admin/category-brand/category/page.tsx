@@ -69,7 +69,7 @@ const CategoryPage = () => {
 
   // Fetch all categories to determine subcategory counts
   const { data: allCategoriesData } = useGetAllCategoriesQuery({});
-  const allCategories: ICategory[] = allCategoriesData?.data?.data || [];
+//   const allCategories: ICategory[] = allCategoriesData?.data?.data || [];
 
   const handleAddClick = () => {
     setEditingCategory(null);

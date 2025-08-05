@@ -104,6 +104,7 @@ const ProfilePage = () => {
         toast.success("Profile picture has been uploaded successfully.")
       }
     } catch (error) {
+      console.log(error)
       toast.error("Failed to upload image. Please try again.")
     } finally {
       setUploading(false)

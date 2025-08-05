@@ -13,10 +13,8 @@ import {
   Mail,
   User,
   Receipt,
-  ArrowLeft,
   Printer,
 } from "lucide-react";
-import Link from "next/link";
 import { toast } from "sonner";
 import { useAppSelector } from "@/redux/hooks/hooks";
 
@@ -168,6 +166,7 @@ const PaymentSuccessContent = ({ paymentData }: PaymentSuccessContentProps) => {
 
       toast.success("Receipt downloaded successfully!");
     } catch (error) {
+      console.log(error)
       toast.error("Failed to download receipt");
     } finally {
       setIsDownloading(false);

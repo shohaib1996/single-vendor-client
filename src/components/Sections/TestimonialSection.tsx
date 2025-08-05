@@ -6,7 +6,7 @@ import { useState, useEffect, useRef, useCallback } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Star, Quote, ChevronLeft, ChevronRight, Play, Pause } from "lucide-react"
+import { Star, Quote, ChevronLeft, ChevronRight} from "lucide-react"
 import Image from "next/image"
 
 const testimonials = [
@@ -132,7 +132,7 @@ export function TestimonialsSection() {
     }, 500) // Match transition duration
 
     return () => clearTimeout(timer)
-  }, [currentIndex, isTransitioning, slidesToShow, testimonials.length])
+  }, [currentIndex, isTransitioning, slidesToShow])
 
   // Auto-play functionality
   useEffect(() => {
@@ -149,9 +149,9 @@ export function TestimonialsSection() {
     }
   }, [isAutoPlaying, nextSlide])
 
-  const toggleAutoPlay = () => {
-    setIsAutoPlaying(!isAutoPlaying)
-  }
+  // const toggleAutoPlay = () => {
+  //   setIsAutoPlaying(!isAutoPlaying)
+  // }
 
   const goToSlide = (index: number) => {
     if (isTransitioning) return
@@ -212,7 +212,7 @@ export function TestimonialsSection() {
           </Badge>
           <h2 className="text-3xl md:text-4xl font-bold mb-4">What Our Customers Say</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Don't just take our word for it. Here's what our satisfied customers have to say about their experience
+            Don&apos;t just take our word for it. Here&apos;s what our satisfied customers have to say about their experience
           </p>
         </div>
 
@@ -254,7 +254,7 @@ export function TestimonialsSection() {
                       </div>
 
                       {/* Content */}
-                      <p className="text-muted-foreground mb-6 leading-relaxed flex-grow">"{testimonial.content}"</p>
+                      <p className="text-muted-foreground mb-6 leading-relaxed flex-grow">&ldquo;{testimonial.content}&ldquo;</p>
 
                       {/* Author */}
                       <div className="flex items-center space-x-4 mt-auto">

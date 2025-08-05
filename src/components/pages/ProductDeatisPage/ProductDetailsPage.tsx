@@ -194,7 +194,7 @@ const ProductDetailsPage = ({ id }: ProductDetailsPageProps) => {
             <X className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
             <h2 className="text-2xl font-bold mb-2">Product Not Found</h2>
             <p className="text-muted-foreground">
-              The product you're looking for doesn't exist.
+              The product you&apos;re looking for doesn&apos;t exist.
             </p>
           </CardContent>
         </Card>

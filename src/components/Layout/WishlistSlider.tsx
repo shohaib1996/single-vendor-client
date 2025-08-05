@@ -1,6 +1,5 @@
 "use client"
 
-import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -33,8 +32,7 @@ interface WishlistSliderProps {
 }
 
 const WishlistSlider = ({ isOpen, onClose }: WishlistSliderProps) => {
-  const { user } = useAppSelector((state) => state.auth)
-  const { data: wishlist, isLoading } = useGetWishlistQuery({})
+  const { data: wishlist } = useGetWishlistQuery({})
   const [deleteWishlist, { isLoading: wishlistDeleteLoading }] = useDeleteWishlistMutation()
 
   const wishlistItems: WishlistItem[] = wishlist?.data || []
@@ -51,15 +49,16 @@ const WishlistSlider = ({ isOpen, onClose }: WishlistSliderProps) => {
       await deleteWishlist(id).unwrap()
       toast.success("Item removed from wishlist")
     } catch (error) {
+      console.log(error)
       toast.error("Failed to remove item from wishlist")
     }
   }
 
-  const renderStars = (rating: number = 0) => {
-    return Array.from({ length: 5 }, (_, i) => (
-      <Star key={i} className={cn("h-3 w-3", i < rating ? "fill-yellow-400 text-yellow-400" : "text-gray-300")} />
-    ))
-  }
+  // const renderStars = (rating: number = 0) => {
+  //   return Array.from({ length: 5 }, (_, i) => (
+  //     <Star key={i} className={cn("h-3 w-3", i < rating ? "fill-yellow-400 text-yellow-400" : "text-gray-300")} />
+  //   ))
+  // }
 
   return (
     <>

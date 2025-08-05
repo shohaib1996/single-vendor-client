@@ -1,6 +1,5 @@
 "use client"
 
-import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -36,7 +35,6 @@ interface CartSliderProps {
 }
 
 const CartSlider = ({ isOpen, onClose }: CartSliderProps) => {
-  const { user } = useAppSelector((state) => state.auth)
   const { data, isLoading } = useGetCartQuery({})
   const [deleteCart, { isLoading: deleteCartLoading }] = useDeleteCartItemMutation()
   const [updateCartItemQuantity, { isLoading: updateQuantityLoading }] = useUpdateCartItemMutation()
@@ -59,6 +57,7 @@ const CartSlider = ({ isOpen, onClose }: CartSliderProps) => {
       await updateCartItemQuantity({ id, data: { quantity: newQuantity } }).unwrap()
       toast.success("Quantity updated")
     } catch (error) {
+      console.log(error)
       toast.error("Failed to update quantity")
     }
   }
@@ -68,6 +67,7 @@ const CartSlider = ({ isOpen, onClose }: CartSliderProps) => {
       await deleteCart(id).unwrap()
       toast.success("Item removed from cart")
     } catch (error) {
+      console.log(error)
       toast.error("Failed to remove item")
     }
   }

@@ -10,11 +10,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useGetUsersQuery, useUpdateUserMutation } from "@/redux/api/user/userApi";
+import {
+  useGetUsersQuery,
+  useUpdateUserMutation,
+} from "@/redux/api/user/userApi";
 import { useDebounced } from "@/redux/hooks/hooks";
 import { IUser } from "@/types/user/user";
 import { PaginationControls } from "@/components/common/PaginationControls";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
@@ -43,6 +45,7 @@ const UsersPage = () => {
       await updateUser({ id: userId, data: { role } }).unwrap();
       toast.success("User role updated successfully");
     } catch (error) {
+      console.log(error);
       toast.error("Failed to update user role");
     } finally {
       setUpdatingId(null);
@@ -65,9 +68,7 @@ const UsersPage = () => {
         </div>
       </div>
       {isLoading ? (
-        <div className="space-y-4">
-          Loading...
-        </div>
+        <div className="space-y-4">Loading...</div>
       ) : isError ? (
         <div>Error loading users.</div>
       ) : (
@@ -85,7 +86,9 @@ const UsersPage = () => {
             <TableBody>
               {users.map((user: IUser) => (
                 <TableRow key={user.id}>
-                  <TableCell className="truncate max-w-[100px]">{user.id}</TableCell>
+                  <TableCell className="truncate max-w-[100px]">
+                    {user.id}
+                  </TableCell>
                   <TableCell>{user.name}</TableCell>
                   <TableCell>{user.email}</TableCell>
                   <TableCell>{user.role}</TableCell>

@@ -1,9 +1,8 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { CheckCircle, Award, Users, Globe, ArrowRight, Star } from "lucide-react"
+import { CheckCircle, Award, Users, Globe, Star } from "lucide-react"
 import Image from "next/image"
 
 const features = [
@@ -53,7 +52,7 @@ export function AboutSection() {
             Your Trusted Shopping Partner Since 2020
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            We started with a simple mission: to make quality products accessible to everyone. Today, we're proud to
+            We started with a simple mission: to make quality products accessible to everyone. Today, we&apos;re proud to
             serve thousands of happy customers worldwide.
           </p>
         </div>

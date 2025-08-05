@@ -78,6 +78,7 @@ const OrderPage = () => {
       await deleteOrder(orderId).unwrap()
       toast.success("Order deleted successfully")
     } catch (error) {
+      console.log(error)
       toast.error("Failed to delete order")
     }
   }
@@ -99,6 +100,7 @@ const OrderPage = () => {
         throw new Error("No checkout URL received")
       }
     } catch (error) {
+      console.log(error)
       toast.error("Failed to create payment session")
     } finally {
       setPaymentLoadingOrderId(null)

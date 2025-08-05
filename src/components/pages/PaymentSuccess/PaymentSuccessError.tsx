@@ -14,7 +14,7 @@ const PaymentSuccessError = () => {
             <XCircle className="h-12 w-12 text-red-600 dark:text-red-400" />
           </div>
           <h1 className="text-3xl font-bold text-red-800 dark:text-red-200 mb-2">Payment Verification Failed</h1>
-          <p className="text-red-600 dark:text-red-400">We couldn't verify your payment details</p>
+          <p className="text-red-600 dark:text-red-400">We couldn&apos;t verify your payment details</p>
         </div>
 
         <Card className="shadow-xl border-0 bg-white/80 dark:bg-card/80 backdrop-blur-sm">

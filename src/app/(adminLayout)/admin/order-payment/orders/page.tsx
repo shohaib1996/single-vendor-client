@@ -38,7 +38,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Eye } from "lucide-react";
 import Link from "next/link";
 
@@ -71,6 +70,7 @@ const OrdersPage = () => {
       await updateOrder({ id: orderId, data: { status } }).unwrap();
       toast.success("Order status updated successfully");
     } catch (error) {
+      console.log(error);
       toast.error("Failed to update order status");
     } finally {
       setUpdateLoadingStates((prev) => ({ ...prev, [orderId]: false })); // Clear loading for this order
@@ -83,6 +83,7 @@ const OrdersPage = () => {
       await deleteOrder(orderId).unwrap();
       toast.success("Order deleted successfully");
     } catch (error) {
+      console.log(error);
       toast.error("Failed to delete order");
     } finally {
       setDeletingId(null);
@@ -105,9 +106,7 @@ const OrdersPage = () => {
         </div>
       </div>
       {isLoading ? (
-        <div className="space-y-4">
-          Loading....
-        </div>
+        <div className="space-y-4">Loading....</div>
       ) : isError ? (
         <div>Error loading orders.</div>
       ) : (
