@@ -12,9 +12,10 @@ export const orderApi = baseApi.injectEndpoints({
       invalidatesTags: [tagTypes.ORDER, tagTypes.CART],
     }),
     getAllOrders: builder.query({
-      query: () => ({
+      query: (arg) => ({
         url: '/orders',
         method: 'GET',
+        params: arg
       }),
       providesTags: [tagTypes.ORDER],
     }),
@@ -43,4 +44,4 @@ export const orderApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useCreateOrderMutation, useGetAllOrdersQuery, useUpdateOrderMutation, useDeleteOrderMutation } = orderApi;
+export const { useCreateOrderMutation, useGetAllOrdersQuery, useGetSingleOrderQuery, useUpdateOrderMutation, useDeleteOrderMutation } = orderApi;

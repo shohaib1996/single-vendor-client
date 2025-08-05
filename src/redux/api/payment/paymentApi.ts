@@ -1,5 +1,7 @@
+
 import { tagTypes } from "@/redux/tagTypes/tagTypes";
 import { baseApi } from "../baseApi";
+
 
 export const paymentApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -26,7 +28,23 @@ export const paymentApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.PAYMENT],
     }),
+    getAllPayment: builder.query({
+      query: (arg) => ({
+        url: '/payment',
+        method: 'GET',
+        params: arg
+      }),
+      providesTags: [tagTypes.PAYMENT],
+    }),
+    updatePayment: builder.mutation({
+       query: ({id, data}) => ({
+        url: `/payment/${id}`,
+        method: 'PATCH',
+        data,
+      }),
+      invalidatesTags: [tagTypes.PAYMENT],
+    })
   }),
 });
 
-export const { useCreateCheckoutSessionMutation, usePaymentSuccessQuery, usePaymentCancelQuery } = paymentApi;
+export const { useCreateCheckoutSessionMutation, usePaymentSuccessQuery, usePaymentCancelQuery, useGetAllPaymentQuery, useUpdatePaymentMutation } = paymentApi;

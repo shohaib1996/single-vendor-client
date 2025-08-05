@@ -43,6 +43,7 @@ export interface IPayment {
   status: PaymentStatus
   method: string | null
   paidAt: string | null
+  order: IOrder
 }
 
 export interface IOrder {

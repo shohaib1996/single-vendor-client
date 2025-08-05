@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Calendar, Home, Inbox, Search, Settings, Package, MessageSquare, Boxes, ChevronDown, ChevronRight, Box } from "lucide-react"
+import { Calendar, Home, Inbox, Search, Settings, Package, MessageSquare, Boxes, ChevronDown, ChevronRight, Box, ListOrdered, Package2Icon } from "lucide-react"
 
 import {
   Sidebar,
@@ -68,9 +68,20 @@ const items: MenuItem[] = [
     ]
   },
   {
-    title: "Calendar",
-    url: "#",
+    title: "Order&Payment",
     icon: Calendar,
+    children: [
+      {
+        title: "All Orders",
+        icon: ListOrdered,
+        url: "/admin/order-payment/orders"
+      },
+      {
+        title: "All Payments",
+        icon: Package2Icon,
+        url: "/admin/order-payment/payments"
+      }
+    ]
   },
   {
     title: "Search",
@@ -87,8 +98,9 @@ const items: MenuItem[] = [
 export function AppSidebar() {
   // State to track open/closed status for each menu with children
   const [openMenus, setOpenMenus] = useState<{ [key: string]: boolean }>({
-    "Product Management": true, 
-    "Categoy&Brand": false, 
+    "Product Management": false, 
+    "Categoy&Brand": false,
+    "Order&Payment": false
   })
 
   const toggleMenu = (title: string) => {
