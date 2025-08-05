@@ -13,9 +13,10 @@ export const brandApi = baseApi.injectEndpoints({
       invalidatesTags: [tagTypes.BRAND],
     }),
     getAllBrands: builder.query({
-      query: () => ({
+      query: (arg) => ({
         url: '/brands',
         method: 'GET',
+        params: arg
       }),
       providesTags: [tagTypes.BRAND],
     }),

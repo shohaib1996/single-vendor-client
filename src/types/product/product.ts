@@ -62,10 +62,19 @@ type ICategory = {
   parentId: string | null;
 };
 
-export type IBrand = {
+export interface IBrand {
   id: string;
   name: string;
-};
+  categories: {
+    id: string;
+    name: string;
+    slug: string;
+    icon: string;
+    description: string;
+    parentId: string | null;
+  }[];
+}
+
 
 export type IProductSpecification = {
   id: string;

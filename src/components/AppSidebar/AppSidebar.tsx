@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Calendar, Home, Inbox, Search, Settings, Package, MessageSquare, Boxes, ChevronDown, ChevronRight } from "lucide-react"
+import { Calendar, Home, Inbox, Search, Settings, Package, MessageSquare, Boxes, ChevronDown, ChevronRight, Box } from "lucide-react"
 
 import {
   Sidebar,
@@ -52,9 +52,20 @@ const items: MenuItem[] = [
     ],
   },
   {
-    title: "Inbox",
-    url: "#",
+    title: "Categoy&Brand",
     icon: Inbox,
+    children: [
+      {
+        title: "Category",
+        url: "/admin/category-brand/category",
+        icon: Box
+      },
+      {
+        title: "Brand",
+        url: "/admin/category-brand/brand",
+        icon: Box
+      }
+    ]
   },
   {
     title: "Calendar",
@@ -74,7 +85,18 @@ const items: MenuItem[] = [
 ]
 
 export function AppSidebar() {
-  const [isProductManagementOpen, setIsProductManagementOpen] = useState(true)
+  // State to track open/closed status for each menu with children
+  const [openMenus, setOpenMenus] = useState<{ [key: string]: boolean }>({
+    "Product Management": true, 
+    "Categoy&Brand": false, 
+  })
+
+  const toggleMenu = (title: string) => {
+    setOpenMenus((prev) => ({
+      ...prev,
+      [title]: !prev[title]
+    }))
+  }
 
   return (
     <Sidebar>
@@ -89,20 +111,20 @@ export function AppSidebar() {
               {items.map((item) => {
                 if (item.children) {
                   return (
-                    <SidebarGroup key={item.title}>
+                    <SidebarGroup key={item.title} className="px-1 py-0">
                       <SidebarGroupLabel
                         className="flex items-center cursor-pointer p-0"
-                        onClick={() => setIsProductManagementOpen(!isProductManagementOpen)}
+                        onClick={() => toggleMenu(item.title)}
                       >
                         <item.icon className="mr-2 h-4 w-4" />
-                        <span>{item.title}</span>
-                        {isProductManagementOpen ? (
+                        <span className="text-[14px]">{item.title}</span>
+                        {openMenus[item.title] ? (
                           <ChevronDown className="ml-auto h-4 w-4" />
                         ) : (
                           <ChevronRight className="ml-auto h-4 w-4" />
                         )}
                       </SidebarGroupLabel>
-                      {isProductManagementOpen && (
+                      {openMenus[item.title] && (
                         <SidebarGroupContent className="pl-4 border-l-2 border-gray-200 ml-3">
                           {item.children.map((child) => (
                             <SidebarMenuItem key={child.title}>

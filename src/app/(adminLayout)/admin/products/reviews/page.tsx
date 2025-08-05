@@ -1,31 +1,50 @@
-"use client"
+"use client";
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   useGetAllReviewsQuery,
   useCreateReviewMutation,
   useUpdateReviewMutation,
-  useDeleteReviewMutation
-} from '@/redux/api/review/reviewApi';
-import { IReview } from '@/types/product/product';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { toast } from 'sonner';
-import { PaginationControls } from '@/components/common/PaginationControls';
-import { useAppSelector } from '@/redux/hooks/hooks';
+  useDeleteReviewMutation,
+} from "@/redux/api/review/reviewApi";
+import { IReview } from "@/types/product/product";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { toast } from "sonner";
+import { PaginationControls } from "@/components/common/PaginationControls";
+import { useAppSelector } from "@/redux/hooks/hooks";
+import { Eye } from "lucide-react";
+import Link from "next/link";
 
 const ReviewsPage = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const [isFormDialogOpen, setIsFormDialogOpen] = useState(false);
   const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
   const [editingReview, setEditingReview] = useState<IReview | null>(null);
-  const [reviewData, setReviewData] = useState({ rating: 0, comment: '', productId: '' });
+  const [reviewData, setReviewData] = useState({
+    rating: 0,
+    comment: "",
+    productId: "",
+  });
   const [itemToDelete, setItemToDelete] = useState<string | null>(null);
 
   const { user } = useAppSelector((state) => state.auth);
@@ -34,7 +53,8 @@ const ReviewsPage = () => {
   if (searchTerm) {
     // Assuming backend supports searching by productId or productName via a single 'searchTerm' param
     // You might need to adjust this based on your actual API implementation
-    if (searchTerm.length === 36 && searchTerm.includes('-')) { // Basic check for UUID format
+    if (searchTerm.length === 36 && searchTerm.includes("-")) {
+      // Basic check for UUID format
       query.searchTerm = searchTerm;
     } else {
       query.searchTerm = searchTerm;
@@ -42,23 +62,30 @@ const ReviewsPage = () => {
   }
 
   const { data, isLoading, isError, refetch } = useGetAllReviewsQuery(query);
-  const [createReview, { isLoading: createLoading }] = useCreateReviewMutation();
-  const [updateReview, { isLoading: updateLoading }] = useUpdateReviewMutation();
-  const [deleteReview, { isLoading: deleteLoading }] = useDeleteReviewMutation();
+  const [createReview, { isLoading: createLoading }] =
+    useCreateReviewMutation();
+  const [updateReview, { isLoading: updateLoading }] =
+    useUpdateReviewMutation();
+  const [deleteReview, { isLoading: deleteLoading }] =
+    useDeleteReviewMutation();
 
   const reviews: IReview[] = data?.data?.data || [];
   const totalPages = data?.data?.meta?.totalPages || 1;
   const totalItems = data?.data?.meta?.total || 0;
 
-//   const handleAddClick = () => {
-//     setEditingReview(null);
-//     setReviewData({ rating: 0, comment: '', productId: '' });
-//     setIsFormDialogOpen(true);
-//   };
+  //   const handleAddClick = () => {
+  //     setEditingReview(null);
+  //     setReviewData({ rating: 0, comment: '', productId: '' });
+  //     setIsFormDialogOpen(true);
+  //   };
 
   const handleEditClick = (review: IReview) => {
     setEditingReview(review);
-    setReviewData({ rating: review.rating, comment: review.comment, productId: review.productId });
+    setReviewData({
+      rating: review.rating,
+      comment: review.comment,
+      productId: review.productId,
+    });
     setIsFormDialogOpen(true);
   };
 
@@ -68,7 +95,11 @@ const ReviewsPage = () => {
   };
 
   const handleFormSubmit = async () => {
-    if (!reviewData.rating || !reviewData.comment.trim() || !reviewData.productId.trim()) {
+    if (
+      !reviewData.rating ||
+      !reviewData.comment.trim() ||
+      !reviewData.productId.trim()
+    ) {
       toast.error("Rating, Comment, and Product ID are required.");
       return;
     }
@@ -109,7 +140,8 @@ const ReviewsPage = () => {
   };
 
   if (isLoading) return <div className="p-4">Loading reviews...</div>;
-  if (isError) return <div className="p-4 text-red-500">Error loading reviews.</div>;
+  if (isError)
+    return <div className="p-4 text-red-500">Error loading reviews.</div>;
 
   return (
     <div className="p-4">
@@ -140,22 +172,42 @@ const ReviewsPage = () => {
         <TableBody>
           {reviews.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={7} className="text-center">No reviews found.</TableCell>
+              <TableCell colSpan={7} className="text-center">
+                No reviews found.
+              </TableCell>
             </TableRow>
           ) : (
             reviews.map((review) => (
               <TableRow key={review.id}>
                 <TableCell className="font-medium">{review.id}</TableCell>
                 <TableCell>{review.productId}</TableCell>
-                <TableCell>{review.product?.name || 'N/A'}</TableCell>
-                <TableCell>{review.user?.name || 'N/A'}</TableCell>
+                <TableCell className="max-w-xs truncate overflow-hidden whitespace-nowrap">
+                  {review.product?.name || "N/A"}
+                </TableCell>
+                <TableCell>{review.user?.name || "N/A"}</TableCell>
                 <TableCell>{review.rating}</TableCell>
-                <TableCell>{review.comment}</TableCell>
+                <TableCell className="max-w-xs truncate overflow-hidden whitespace-nowrap">
+                  {review.comment}
+                </TableCell>
                 <TableCell className="text-right">
-                  <Button size="sm" variant="outline" onClick={() => handleEditClick(review)} className="mr-2">
+                  <Link href={`/products/${review.productId}`}>
+                    <Button size="sm" variant="outline" className="mr-2">
+                      <Eye />
+                    </Button>
+                  </Link>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => handleEditClick(review)}
+                    className="mr-2"
+                  >
                     Edit
                   </Button>
-                  <Button size="sm" variant="destructive" onClick={() => handleDeleteClick(review.id)}>
+                  <Button
+                    size="sm"
+                    variant="destructive"
+                    onClick={() => handleDeleteClick(review.id)}
+                  >
                     Delete
                   </Button>
                 </TableCell>
@@ -174,7 +226,9 @@ const ReviewsPage = () => {
       <Dialog open={isFormDialogOpen} onOpenChange={setIsFormDialogOpen}>
         <DialogContent className="sm:max-w-[600px]">
           <DialogHeader>
-            <DialogTitle>{editingReview ? "Edit Review" : "Add New Review"}</DialogTitle>
+            <DialogTitle>
+              {editingReview ? "Edit Review" : "Add New Review"}
+            </DialogTitle>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
@@ -184,7 +238,9 @@ const ReviewsPage = () => {
               <Input
                 id="productId"
                 value={reviewData.productId}
-                onChange={(e) => setReviewData({ ...reviewData, productId: e.target.value })}
+                onChange={(e) =>
+                  setReviewData({ ...reviewData, productId: e.target.value })
+                }
                 className="col-span-3"
                 placeholder="Enter Product ID"
                 disabled={!!editingReview} // Disable product ID edit for existing reviews
@@ -198,7 +254,12 @@ const ReviewsPage = () => {
                 id="rating"
                 type="number"
                 value={reviewData.rating}
-                onChange={(e) => setReviewData({ ...reviewData, rating: parseInt(e.target.value) || 0 })}
+                onChange={(e) =>
+                  setReviewData({
+                    ...reviewData,
+                    rating: parseInt(e.target.value) || 0,
+                  })
+                }
                 className="col-span-3"
                 placeholder="Enter rating (1-5)"
                 min={1}
@@ -212,16 +273,30 @@ const ReviewsPage = () => {
               <Textarea
                 id="comment"
                 value={reviewData.comment}
-                onChange={(e) => setReviewData({ ...reviewData, comment: e.target.value })}
+                onChange={(e) =>
+                  setReviewData({ ...reviewData, comment: e.target.value })
+                }
                 className="col-span-3"
                 placeholder="Enter your comment"
               />
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsFormDialogOpen(false)}>Cancel</Button>
-            <Button onClick={handleFormSubmit} disabled={createLoading || updateLoading}>
-              {createLoading || updateLoading ? 'Saving...' : (editingReview ? "Update Review" : "Add Review")}
+            <Button
+              variant="outline"
+              onClick={() => setIsFormDialogOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleFormSubmit}
+              disabled={createLoading || updateLoading}
+            >
+              {createLoading || updateLoading
+                ? "Saving..."
+                : editingReview
+                ? "Update Review"
+                : "Add Review"}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -233,12 +308,22 @@ const ReviewsPage = () => {
             <DialogTitle>Confirm Deletion</DialogTitle>
           </DialogHeader>
           <div className="py-4">
-            Are you sure you want to delete this review? This action cannot be undone.
+            Are you sure you want to delete this review? This action cannot be
+            undone.
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsConfirmDialogOpen(false)}>Cancel</Button>
-            <Button variant="destructive" onClick={handleDeleteConfirm} disabled={deleteLoading}>
-              {deleteLoading ? 'Deleting...' : 'Delete'}
+            <Button
+              variant="outline"
+              onClick={() => setIsConfirmDialogOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={handleDeleteConfirm}
+              disabled={deleteLoading}
+            >
+              {deleteLoading ? "Deleting..." : "Delete"}
             </Button>
           </DialogFooter>
         </DialogContent>
