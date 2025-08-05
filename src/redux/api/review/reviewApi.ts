@@ -15,9 +15,10 @@ export const reviewApi = baseApi.injectEndpoints({
       ],
     }),
     getAllReviews: builder.query({
-      query: () => ({
+      query: (arg) => ({
         url: '/reviews',
         method: 'GET',
+        params: arg
       }),
       providesTags: [tagTypes.REVIEW],
     }),

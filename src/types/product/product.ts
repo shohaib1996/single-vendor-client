@@ -1,32 +1,32 @@
 export interface IProduct {
-  id: string
-  name: string
-  description: string
-  price: number
-  stock: number
-  images: string[]
-  featured?: boolean
-  isDiscountActive?: boolean
-  discountPercentage?: number
-  discountedPrice?: number
-  discountValidUntil?: Date | string
-  categoryId?: string
-  brandId?: string
-  createdAt: Date | string
-  updatedAt: Date | string
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  stock: number;
+  images: string[];
+  featured?: boolean;
+  isDiscountActive?: boolean;
+  discountPercentage?: number;
+  discountedPrice?: number;
+  discountValidUntil?: Date | string;
+  categoryId?: string;
+  brandId?: string;
+  createdAt: Date | string;
+  updatedAt: Date | string;
   category?: {
-    id: string
-    name: string
-    slug: string
-    icon: string
-    description: string
-    parentId: string | null
-  }
+    id: string;
+    name: string;
+    slug: string;
+    icon: string;
+    description: string;
+    parentId: string | null;
+  };
   brand?: {
-    id: string
-    name: string
-  }
-  specifications?: any[]
+    id: string;
+    name: string;
+  };
+  specifications?: any[];
 }
 
 export type ISingleProduct = {
@@ -73,19 +73,25 @@ export type IProductSpecification = {
   key: string;
   value: string;
   product: {
-    name: string,
-    price: number
-  }
+    name: string;
+    price: number;
+  };
 };
 
-export type IReview = {
+export interface IReview {
   id: string;
   rating: number;
   comment: string;
-  createdAt: string;
+  createdAt: string; 
   userId: string;
   productId: string;
-};
+  user: {
+    name: string;
+  };
+  product: {
+    name: string;
+  };
+}
 
 export type IQuestion = {
   id: string;
@@ -103,5 +109,3 @@ export type IAnswer = {
   questionId: string;
   adminId: string;
 };
-
-
