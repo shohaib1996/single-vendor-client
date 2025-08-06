@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -29,13 +29,16 @@ import {
 import { cn } from "@/lib/utils";
 import { logout } from "@/redux/features/auth/authSlice";
 import { ModeToggle } from "../ModeToggle/ModeToggle";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks/hooks";
+import { useAppDispatch, useAppSelector, useDebounced } from "@/redux/hooks/hooks";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import CartSlider from "./CartSlider";
 import WishlistSlider from "./WishlistSlider";
 import { useGetWishlistQuery } from "@/redux/api/wishlist/wishlistApi";
 import { useGetCartQuery } from "@/redux/api/cart/cartApi";
+import { useGetAllProductsQuery } from "@/redux/api/product/productApi";
+import { IProduct } from "@/types";
+
 
 export function Navbar() {
   const router = useRouter();
@@ -46,7 +49,17 @@ export function Navbar() {
   const [isWishlistOpen, setIsWishlistOpen] = useState(false);
   const { data: cartData } = useGetCartQuery({});
   const { data: wishlist } = useGetWishlistQuery({});
+  const [isFocused, setIsFocused] = useState(false);
+  const searchRef = useRef<HTMLDivElement>(null);
 
+  const debouncedTerm = useDebounced({
+    searchQuery: searchQuery,
+    delay: 500,
+  });
+
+  const { data: productsData, isLoading } = useGetAllProductsQuery({
+    searchTerm: debouncedTerm,
+  });
 
   // Redux state
   const { user, token } = useAppSelector((state) => state.auth);
@@ -60,6 +73,19 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+    const handleClickOutside = (event: MouseEvent) => {
+    if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+      setIsFocused(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   const navItems = [
     { name: "Home", href: "/" },
     { name: "Products", href: "/products" },
@@ -70,8 +96,11 @@ export function Navbar() {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Search query:", searchQuery);
-    // Handle search functionality
+    if(searchQuery.trim()){
+      router.push(`/products?searchTerm=${searchQuery}`);
+      setSearchQuery("");
+      setIsFocused(false)
+    }
   };
 
   const handleLogout = () => {
@@ -143,7 +172,7 @@ export function Navbar() {
             </nav>
 
             {/* Search Bar */}
-            <div className="flex-1 max-w-xs sm:max-w-sm md:max-w-md mx-2 sm:mx-4 hidden sm:block">
+            <div className="flex-1 max-w-xs sm:max-w-sm md:max-w-md mx-2 sm:mx-4 hidden sm:block" ref={searchRef}>
               <form onSubmit={handleSearch} className="relative">
                 <Search className="absolute left-2 sm:left-3 top-1/2 transform -translate-y-1/2 h-3 sm:h-4 w-3 sm:w-4 text-muted-foreground" />
                 <Input
@@ -151,8 +180,39 @@ export function Navbar() {
                   placeholder="Search products..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
+                  onFocus={() => setIsFocused(true)}
                   className="pl-8 sm:pl-10 pr-3 sm:pr-4 h-8 sm:h-10 text-xs sm:text-sm bg-muted/50 border-muted-foreground/20 focus:border-primary focus:ring-primary/20"
                 />
+                {isFocused && debouncedTerm && (
+                  <div className="absolute top-full mt-2 w-full bg-background border rounded-md shadow-lg z-50 max-h-80 overflow-y-auto">
+                    {isLoading ? (
+                      <div className="p-4 text-center">Loading...</div>
+                    ) : (
+                      <>
+                        {productsData && productsData.data.length > 0 ? (
+                          <ul>
+                            {productsData.data.map((product: IProduct) => (
+                              <li key={product.id}>
+                                <Link
+                                  href={`/products/${product.id}`}
+                                  className="block p-2 hover:bg-muted"
+                                  onClick={() => {
+                                    setIsFocused(false);
+                                    setSearchQuery("")
+                                  }}
+                                >
+                                  {product.name}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <div className="p-4 text-center">No products found</div>
+                        )}
+                      </>
+                    )}
+                  </div>
+                )}
               </form>
             </div>
 
