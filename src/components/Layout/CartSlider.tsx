@@ -39,7 +39,9 @@ const CartSlider = ({ isOpen, onClose }: CartSliderProps) => {
   const [deleteCart, { isLoading: deleteCartLoading }] = useDeleteCartItemMutation()
   const [updateCartItemQuantity, { isLoading: updateQuantityLoading }] = useUpdateCartItemMutation()
 
-  const cartItems: CartItem[] = data?.data?.items || []
+  const cartItems: CartItem[] = data?.data[0]?.items || []
+
+  console.log(cartItems)
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("en-US", {
@@ -133,8 +135,8 @@ const CartSlider = ({ isOpen, onClose }: CartSliderProps) => {
                         {/* Product Image */}
                         <div className="relative w-20 h-20 flex-shrink-0">
                           <Image
-                            src={item.product.images[0] || "/placeholder.svg"}
-                            alt={item.product.name}
+                            src={item?.product.images[0] || "/placeholder.svg"}
+                            alt={item?.product.name}
                             fill
                             className="object-contain rounded-md"
                           />
@@ -144,8 +146,7 @@ const CartSlider = ({ isOpen, onClose }: CartSliderProps) => {
                         <div className="flex-1 min-w-0">
                           <div className="flex justify-between items-start mb-2">
                             <div>
-                              <h3 className="font-medium text-sm line-clamp-2">{item.product.name}</h3>
-                              <p className="text-xs text-muted-foreground">{item.product.brand.name}</p>
+                              <h3 className="font-medium text-sm line-clamp-2">{item?.product?.name}</h3>
                             </div>
                             <Button
                               variant="ghost"

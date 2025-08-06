@@ -5,10 +5,9 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { X, Heart, Star, Trash2 } from "lucide-react"
+import { X, Heart,Trash2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { toast } from "sonner"
-import { useAppSelector } from "@/redux/hooks/hooks"
 import { useDeleteWishlistMutation, useGetWishlistQuery } from "@/redux/api/wishlist/wishlistApi"
 
 // Define interfaces based on provided data structure

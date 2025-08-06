@@ -64,7 +64,7 @@ const ProductDetailsPage = ({ id }: ProductDetailsPageProps) => {
 
     if (user?.role === "ADMIN") {
       toast.error("You are admin not allowed to add.");
-      return
+      return;
     }
 
     if (!product?.stock || product.stock === 0) {
@@ -93,15 +93,19 @@ const ProductDetailsPage = ({ id }: ProductDetailsPageProps) => {
     }
     if (user?.role === "ADMIN") {
       toast.error("You are admin not allowed to add.");
-      return
+      return;
     }
     const wilshListData = {
       productId: product.id,
     };
 
-    await addToWishlist(wilshListData).unwrap();
-    // Add to wishlist logic here
-    toast.success(`Added ${product?.name} to wishlist`);
+    try {
+      const res = await addToWishlist(wilshListData).unwrap();
+      toast.success(`Added ${product?.name} to wishlist`);
+      return;
+    } catch (error: any) {
+      toast.error(`Duplicate item`)
+    }
   };
 
   const formatPrice = (price: number) => {

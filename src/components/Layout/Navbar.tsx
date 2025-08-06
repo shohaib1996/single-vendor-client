@@ -47,6 +47,7 @@ export function Navbar() {
   const { data: cartData } = useGetCartQuery({});
   const { data: wishlist } = useGetWishlistQuery({});
 
+
   // Redux state
   const { user, token } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
@@ -122,7 +123,7 @@ export function Navbar() {
                   E
                 </span>
               </div>
-              <span className="font-bold text-lg sm:text-xl bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              <span className={`font-bold text-lg sm:text-xl ${isScrolled ? "bg-gradient-to-r from-white to-accent" : "bg-gradient-to-r from-primary to-accent"} bg-clip-text text-transparent`}>
                 EcoShop
               </span>
             </Link>
@@ -178,7 +179,7 @@ export function Navbar() {
                   {user?.role === "ADMIN" ? (
                     0
                   ) : (
-                    <span> {wishlist?.data.length}</span>
+                    <span> {!user ? 0 : <span>{wishlist?.data.length}</span>}</span>
                   )}
                 </span>
               </Button>
@@ -195,7 +196,7 @@ export function Navbar() {
                   {user?.role === "ADMIN" ? (
                     0
                   ) : (
-                    <span> {cartData?.data.length}</span>
+                    <span> {!user ? 0 : <span>{cartData?.data[0]?.items.length}</span>}</span>
                   )}
                 </span>
               </Button>
