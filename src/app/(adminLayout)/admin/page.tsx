@@ -443,7 +443,8 @@ const AdminDashboard = () => {
                       type="category"
                       dataKey="name"
                       className="text-xs"
-                      tick={{ fontSize: 10, fill: "hsl(var(--foreground))" }}
+                      angle={-20}
+                      tick={{ fontSize: 10 }}
                       width={110}
                     />
                     <Tooltip
@@ -453,7 +454,7 @@ const AdminDashboard = () => {
                         borderRadius: "8px",
                         color: "hsl(var(--foreground))",
                       }}
-                      formatter={(value, name) => [
+                      formatter={(value) => [
                         value.toLocaleString(),
                         "Quantity Sold",
                       ]}
