@@ -9,7 +9,6 @@ import { Separator } from "@/components/ui/separator"
 import { X, Plus, Minus, ShoppingBag, Trash2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { toast } from "sonner"
-import { useAppSelector } from "@/redux/hooks/hooks"
 import { useDeleteCartItemMutation, useGetCartQuery, useUpdateCartItemMutation } from "@/redux/api/cart/cartApi"
 
 interface CartItem {

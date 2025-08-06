@@ -20,14 +20,7 @@ import { useDebounced } from "@/redux/hooks/hooks";
 import { IWishlistItem } from "@/types/wishlist/wishlist";
 import { PaginationControls } from "@/components/common/PaginationControls";
 import { CopyButton } from "@/components/common/CopyButton";
-import {
-  Heart,
-  Search,
-  Users,
-  Package,
-  DollarSign,
-  AlertTriangle,
-} from "lucide-react";
+import { Heart, Search, Package, DollarSign, AlertTriangle } from 'lucide-react';
 
 const WishlistsPage = () => {
   const [searchTerm, setSearchTerm] = useState("");

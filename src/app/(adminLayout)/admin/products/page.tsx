@@ -42,9 +42,6 @@ import {
   Star,
   AlertCircle,
   Eye,
-  Filter,
-  Download,
-  Upload,
 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -59,6 +56,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import Link from "next/link";
+import Image from "next/image";
 
 const AllProductsPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -320,146 +318,148 @@ const AllProductsPage = () => {
                             <div className="flex items-center gap-3">
                               <div className="h-12 w-12 rounded-lg bg-muted flex items-center justify-center overflow-hidden">
                                 {product.images && product.images.length > 0 ? (
-                                  <img
-                                    src={
-                                      product.images[0] || "/placeholder.svg"
-                                    }
-                                    alt={product.name}
-                                    className="h-full w-full object-cover"
-                                  />
-                                ) : (
-                                  <Package className="h-6 w-6 text-muted-foreground" />
-                                )}
-                              </div>
-                              <div>
-                                <p className="font-medium text-sm">
-                                  {product.name}
-                                </p>
-                                <p className="text-xs text-muted-foreground line-clamp-1">
-                                  {product.description}
-                                </p>
-                              </div>
+                                  <Image
+                                  src={
+                                    product.images[0] || "/placeholder.svg"
+                                  }
+                                  alt={product.name}
+                                  width={48}
+                                  height={48}
+                                  className="h-full w-full object-cover"
+                                />
+                              ) : (
+                                <Package className="h-6 w-6 text-muted-foreground" />
+                              )}
                             </div>
-                          </TableCell>
-                          <TableCell>
-                            <Badge variant="secondary" className="text-xs">
-                              {getCategoryName(product.categoryId || "")}
-                            </Badge>
-                          </TableCell>
-                          <TableCell>
-                            <Badge variant="outline" className="text-xs">
-                              {getBrandName(product.brandId || "")}
-                            </Badge>
-                          </TableCell>
-                          <TableCell>
-                            <div className="flex flex-col">
-                              <span className="font-semibold">
-                                ${product.price.toFixed(2)}
-                              </span>
-                              {product.isDiscountActive &&
-                                product.discountPercentage && (
-                                  <span className="text-xs text-green-600 dark:text-green-400">
-                                    {product.discountPercentage}% off
-                                  </span>
-                                )}
+                            <div>
+                              <p className="font-medium text-sm">
+                                {product.name}
+                              </p>
+                              <p className="text-xs text-muted-foreground line-clamp-1">
+                                {product.description}
+                              </p>
                             </div>
-                          </TableCell>
-                          <TableCell>
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant="secondary" className="text-xs">
+                            {getCategoryName(product.categoryId || "")}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="text-xs">
+                            {getBrandName(product.brandId || "")}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex flex-col">
+                            <span className="font-semibold">
+                              ${product.price.toFixed(2)}
+                            </span>
+                            {product.isDiscountActive &&
+                              product.discountPercentage && (
+                                <span className="text-xs text-green-600 dark:text-green-400">
+                                  {product.discountPercentage}% off
+                                </span>
+                              )}
+                          </div>
+                        </TableCell>
+                        <TableCell>
+                          <Badge
+                            variant={
+                              product.stock > 10
+                                ? "default"
+                                : product.stock > 0
+                                ? "secondary"
+                                : "destructive"
+                            }
+                            className="text-xs"
+                          >
+                            {product.stock > 0
+                              ? `${product.stock} in stock`
+                              : "Out of stock"}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            {product.featured && (
+                              <Badge
+                                variant="default"
+                                className="text-xs gap-1"
+                              >
+                                <Star className="h-3 w-3" />
+                                Featured
+                              </Badge>
+                            )}
                             <Badge
                               variant={
-                                product.stock > 10
-                                  ? "default"
-                                  : product.stock > 0
-                                  ? "secondary"
-                                  : "destructive"
+                                product.stock > 0 ? "default" : "secondary"
                               }
                               className="text-xs"
                             >
-                              {product.stock > 0
-                                ? `${product.stock} in stock`
-                                : "Out of stock"}
+                              {product.stock > 0 ? "Active" : "Inactive"}
                             </Badge>
-                          </TableCell>
-                          <TableCell>
-                            <div className="flex items-center gap-2">
-                              {product.featured && (
-                                <Badge
-                                  variant="default"
-                                  className="text-xs gap-1"
-                                >
-                                  <Star className="h-3 w-3" />
-                                  Featured
-                                </Badge>
-                              )}
-                              <Badge
-                                variant={
-                                  product.stock > 0 ? "default" : "secondary"
-                                }
-                                className="text-xs"
-                              >
-                                {product.stock > 0 ? "Active" : "Inactive"}
-                              </Badge>
-                            </div>
-                          </TableCell>
-                          <TableCell className="text-right">
-                            <div className="flex items-center justify-end gap-2">
-                              <Link href={`/products/${product.id}`}>
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  className="h-8 w-8 p-0"
-                                >
-                                  <Eye className="h-4 w-4" />
-                                </Button>
-                              </Link>
+                          </div>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <div className="flex items-center justify-end gap-2">
+                            <Link href={`/products/${product.id}`}>
                               <Button
                                 variant="ghost"
                                 size="sm"
-                                onClick={() => handleEdit(product.id)}
-                                className="h-8 w-8 p-0 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-950/20"
+                                className="h-8 w-8 p-0"
                               >
-                                <Edit className="h-4 w-4" />
+                                <Eye className="h-4 w-4" />
                               </Button>
-                              <AlertDialog>
-                                <AlertDialogTrigger asChild>
-                                  <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    className="h-8 w-8 p-0 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/20"
+                            </Link>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleEdit(product.id)}
+                              className="h-8 w-8 p-0 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-950/20"
+                            >
+                              <Edit className="h-4 w-4" />
+                            </Button>
+                            <AlertDialog>
+                              <AlertDialogTrigger asChild>
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  className="h-8 w-8 p-0 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/20"
+                                >
+                                  <Trash2 className="h-4 w-4" />
+                                </Button>
+                              </AlertDialogTrigger>
+                              <AlertDialogContent>
+                                <AlertDialogHeader>
+                                  <AlertDialogTitle>
+                                    Delete Product
+                                  </AlertDialogTitle>
+                                  <AlertDialogDescription>
+                                    Are you sure you want to delete &quot;
+                                    {product.name}&quot;? This action cannot be
+                                    undone.
+                                  </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                  <AlertDialogCancel>
+                                    Cancel
+                                  </AlertDialogCancel>
+                                  <AlertDialogAction
+                                    onClick={() => handleDelete(product.id)}
+                                    className="bg-red-600 hover:bg-red-700"
                                   >
-                                    <Trash2 className="h-4 w-4" />
-                                  </Button>
-                                </AlertDialogTrigger>
-                                <AlertDialogContent>
-                                  <AlertDialogHeader>
-                                    <AlertDialogTitle>
-                                      Delete Product
-                                    </AlertDialogTitle>
-                                    <AlertDialogDescription>
-                                      Are you sure you want to delete "
-                                      {product.name}"? This action cannot be
-                                      undone.
-                                    </AlertDialogDescription>
-                                  </AlertDialogHeader>
-                                  <AlertDialogFooter>
-                                    <AlertDialogCancel>
-                                      Cancel
-                                    </AlertDialogCancel>
-                                    <AlertDialogAction
-                                      onClick={() => handleDelete(product.id)}
-                                      className="bg-red-600 hover:bg-red-700"
-                                    >
-                                      Delete
-                                    </AlertDialogAction>
-                                  </AlertDialogFooter>
-                                </AlertDialogContent>
-                              </AlertDialog>
-                            </div>
-                          </TableCell>
-                        </TableRow>
-                      ))
-                    )}
-                  </TableBody>
+                                    Delete
+                                  </AlertDialogAction>
+                                </AlertDialogFooter>
+                              </AlertDialogContent>
+                            </AlertDialog>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  )}
+                </TableBody>
                 </Table>
               </div>
             </CardContent>

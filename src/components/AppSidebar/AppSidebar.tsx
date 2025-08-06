@@ -2,17 +2,9 @@
 
 import { useState, useEffect } from "react";
 import {
-  Calendar,
-  Home,
-  Inbox,
-  Search,
-  Settings,
   Package,
-  MessageSquare,
-  Boxes,
   ChevronDown,
   ChevronRight,
-  Box,
   ListOrdered,
   CreditCard,
   ShoppingBag,
@@ -20,7 +12,6 @@ import {
   Filter,
   LayoutDashboard,
   LogOut,
-  Mail,
   Tags,
   Heart,
   ShoppingCart,
@@ -28,6 +19,7 @@ import {
   HelpCircle,
   Star,
   Wrench,
+  Boxes,
 } from "lucide-react";
 
 import {

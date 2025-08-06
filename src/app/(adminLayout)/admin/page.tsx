@@ -257,7 +257,7 @@ const AdminDashboard = () => {
           variants={itemVariants}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6"
         >
-          {kpiCards.map((kpi, index) => (
+          {kpiCards.map((kpi) => (
             <motion.div
               key={kpi.title}
               variants={itemVariants}

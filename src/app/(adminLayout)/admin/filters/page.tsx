@@ -750,7 +750,7 @@ const FiltersManagement = () => {
                                       <span>Are you absolutely sure?</span>
                                     </AlertDialogTitle>
                                     <AlertDialogDescription>
-                                      This action cannot be undone. This will permanently delete the filter option "{filterOption.name}" and remove its data from our servers.
+                                      This action cannot be undone. This will permanently delete the filter option &quot;{filterOption.name}&quot; and remove its data from our servers.
                                     </AlertDialogDescription>
                                   </AlertDialogHeader>
                                   <AlertDialogFooter>

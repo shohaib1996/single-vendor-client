@@ -27,11 +27,11 @@ import {
 } from "@/components/ui/select";
 import { toast } from "sonner";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { CopyButton } from "@/components/common/CopyButton";
-import { CreditCard, Search, AlertTriangle, CheckCircle, Clock, XCircle, RefreshCw, DollarSign, Users, TrendingUp } from 'lucide-react';
+import { CreditCard, Search, AlertTriangle, CheckCircle, Clock, XCircle, RefreshCw, DollarSign } from 'lucide-react';
 
 const PaymentsPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -101,35 +101,7 @@ const PaymentsPage = () => {
     },
   };
 
-  const getStatusIcon = (status: PaymentStatus) => {
-    switch (status) {
-      case 'COMPLETED':
-        return <CheckCircle className="h-4 w-4" />;
-      case 'PENDING':
-        return <Clock className="h-4 w-4" />;
-      case 'FAILED':
-        return <XCircle className="h-4 w-4" />;
-      case 'REFUND':
-        return <RefreshCw className="h-4 w-4" />;
-      default:
-        return <Clock className="h-4 w-4" />;
-    }
-  };
-
-  const getStatusColor = (status: PaymentStatus) => {
-    switch (status) {
-      case 'COMPLETED':
-        return 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400';
-      case 'PENDING':
-        return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400';
-      case 'FAILED':
-        return 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400';
-      case 'REFUND':
-        return 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400';
-      default:
-        return 'bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400';
-    }
-  };
+  
 
   if (isLoading) {
     return <PaymentsSkeleton />;
