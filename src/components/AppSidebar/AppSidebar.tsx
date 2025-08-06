@@ -1,7 +1,25 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Calendar, Home, Inbox, Search, Settings, Package, MessageSquare, Boxes, ChevronDown, ChevronRight, Box, ListOrdered, Package2Icon, ShoppingBag, User2 } from "lucide-react"
+import { useState } from "react";
+import {
+  Calendar,
+  Home,
+  Inbox,
+  Search,
+  Settings,
+  Package,
+  MessageSquare,
+  Boxes,
+  ChevronDown,
+  ChevronRight,
+  Box,
+  ListOrdered,
+  Package2Icon,
+  ShoppingBag,
+  User2,
+  Filter,
+  LayoutDashboard,
+} from "lucide-react";
 
 import {
   Sidebar,
@@ -14,7 +32,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 
 interface MenuItem {
   title: string;
@@ -25,6 +43,11 @@ interface MenuItem {
 
 // Menu items.
 const items: MenuItem[] = [
+  {
+    title: "Admin Dashboard",
+    icon: LayoutDashboard,
+    url: "/admin",
+  },
   {
     title: "Product Management",
     icon: Home,
@@ -58,14 +81,25 @@ const items: MenuItem[] = [
       {
         title: "Category",
         url: "/admin/category-brand/category",
-        icon: Box
+        icon: Box,
       },
       {
         title: "Brand",
         url: "/admin/category-brand/brand",
-        icon: Box
-      }
-    ]
+        icon: Box,
+      },
+    ],
+  },
+  {
+    title: "Filter Options",
+    icon: Settings,
+    children: [
+      {
+        title: "All Filter",
+        icon: Filter,
+        url: "/admin/filters",
+      },
+    ],
   },
   {
     title: "Order&Payment",
@@ -74,14 +108,14 @@ const items: MenuItem[] = [
       {
         title: "All Orders",
         icon: ListOrdered,
-        url: "/admin/order-payment/orders"
+        url: "/admin/order-payment/orders",
       },
       {
         title: "All Payments",
         icon: Package2Icon,
-        url: "/admin/order-payment/payments"
-      }
-    ]
+        url: "/admin/order-payment/payments",
+      },
+    ],
   },
   {
     title: "Cart&Wishlist",
@@ -90,53 +124,48 @@ const items: MenuItem[] = [
       {
         title: "Cart Items",
         icon: ShoppingBag,
-        url: "/admin/cart-wishlist/cart-items"
+        url: "/admin/cart-wishlist/cart-items",
       },
       {
         title: "All Wishlist",
         icon: ShoppingBag,
-        url: "/admin/cart-wishlist/wishlists"
-      }
-    ]
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
+        url: "/admin/cart-wishlist/wishlists",
+      },
+    ],
   },
   {
     title: "User Management",
     icon: Settings,
-    children: [{
-      title: "All Users",
-      icon: User2,
-      url: "/admin/users"
-    }]
+    children: [
+      {
+        title: "All Users",
+        icon: User2,
+        url: "/admin/users",
+      },
+    ],
   },
-]
+];
 
 export function AppSidebar() {
   // State to track open/closed status for each menu with children
   const [openMenus, setOpenMenus] = useState<{ [key: string]: boolean }>({
-    "Product Management": false, 
+    "Product Management": false,
     "Categoy&Brand": false,
     "Order&Payment": false,
     "Cart&Wishlist": false,
-    "User Management": false
-  })
+    "User Management": false,
+  });
 
   const toggleMenu = (title: string) => {
     setOpenMenus((prev) => ({
       ...prev,
-      [title]: !prev[title]
-    }))
-  }
+      [title]: !prev[title],
+    }));
+  };
 
   return (
     <Sidebar>
-      <SidebarHeader>
-        hello
-      </SidebarHeader>
+      <SidebarHeader>hello</SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Application</SidebarGroupLabel>
@@ -163,7 +192,10 @@ export function AppSidebar() {
                           {item.children.map((child) => (
                             <SidebarMenuItem key={child.title}>
                               <SidebarMenuButton asChild>
-                                <a href={child.url} className="flex items-center">
+                                <a
+                                  href={child.url}
+                                  className="flex items-center"
+                                >
                                   <child.icon className="mr-2 h-4 w-4" />
                                   <span>{child.title}</span>
                                 </a>
@@ -193,5 +225,5 @@ export function AppSidebar() {
       </SidebarContent>
       <SidebarFooter />
     </Sidebar>
-  )
+  );
 }

@@ -29,3 +29,13 @@ export interface ISubCategory {
   };
 }
 
+export interface IFilterOption {
+  id: string;
+  categoryId: string;
+  name: string;
+  type: 'DROPDOWN' | 'RANGE' | 'TEXT';
+  options: string[] | null;
+  unit: string | null;
+  category: ICategory;
+}
+

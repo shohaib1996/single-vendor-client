@@ -13,6 +13,7 @@ export enum tagTypes {
     REVIEW = 'review',
     UPLOADER = 'uploader',
     WISHLIST = 'wishlist',
+    DASHBOARD_ANALYTICS = 'dashboardAnalytics',
 }
 
 export const tagTypesList = [
@@ -30,4 +31,5 @@ export const tagTypesList = [
     tagTypes.REVIEW,
     tagTypes.UPLOADER,
     tagTypes.WISHLIST,
+    tagTypes.DASHBOARD_ANALYTICS,
 ];

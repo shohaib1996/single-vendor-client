@@ -102,39 +102,38 @@ const SpecificationPage = () => {
     setSpecList(updatedSpecList);
   };
 
-  const handleFormSubmit = async () => {
-    // Validate all fields
-    const isValid = specList.every(
-      (spec) => spec.productId.trim() && spec.key.trim() && spec.value.trim()
-    );
-    if (!isValid) {
-      toast.error("All fields are required for each specification.");
-      return;
-    }
+const handleFormSubmit = async () => {
+  // Validate all fields
+  const isValid = specList.every(
+    (spec) => spec.productId.trim() && spec.key.trim() && spec.value.trim()
+  );
+  if (!isValid) {
+    toast.error("All fields are required for each specification.");
+    return;
+  }
 
-    try {
-      if (editingSpecification) {
-        // For editing, only handle the first specification
-        await updateSpecification({
-          id: editingSpecification.id,
-          data: specList[0],
-        }).unwrap();
-        toast.success("Specification updated successfully!");
-      } else {
-        // For creation, send array if multiple specs, single object if one
-        const dataToSend = specList.length > 1 ? specList : specList[0];
-        await createSpecification(dataToSend).unwrap();
-        toast.success(
-          `Specification${specList.length > 1 ? "s" : ""} added successfully!`
-        );
-      }
-      setIsFormDialogOpen(false);
-      refetch();
-    } catch (error: any) {
-      toast.error(error?.data?.message || "Failed to save specification(s).");
-      console.error("Specification save error:", error);
+  try {
+    if (editingSpecification) {
+      // For editing, only handle the first specification
+      await updateSpecification({
+        id: editingSpecification.id,
+        data: specList[0], // Update still uses single object
+      }).unwrap();
+      toast.success("Specification updated successfully!");
+    } else {
+      // For creation, always send array of specifications
+      await createSpecification(specList).unwrap();
+      toast.success(
+        `Specification${specList.length > 1 ? "s" : ""} added successfully!`
+      );
     }
-  };
+    setIsFormDialogOpen(false);
+    refetch();
+  } catch (error: any) {
+    toast.error(error?.data?.message || "Failed to save specification(s).");
+    console.error("Specification save error:", error);
+  }
+};
 
   const handleDeleteConfirm = async () => {
     if (!itemToDelete) return;
