@@ -37,6 +37,7 @@ import WishlistSlider from "./WishlistSlider";
 import { useGetWishlistQuery } from "@/redux/api/wishlist/wishlistApi";
 import { useGetCartQuery } from "@/redux/api/cart/cartApi";
 import { useGetAllProductsQuery } from "@/redux/api/product/productApi";
+import { useGetUserProfileQuery } from "@/redux/api/user/userApi";
 import { IProduct } from "@/types";
 
 
@@ -64,6 +65,13 @@ export function Navbar() {
   // Redux state
   const { user, token } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
+  const { data: userData, refetch } = useGetUserProfileQuery({});
+
+  useEffect(() => {
+    if (user) {
+      refetch();
+    }
+  }, [user, refetch]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -271,7 +279,7 @@ export function Navbar() {
                     >
                       <Avatar className="h-8 w-8">
                         <AvatarImage
-                          src={user.avatarUrl || "/placeholder.svg"}
+                          src={userData?.data?.avatarUrl || "/placeholder.svg"}
                           alt={user?.name}
                         />
                         <AvatarFallback className="bg-gradient-to-br from-primary to-accent text-primary-foreground text-xs font-semibold">
