@@ -1,7 +1,4 @@
-export interface DashboardAnalytics {
-  success: boolean;
-  message: string;
-  data: {
+export interface IDashboardAnalytics {
     totalRevenue: number;
     totalOrders: number;
     totalCustomers: number;
@@ -31,11 +28,12 @@ export interface DashboardAnalytics {
     }[];
 
     topCategoriesBySales: {
-      _sum: { price: number };
-      productId: string;
-      product: {
+      totalSales:  number 
+      categoryId: string;
+      category: {
         id: string;
         name: string;
+        slug: string
       };
     }[];
 
@@ -48,5 +46,4 @@ export interface DashboardAnalytics {
       _count: { method: number };
       method: string | null;
     }[];
-  };
 }

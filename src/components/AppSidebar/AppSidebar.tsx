@@ -209,7 +209,7 @@ export function AppSidebar() {
                 } else {
                   return (
                     <SidebarMenuItem key={item.title}>
-                      <SidebarMenuButton asChild>
+                      <SidebarMenuButton asChild className="p-0 text-sidebar-foreground/70 font-semibold px-1">
                         <a href={item.url} className="flex items-center">
                           <item.icon className="mr-2 h-4 w-4" />
                           <span>{item.title}</span>
