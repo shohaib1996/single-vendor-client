@@ -318,8 +318,8 @@ const ReviewsPage = () => {
 
         {/* Search and Controls */}
         <motion.div variants={itemVariants}>
-          <Card className="shadow-lg border-0">
-            <CardContent className="p-6">
+          <Card className="shadow-lg border-0 py-0">
+            <CardContent className="p-4">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div className="relative flex-1 max-w-md">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
@@ -690,7 +690,7 @@ const ReviewsSkeleton = () => {
                 <div className="flex items-center justify-between">
                   <div className="space-y-2 flex-1">
                     <Skeleton className="h-4 w-24" />
-                    <Skeleton className="h-8 w-20" />
+                    <Skeleton className="h-8 w-20" />  
                   </div>
                   <Skeleton className="h-12 w-12 rounded-full" />
                 </div>

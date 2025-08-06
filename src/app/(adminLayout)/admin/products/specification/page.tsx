@@ -53,15 +53,6 @@ const SpecificationPage = () => {
     query.productId = searchTerm;
   }
 
-  // currentPage={page}
-  //                 totalPages={Math.ceil(
-  //                   (meta?.total || 0) / (meta?.limit || 1)
-  //                 )}
-  //                 totalItems={meta?.total || 0}
-  //                 itemsPerPage={limit}
-  //                 onPageChange={handlePageChange}
-  //                 onLimitChange={handleLimitChange}
-  //                 limitOptions={[5, 10, 20, 50]}
 
   const { data, isLoading, isError, refetch } =
     useGetProductSpecificationsQuery(query);
