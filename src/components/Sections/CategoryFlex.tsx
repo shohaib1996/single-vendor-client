@@ -11,8 +11,14 @@ const CategoryFlex = () => {
 
   if (isLoading) {
     return (
-      <div className="flex container mx-auto items-center justify-center py-4 bg-background">
-        <span className="text-muted-foreground">Loading categories...</span>
+      <div className="container mx-auto py-4 bg-background">
+        <nav className="flex flex-wrap items-center justify-center">
+          {Array.from({ length: 8 }).map((_, index) => (
+            <div key={index} className="px-3 py-2 rounded-md animate-pulse">
+              <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-20"></div>
+            </div>
+          ))}
+        </nav>
       </div>
     );
   }
