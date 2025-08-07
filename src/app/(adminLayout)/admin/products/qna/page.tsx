@@ -146,12 +146,12 @@ const QnAPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 p-4 md:p-6">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
       <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="container mx-auto space-y-6"
+        className="max-w-[1200px] 3xl:container  mx-auto space-y-6"
       >
         {/* Header */}
         <motion.div variants={itemVariants} className="text-center space-y-4">
@@ -294,7 +294,7 @@ const QnAPage = () => {
                             {q.answer ? (
                               <div className="space-y-2">
                                 <p
-                                  className="truncate cursor-pointer text-sm bg-muted/50 p-2 rounded hover:bg-muted transition-colors"
+                                  className="truncate max-w-[150px] cursor-pointer text-sm bg-muted/50 p-2 rounded hover:bg-muted transition-colors"
                                   onClick={() => {
                                     setFullAnswerContent(q.answer!.answer);
                                     setShowFullAnswerDialog(true);

@@ -198,7 +198,7 @@ const handleFormSubmit = async () => {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="container mx-auto space-y-6"
+        className="max-w-[1200px] 3xl:container  mx-auto space-y-6"
       >
         {/* Header */}
         <motion.div variants={itemVariants} className="text-center space-y-4">
@@ -339,7 +339,7 @@ const handleFormSubmit = async () => {
                             </span>
                           </TableCell>
                           <TableCell>
-                            <span className="text-muted-foreground">
+                            <span className="text-muted-foreground truncate max-w-[150px]">
                               {spec.value}
                             </span>
                           </TableCell>

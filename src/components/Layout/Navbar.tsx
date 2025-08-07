@@ -63,6 +63,8 @@ export function Navbar({
   const [isFocused, setIsFocused] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
 
+  console.log(cartData?.data[0])
+
   const debouncedTerm = useDebounced({
     searchQuery: searchQuery,
     delay: 500,
@@ -345,7 +347,7 @@ export function Navbar({
                       {!user ? (
                         0
                       ) : (
-                        <span>{cartData?.data[0]?.items.length}</span>
+                        <span>{cartData?.data[0]?.items?.length}</span>
                       )}
                     </span>
                   )}

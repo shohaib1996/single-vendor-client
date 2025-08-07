@@ -41,6 +41,7 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --breakpoint-3xl: 120rem;
 }
 
 :root {
@@ -180,7 +181,10 @@ html {
 }
 
 .bg-grid-pattern {
-  background-image: linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.1) 1px,
+      transparent 1px
+    ),
     linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
   background-size: 20px 20px;
   animation: grid-pattern 20s linear infinite;

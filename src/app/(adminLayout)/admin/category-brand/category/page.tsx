@@ -380,7 +380,7 @@ const CategoryPage = () => {
                           <TableCell className="font-medium">
                             <div className="flex items-center space-x-2">
                               <span className="font-mono text-sm bg-muted px-2 py-1 rounded">
-                                {category.id}
+                                {category.id.slice(0, 15)}...
                               </span>
                               <CopyButton text={category.id} />
                             </div>
@@ -408,7 +408,7 @@ const CategoryPage = () => {
                           </TableCell>
                           <TableCell className="max-w-xs">
                             <p
-                              className="truncate"
+                              className="truncate max-w-[130px]"
                               title={category.description ?? undefined}
                             >
                               {category.description}

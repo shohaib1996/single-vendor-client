@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -33,16 +32,7 @@ import { IProduct, ICategory, IBrand } from "@/types";
 import { useGetAllCategoriesQuery } from "@/redux/api/category/categoryApi";
 import { useGetAllBrandsQuery } from "@/redux/api/brand/brandApi";
 import { PaginationControls } from "@/components/common/PaginationControls";
-import {
-  Search,
-  Plus,
-  Edit,
-  Trash2,
-  Package,
-  Star,
-  AlertCircle,
-  Eye,
-} from "lucide-react";
+import { Search, Plus, Edit, Trash2, Package, Star, AlertCircle, Eye, Sparkles } from 'lucide-react';
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   AlertDialog,
@@ -82,7 +72,6 @@ const AllProductsPage = () => {
 
   const products = data?.data || [];
   const meta = data?.meta;
-
   const categories: ICategory[] = categoriesData?.data || [];
   const brands: IBrand[] = brandsData?.data || [];
 
@@ -207,7 +196,7 @@ const AllProductsPage = () => {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="container mx-auto space-y-6 "
+        className="max-w-[1200px] 3xl:container  mx-auto space-y-6"
       >
         {/* Header */}
         <motion.div variants={itemVariants}>
@@ -234,17 +223,34 @@ const AllProductsPage = () => {
                         Add Product
                       </Button>
                     </DialogTrigger>
-                    <DialogContent className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto">
-                      <DialogHeader>
-                        <DialogTitle className="text-xl font-semibold flex items-center gap-2">
-                          <Plus className="h-5 w-5" />
-                          Add New Product
-                        </DialogTitle>
-                      </DialogHeader>
-                      <ProductForm
-                        onSubmit={handleAddProduct}
-                        onCancel={() => setIsAddProductDialogOpen(false)}
-                      />
+                    <DialogContent className="sm:max-w-[800px] max-h-[95vh] overflow-hidden border-0 shadow-2xl">
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.2 }}
+                        className="relative"
+                      >
+                        <DialogHeader className="pb-6 border-b border-border/50">
+                          <DialogTitle className="text-2xl font-bold flex items-center gap-3 text-foreground">
+                            <div className="p-2 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10 border border-primary/20">
+                              <Plus className="h-6 w-6 text-primary" />
+                            </div>
+                            <div className="flex flex-col">
+                              <span>Add New Product</span>
+                              <span className="text-sm font-normal text-muted-foreground flex items-center gap-1">
+                                <Sparkles className="h-3 w-3" />
+                                Create something amazing
+                              </span>
+                            </div>
+                          </DialogTitle>
+                        </DialogHeader>
+                        <div className="mt-6 max-h-[calc(95vh-120px)] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent">
+                          <ProductForm
+                            onSubmit={handleAddProduct}
+                            onCancel={() => setIsAddProductDialogOpen(false)}
+                          />
+                        </div>
+                      </motion.div>
                     </DialogContent>
                   </Dialog>
                 </div>
@@ -273,7 +279,7 @@ const AllProductsPage = () => {
         </motion.div>
 
         {/* Products Table */}
-        <motion.div variants={itemVariants}>
+        <motion.div variants={itemVariants} className="">
           <Card className="shadow-lg py-0">
             <CardContent className="p-0">
               <div className="overflow-x-auto">
@@ -319,147 +325,147 @@ const AllProductsPage = () => {
                               <div className="h-12 w-12 rounded-lg bg-muted flex items-center justify-center overflow-hidden">
                                 {product.images && product.images.length > 0 ? (
                                   <Image
-                                  src={
-                                    product.images[0] || "/placeholder.svg"
-                                  }
-                                  alt={product.name}
-                                  width={48}
-                                  height={48}
-                                  className="h-full w-full object-cover"
-                                />
-                              ) : (
-                                <Package className="h-6 w-6 text-muted-foreground" />
-                              )}
+                                    src={
+                                      product.images[0] || "/placeholder.svg"
+                                    }
+                                    alt={product.name}
+                                    width={48}
+                                    height={48}
+                                    className="h-full w-full object-cover"
+                                  />
+                                ) : (
+                                  <Package className="h-6 w-6 text-muted-foreground" />
+                                )}
+                              </div>
+                              <div>
+                                <p className="font-medium text-sm">
+                                  {product.name}
+                                </p>
+                                <p className="text-xs text-muted-foreground truncate max-w-[150px]">
+                                  {product.description}
+                                </p>
+                              </div>
                             </div>
-                            <div>
-                              <p className="font-medium text-sm">
-                                {product.name}
-                              </p>
-                              <p className="text-xs text-muted-foreground line-clamp-1">
-                                {product.description}
-                              </p>
+                          </TableCell>
+                          <TableCell>
+                            <Badge variant="secondary" className="text-xs">
+                              {getCategoryName(product.categoryId || "")}
+                            </Badge>
+                          </TableCell>
+                          <TableCell>
+                            <Badge variant="outline" className="text-xs">
+                              {getBrandName(product.brandId || "")}
+                            </Badge>
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex flex-col">
+                              <span className="font-semibold">
+                                ${product.price.toFixed(2)}
+                              </span>
+                              {product.isDiscountActive &&
+                                product.discountPercentage && (
+                                  <span className="text-xs text-green-600 dark:text-green-400">
+                                    {product.discountPercentage}% off
+                                  </span>
+                                )}
                             </div>
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <Badge variant="secondary" className="text-xs">
-                            {getCategoryName(product.categoryId || "")}
-                          </Badge>
-                        </TableCell>
-                        <TableCell>
-                          <Badge variant="outline" className="text-xs">
-                            {getBrandName(product.brandId || "")}
-                          </Badge>
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex flex-col">
-                            <span className="font-semibold">
-                              ${product.price.toFixed(2)}
-                            </span>
-                            {product.isDiscountActive &&
-                              product.discountPercentage && (
-                                <span className="text-xs text-green-600 dark:text-green-400">
-                                  {product.discountPercentage}% off
-                                </span>
-                              )}
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <Badge
-                            variant={
-                              product.stock > 10
-                                ? "default"
-                                : product.stock > 0
-                                ? "secondary"
-                                : "destructive"
-                            }
-                            className="text-xs"
-                          >
-                            {product.stock > 0
-                              ? `${product.stock} in stock`
-                              : "Out of stock"}
-                          </Badge>
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex items-center gap-2">
-                            {product.featured && (
-                              <Badge
-                                variant="default"
-                                className="text-xs gap-1"
-                              >
-                                <Star className="h-3 w-3" />
-                                Featured
-                              </Badge>
-                            )}
+                          </TableCell>
+                          <TableCell>
                             <Badge
                               variant={
-                                product.stock > 0 ? "default" : "secondary"
+                                product.stock > 10
+                                  ? "default"
+                                  : product.stock > 0
+                                  ? "secondary"
+                                  : "destructive"
                               }
                               className="text-xs"
                             >
-                              {product.stock > 0 ? "Active" : "Inactive"}
+                              {product.stock > 0
+                                ? `${product.stock} in stock`
+                                : "Out of stock"}
                             </Badge>
-                          </div>
-                        </TableCell>
-                        <TableCell className="text-right">
-                          <div className="flex items-center justify-end gap-2">
-                            <Link href={`/products/${product.id}`}>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                className="h-8 w-8 p-0"
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex items-center gap-2">
+                              {product.featured && (
+                                <Badge
+                                  variant="default"
+                                  className="text-xs gap-1"
+                                >
+                                  <Star className="h-3 w-3" />
+                                  Featured
+                                </Badge>
+                              )}
+                              <Badge
+                                variant={
+                                  product.stock > 0 ? "default" : "secondary"
+                                }
+                                className="text-xs"
                               >
-                                <Eye className="h-4 w-4" />
-                              </Button>
-                            </Link>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => handleEdit(product.id)}
-                              className="h-8 w-8 p-0 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-950/20"
-                            >
-                              <Edit className="h-4 w-4" />
-                            </Button>
-                            <AlertDialog>
-                              <AlertDialogTrigger asChild>
+                                {product.stock > 0 ? "Active" : "Inactive"}
+                              </Badge>
+                            </div>
+                          </TableCell>
+                          <TableCell className="text-right">
+                            <div className="flex items-center justify-end gap-2">
+                              <Link href={`/products/${product.id}`}>
                                 <Button
                                   variant="ghost"
                                   size="sm"
-                                  className="h-8 w-8 p-0 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/20"
+                                  className="h-8 w-8 p-0"
                                 >
-                                  <Trash2 className="h-4 w-4" />
+                                  <Eye className="h-4 w-4" />
                                 </Button>
-                              </AlertDialogTrigger>
-                              <AlertDialogContent>
-                                <AlertDialogHeader>
-                                  <AlertDialogTitle>
-                                    Delete Product
-                                  </AlertDialogTitle>
-                                  <AlertDialogDescription>
-                                    Are you sure you want to delete &quot;
-                                    {product.name}&quot;? This action cannot be
-                                    undone.
-                                  </AlertDialogDescription>
-                                </AlertDialogHeader>
-                                <AlertDialogFooter>
-                                  <AlertDialogCancel>
-                                    Cancel
-                                  </AlertDialogCancel>
-                                  <AlertDialogAction
-                                    onClick={() => handleDelete(product.id)}
-                                    className="bg-red-600 hover:bg-red-700"
+                              </Link>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => handleEdit(product.id)}
+                                className="h-8 w-8 p-0 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-950/20"
+                              >
+                                <Edit className="h-4 w-4" />
+                              </Button>
+                              <AlertDialog>
+                                <AlertDialogTrigger asChild>
+                                  <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    className="h-8 w-8 p-0 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/20"
                                   >
-                                    Delete
-                                  </AlertDialogAction>
-                                </AlertDialogFooter>
-                              </AlertDialogContent>
-                            </AlertDialog>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    ))
-                  )}
-                </TableBody>
+                                    <Trash2 className="h-4 w-4" />
+                                  </Button>
+                                </AlertDialogTrigger>
+                                <AlertDialogContent>
+                                  <AlertDialogHeader>
+                                    <AlertDialogTitle>
+                                      Delete Product
+                                    </AlertDialogTitle>
+                                    <AlertDialogDescription>
+                                      Are you sure you want to delete &quot;
+                                      {product.name}&quot;? This action cannot
+                                      be undone.
+                                    </AlertDialogDescription>
+                                  </AlertDialogHeader>
+                                  <AlertDialogFooter>
+                                    <AlertDialogCancel>
+                                      Cancel
+                                    </AlertDialogCancel>
+                                    <AlertDialogAction
+                                      onClick={() => handleDelete(product.id)}
+                                      className="bg-red-600 hover:bg-red-700"
+                                    >
+                                      Delete
+                                    </AlertDialogAction>
+                                  </AlertDialogFooter>
+                                </AlertDialogContent>
+                              </AlertDialog>
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    )}
+                  </TableBody>
                 </Table>
               </div>
             </CardContent>
@@ -493,18 +499,35 @@ const AllProductsPage = () => {
             open={isEditProductDialogOpen}
             onOpenChange={setIsEditProductDialogOpen}
           >
-            <DialogContent className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto">
-              <DialogHeader>
-                <DialogTitle className="text-xl font-semibold flex items-center gap-2">
-                  <Edit className="h-5 w-5" />
-                  Edit Product
-                </DialogTitle>
-              </DialogHeader>
-              <ProductForm
-                initialData={editingProduct}
-                onSubmit={handleUpdateProduct}
-                onCancel={() => setIsEditProductDialogOpen(false)}
-              />
+            <DialogContent className="sm:max-w-[800px] max-h-[95vh] overflow-hidden border-0 shadow-2xl">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.2 }}
+                className="relative"
+              >
+                <DialogHeader className="pb-6 border-b border-border/50">
+                  <DialogTitle className="text-2xl font-bold flex items-center gap-3 text-foreground">
+                    <div className="p-2 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-blue-500/20">
+                      <Edit className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span>Edit Product</span>
+                      <span className="text-sm font-normal text-muted-foreground flex items-center gap-1">
+                        <Sparkles className="h-3 w-3" />
+                        Update {editingProduct.name}
+                      </span>
+                    </div>
+                  </DialogTitle>
+                </DialogHeader>
+                <div className="mt-6 max-h-[calc(95vh-120px)] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent">
+                  <ProductForm
+                    initialData={editingProduct}
+                    onSubmit={handleUpdateProduct}
+                    onCancel={() => setIsEditProductDialogOpen(false)}
+                  />
+                </div>
+              </motion.div>
             </DialogContent>
           </Dialog>
         )}
