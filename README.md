@@ -1,36 +1,102 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# 🛍️ EcoShop – Single Vendor E-commerce Platform
 
-First, run the development server:
+**EcoShop** is a modern, full-featured e-commerce platform built with a single vendor in mind. It includes product browsing, cart and wishlist features, order tracking, Stripe-powered checkout, and a dynamic admin dashboard for seamless store management.
+
+Built with performance and scalability in mind using **Next.js**, **TypeScript**, **Redux**, **ShadCN UI**, and **Framer Motion**, EcoShop delivers a responsive, intuitive shopping experience.
+
+---
+
+## 🚀 Live Demo
+
+🔗 [Live Site](https://eco-shop-nine.vercel.app)  
+🔗 [Backend Repo](https://github.com/shohaib1996/single-vendor-backend)
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend**: Next.js, TypeScript, Redux, Framer Motion, Shadcn UI
+- **Authentication**: JWT
+- **Payment Gateway**: Stripe
+- **Email Notifications**: EmailJS
+- **Deployment**: Vercel (Frontend), Render (Backend)
+
+---
+
+## 🌟 Features
+
+1. **Product Browsing & Filtering**  
+   Users can explore and search products with responsive UI and category filters.
+
+2. **Cart & Wishlist Management**  
+   Add, remove, and update items in cart and wishlist, with real-time state using Redux.
+
+3. **Secure Authentication & Authorization**  
+   JWT-based login/signup flow with protected routes for admin and users.
+
+4. **Stripe Checkout Integration**  
+   Seamless and secure payment handling using Stripe.
+
+5. **Admin Dashboard**  
+   Manage products, orders, categories, and users with role-based access.
+
+---
+
+## 📁 .env Configuration
+
+Create a `.env.local` file in the root of your frontend project with the following:
+
+```env
+NEXT_PUBLIC_API_URL=https://single-vendor-backend-zz7x.onrender.com/api/v1
+NEXT_PUBLIC_EMAILJS_SERVICE_ID=
+NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=
+NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=
+````
+
+> ⚠️ Never expose private keys or sensitive data in public repositories.
+
+---
+
+## 📸 UI Preview
+
+> *(You can add screenshots or a short GIF demo here to visually showcase EcoShop)*
+
+---
+
+## 📦 Installation
 
 ```bash
+# Clone the repo
+git clone https://github.com/your-username/ecoshop-frontend.git
+
+# Install dependencies
+npm install
+
+# Run locally
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🙌 Contributions
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Feel free to fork this repo, suggest improvements, or create pull requests. All contributions are welcome!
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 📄 License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+MIT License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 👤 Author
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Shohaib Hossain**
+🌐 [Portfolio](https://shohaib-hossain.netlify.app/)
+📧 Available upon request
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+
