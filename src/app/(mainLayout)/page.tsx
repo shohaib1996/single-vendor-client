@@ -2,6 +2,7 @@
 
 import { AboutSection } from "@/components/Sections/AboutSection"
 import CategoriesSection from "@/components/Sections/CategoriesSection"
+import CategoryFlex from "@/components/Sections/CategoryFlex"
 import { ContactSection } from "@/components/Sections/ContactSection"
 import { FeaturedProducts } from "@/components/Sections/FeaturedProduct"
 import { HeroSection } from "@/components/Sections/HeroSection"
@@ -15,6 +16,7 @@ import { TestimonialsSection } from "@/components/Sections/TestimonialSection"
 export default function HomePage() {
   return (
     <div className="overflow-hidden">
+      <CategoryFlex/>
       <HeroSection />
       <CategoriesSection />
       <FeaturedProducts />

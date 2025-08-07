@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
 import { useUserLoginMutation } from "@/redux/api/user/userApi"
 import { useRouter } from "next/navigation"
@@ -22,7 +21,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { Eye, EyeOff, Mail, Lock, ArrowRight, Home } from 'lucide-react'
+import { Eye, EyeOff, Mail, Lock, ArrowRight, Home, User, Shield } from 'lucide-react'
 import loginAnimation from "@/assets/lottie/Login.json"
 import dynamic from "next/dynamic"
 import { ModeToggle } from "@/components/ModeToggle/ModeToggle"
@@ -74,6 +73,17 @@ export default function SignInPage() {
     } catch (error: any) {
       toast.error(error.data?.message || "An unexpected error occurred.")
     }
+  }
+
+  const handleQuickLogin = (type: 'user' | 'admin') => {
+    const credentials = {
+      user: { email: "user@user.com", password: "securePassword" },
+      admin: { email: "admin@admin.com", password: "securePassword" }
+    }
+    
+    form.setValue("email", credentials[type].email)
+    form.setValue("password", credentials[type].password)
+    toast.success(`${type === 'admin' ? 'Admin' : 'User'} credentials filled!`)
   }
 
   return (
@@ -233,6 +243,40 @@ export default function SignInPage() {
                       </div>
                     )}
                   </Button>
+
+                  {/* Quick Login Buttons */}
+                  <div className="space-y-3">
+                    <div className="relative">
+                      <div className="absolute inset-0 flex items-center">
+                        <span className="w-full border-t border-muted" />
+                      </div>
+                      <div className="relative flex justify-center text-xs uppercase">
+                        <span className="bg-card px-2 text-muted-foreground">Quick Login</span>
+                      </div>
+                    </div>
+                    
+                    <div className="grid grid-cols-2 gap-3">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="h-10 text-xs hover:bg-blue-50 hover:border-blue-200 dark:hover:bg-blue-950/20 dark:hover:border-blue-800"
+                        onClick={() => handleQuickLogin('user')}
+                      >
+                        <User className="h-3 w-3 mr-1" />
+                        User Login
+                      </Button>
+                      
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="h-10 text-xs hover:bg-orange-50 hover:border-orange-200 dark:hover:bg-orange-950/20 dark:hover:border-orange-800"
+                        onClick={() => handleQuickLogin('admin')}
+                      >
+                        <Shield className="h-3 w-3 mr-1" />
+                        Admin Login
+                      </Button>
+                    </div>
+                  </div>
                 </form>
               </Form>
 

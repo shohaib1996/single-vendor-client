@@ -1,3 +1,4 @@
+import { IBrand } from "../brand/brand";
 
 
 
@@ -10,6 +11,7 @@ export interface ICategory {
   parentId: string | null;
   children: ICategory[];
   parent: ICategory | null;
+  brands: IBrand[]
 }
 export interface ISubCategory {
   id: string;

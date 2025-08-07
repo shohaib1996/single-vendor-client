@@ -286,7 +286,7 @@ const CategoryPage = () => {
                   <p className="text-sm font-medium text-muted-foreground">
                     Items Per Page
                   </p>
-                  <p className="text-2xl font-bold text-foreground">{limit}</p>
+                  <p className="text-2xl font-bold text-foreground">{categories?.length}</p>
                 </div>
                 <div className="p-3 rounded-full bg-purple-50 dark:bg-purple-950/20">
                   <Hash className="h-6 w-6 text-purple-600 dark:text-purple-400" />
@@ -300,8 +300,8 @@ const CategoryPage = () => {
         <motion.div variants={itemVariants}>
           <Card className="shadow-lg py-0">
             <CardContent className="p-4">
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                <div className="relative flex-1 max-w-md">
+              <div className="flex flex-col sm:flex-row justify-between items-center sm:items-center gap-4">
+                {/* <div className="relative flex-1 max-w-md">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                   <Input
                     placeholder="Search categories..."
@@ -309,10 +309,10 @@ const CategoryPage = () => {
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="pl-10"
                   />
-                </div>
+                </div> */}
                 <Button
                   onClick={handleAddClick}
-                  className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-300"
+                  className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 transition-all duration-300 "
                 >
                   <Plus className="h-4 w-4 mr-2" />
                   Add Category
