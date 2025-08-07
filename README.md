@@ -58,12 +58,6 @@ NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=
 
 ---
 
-## 📸 UI Preview
-
-> *(You can add screenshots or a short GIF demo here to visually showcase EcoShop)*
-
----
-
 ## 📦 Installation
 
 ```bash
