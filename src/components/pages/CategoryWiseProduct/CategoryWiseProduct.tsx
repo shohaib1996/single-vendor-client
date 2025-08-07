@@ -1,88 +1,114 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { useGetAllProductsQuery } from "@/redux/api/product/productApi"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Filter, Grid, List } from 'lucide-react'
-import ProductGrid from "./ProductGrid"
-import FilterSidebar from "./FilterSidebar"
-import FilterSlider from "./FilterSlider"
-import CategoryBreadcrumb from "./CategoryBreadcrumb"
+import { useState } from "react";
+import { useGetAllProductsQuery } from "@/redux/api/product/productApi";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Filter, Grid, List } from "lucide-react";
+import ProductGrid from "./ProductGrid";
+import FilterSidebar from "./FilterSidebar";
+import FilterSlider from "./FilterSlider";
+import CategoryBreadcrumb from "./CategoryBreadcrumb";
+import { PaginationControls } from "@/components/common/PaginationControls";
 
 interface CategoryWiseProductProps {
-  slug: string
+  slug: string;
 }
 
 export interface FilterState {
-  [key: string]: string[] | { min?: number; max?: number }
+  [key: string]: string[] | { min?: number; max?: number };
 }
 
 const CategoryWiseProduct = ({ slug }: CategoryWiseProductProps) => {
   // Extract category slug and ID from the slug parameter
-  const [categorySlug, categoryId] = slug.split("~")
+  const [categorySlug, categoryId] = slug.split("~");
+
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
 
   // State management
-  const [filters, setFilters] = useState<FilterState>({})
-  const [isFilterOpen, setIsFilterOpen] = useState(false)
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
+  const [filters, setFilters] = useState<FilterState>({});
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
   // Build query parameters
   const buildQueryParams = () => {
     const params: Record<string, any> = {
       categoryId,
-    }
+    };
 
     // Add filter parameters
     Object.entries(filters).forEach(([key, value]) => {
       if (Array.isArray(value) && value.length > 0) {
-        params[key.toLowerCase()] = value.join(",")
+        params[key.toLowerCase()] = value.join(",");
       } else if (typeof value === "object" && value !== null) {
-        const rangeValue = value as { min?: number; max?: number }
+        const rangeValue = value as { min?: number; max?: number };
         // Convert "Price Range" to "priceRange" maintaining camelCase
         const filterKey = key
           .split(" ")
-          .map((word, index) => 
-            index === 0 
-              ? word.toLowerCase() 
+          .map((word, index) =>
+            index === 0
+              ? word.toLowerCase()
               : word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
           )
-          .join("")
-        
-        if (rangeValue.min !== undefined) params[`${filterKey}Min`] = rangeValue.min
-        if (rangeValue.max !== undefined) params[`${filterKey}Max`] = rangeValue.max
-      }
-    })
+          .join("");
 
-    return params
-  }
+        if (rangeValue.min !== undefined)
+          params[`${filterKey}Min`] = rangeValue.min;
+        if (rangeValue.max !== undefined)
+          params[`${filterKey}Max`] = rangeValue.max;
+      }
+    });
+
+    return params;
+  };
 
   // Fetch products with filters
-  const { data: productsData, isLoading, error } = useGetAllProductsQuery(buildQueryParams())
-  const products = productsData?.data || []
+  const {
+    data: productsData,
+    isLoading,
+    error,
+  } = useGetAllProductsQuery(buildQueryParams());
+  const products = productsData?.data || [];
+  const meta = productsData?.meta;
 
-  const handleFilterChange = (filterName: string, value: string[] | { min?: number; max?: number }) => {
+  const handleFilterChange = (
+    filterName: string,
+    value: string[] | { min?: number; max?: number }
+  ) => {
     setFilters((prev) => ({
       ...prev,
       [filterName]: value,
-    }))
-  }
+    }));
+  };
 
   const clearFilters = () => {
-    setFilters({})
-  }
+    setFilters({});
+  };
 
   const getActiveFilterCount = () => {
     return Object.values(filters).reduce((count, value) => {
       if (Array.isArray(value)) {
-        return count + value.length
+        return count + value.length;
       } else if (typeof value === "object" && value !== null) {
-        const rangeValue = value as { min?: number; max?: number }
-        return count + (rangeValue.min !== undefined || rangeValue.max !== undefined ? 1 : 0)
+        const rangeValue = value as { min?: number; max?: number };
+        return (
+          count +
+          (rangeValue.min !== undefined || rangeValue.max !== undefined ? 1 : 0)
+        );
       }
-      return count
-    }, 0)
-  }
+      return count;
+    }, 0);
+  };
+
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleLimitChange = (newLimit: number) => {
+    setLimit(newLimit);
+    setPage(1); // Reset to first page when changing limit
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-muted/30">
@@ -94,7 +120,9 @@ const CategoryWiseProduct = ({ slug }: CategoryWiseProductProps) => {
         <div className="mb-6">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h1 className="text-2xl md:text-3xl font-bold capitalize">{categorySlug.replace(/-/g, " ")} Products</h1>
+              <h1 className="text-2xl md:text-3xl font-bold capitalize">
+                {categorySlug.replace(/-/g, " ")} Products
+              </h1>
               <p className="text-muted-foreground mt-1">
                 {isLoading ? "Loading..." : `${products.length} products found`}
               </p>
@@ -121,7 +149,11 @@ const CategoryWiseProduct = ({ slug }: CategoryWiseProductProps) => {
 
           {/* Mobile Filter Button */}
           <div className="flex items-center justify-between lg:hidden mb-4">
-            <Button variant="outline" onClick={() => setIsFilterOpen(true)} className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              onClick={() => setIsFilterOpen(true)}
+              className="flex items-center gap-2"
+            >
               <Filter className="h-4 w-4" />
               Filters
               {getActiveFilterCount() > 0 && (
@@ -138,7 +170,8 @@ const CategoryWiseProduct = ({ slug }: CategoryWiseProductProps) => {
               {getActiveFilterCount() > 0 && (
                 <div className="flex items-center gap-2">
                   <Badge variant="outline">
-                    {getActiveFilterCount()} filter{getActiveFilterCount() > 1 ? "s" : ""} applied
+                    {getActiveFilterCount()} filter
+                    {getActiveFilterCount() > 1 ? "s" : ""} applied
                   </Badge>
                   <Button variant="ghost" size="sm" onClick={clearFilters}>
                     Clear all
@@ -165,7 +198,23 @@ const CategoryWiseProduct = ({ slug }: CategoryWiseProductProps) => {
 
           {/* Products Grid */}
           <div className="lg:col-span-3">
-            <ProductGrid products={products} isLoading={isLoading} error={error} viewMode={viewMode} />
+            <ProductGrid
+              products={products}
+              isLoading={isLoading}
+              error={error}
+              viewMode={viewMode}
+            />
+            <div className="mt-8">
+              <PaginationControls
+                currentPage={page}
+                totalPages={Math.ceil((meta?.total || 0) / (meta?.limit || 1))}
+                totalItems={meta?.total || 0}
+                itemsPerPage={limit}
+                onPageChange={handlePageChange}
+                onLimitChange={handleLimitChange}
+                limitOptions={[12, 16, 24, 32]}
+              />
+            </div>
           </div>
         </div>
 
@@ -180,7 +229,7 @@ const CategoryWiseProduct = ({ slug }: CategoryWiseProductProps) => {
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CategoryWiseProduct
+export default CategoryWiseProduct;
