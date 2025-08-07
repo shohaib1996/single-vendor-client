@@ -29,7 +29,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { logout } from "@/redux/features/auth/authSlice";
-import { ModeToggle } from "../ModeToggle/ModeToggle";
+import { CategoryDropdown } from "./CategoryDropdown";
 import {
   useAppDispatch,
   useAppSelector,
@@ -44,6 +44,7 @@ import { useGetCartQuery } from "@/redux/api/cart/cartApi";
 import { useGetAllProductsQuery } from "@/redux/api/product/productApi";
 import { useGetUserProfileQuery } from "@/redux/api/user/userApi";
 import { IProduct } from "@/types";
+import { ModeToggle } from "../ModeToggle/ModeToggle";
 
 export function Navbar({
   onCartClick,
@@ -63,7 +64,7 @@ export function Navbar({
   const [isFocused, setIsFocused] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
 
-  console.log(cartData?.data[0])
+  console.log(cartData?.data[0]);
 
   const debouncedTerm = useDebounced({
     searchQuery: searchQuery,
@@ -304,14 +305,15 @@ export function Navbar({
             {/* Right Side Actions */}
             <div className="flex items-center space-x-1 sm:space-x-2">
               {/* Offer */}
-
-              <Button
-                variant="ghost"
-                size="icon"
-                className="relative group p-1 sm:p-2 hidden lg:flex"
-              >
-                <BadgePercent className="h-4 sm:h-5 w-4 sm:w-5 transition-colors group-hover:text-primary" />
-              </Button>
+              <Link href={`/offers`}>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="relative group p-1 sm:p-2 hidden lg:flex"
+                >
+                  <BadgePercent className="h-4 sm:h-5 w-4 sm:w-5 transition-colors group-hover:text-primary" />
+                </Button>
+              </Link>
               {/* Wishlist */}
               <Button
                 variant="ghost"
@@ -448,71 +450,7 @@ export function Navbar({
           {/* Mobile Navigation */}
           {isMobileMenuOpen && (
             <div className="lg:hidden border-t py-3 sm:py-4 animate-in slide-in-from-top-2">
-              <nav className="flex flex-col space-y-3 sm:space-y-4">
-                {navItems.map((item) => (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    className="text-xs sm:text-sm font-medium transition-colors hover:text-primary px-2 py-1"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-
-                {/* Mobile User Menu */}
-                {isAuthenticated && (
-                  <>
-                    <div className="border-t pt-3 mt-3">
-                      <div className="flex items-center space-x-3 px-2 py-2">
-                        <Avatar className="h-8 w-8">
-                          <AvatarImage
-                            src={
-                              userData?.data?.avatarUrl || "/placeholder.svg"
-                            }
-                            alt={user.name}
-                          />
-                          <AvatarFallback className="bg-gradient-to-br from-primary to-accent text-primary-foreground text-xs font-semibold">
-                            {getInitials(user.name)}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div className="flex flex-col">
-                          <p className="text-sm font-medium">{user.name}</p>
-                          <p className="text-xs text-muted-foreground">
-                            {user.email}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <Link
-                      href="/profile"
-                      className="text-xs sm:text-sm font-medium transition-colors hover:text-primary px-2 py-1 flex items-center"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      <Settings className="mr-2 h-4 w-4" />
-                      Manage Profile
-                    </Link>
-                    <Link
-                      href="/orders"
-                      className="text-xs sm:text-sm font-medium transition-colors hover:text-primary px-2 py-1 flex items-center"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      <Package className="mr-2 h-4 w-4" />
-                      My Orders
-                    </Link>
-                    <button
-                      onClick={() => {
-                        handleLogout();
-                        setIsMobileMenuOpen(false);
-                      }}
-                      className="text-xs sm:text-sm font-medium transition-colors hover:text-red-600 px-2 py-1 flex items-center text-red-600 w-full text-left"
-                    >
-                      <LogOut className="mr-2 h-4 w-4" />
-                      Logout
-                    </button>
-                  </>
-                )}
-              </nav>
+              <CategoryDropdown onClose={() => setIsMobileMenuOpen(false)} />
             </div>
           )}
         </div>

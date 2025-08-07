@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useGetAllProductsQuery } from "@/redux/api/product/productApi";
-import { useDebounced } from "@/redux/hooks/hooks";
 import { IProduct } from "@/types/product/product";
 import { useSearchParams, useRouter } from "next/navigation";
 import { PaginationControls } from "@/components/common/PaginationControls";
@@ -12,29 +11,21 @@ import { Eye, Clock } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-const AllProductsPage = () => {
+const OffersPage = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const searchTerm = searchParams.get("searchTerm") || "";
   const page = Number(searchParams.get("page")) || 1;
   const limit = Number(searchParams.get("limit")) || 10;
 
   const [currentPage, setCurrentPage] = useState(page);
   const [itemsPerPage, setItemsPerPage] = useState(limit);
 
-  const debouncedTerm = useDebounced({
-    searchQuery: searchTerm,
-    delay: 500,
-  });
-
   const { data: products, isLoading } = useGetAllProductsQuery({
-    searchTerm: debouncedTerm,
+    discounted: true,
     page: currentPage,
     limit: itemsPerPage,
   });
-  // Math.ceil(
-  //                     (meta?.total || 0) / (meta?.limit || 1)
-  //                   )
+
   const productsData: IProduct[] = products?.data || [];
   const totalItems = products?.meta?.total || 0;
   const meta = products?.meta;
@@ -114,6 +105,7 @@ const AllProductsPage = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-8">Special Offers</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
         {productsData.map((product: IProduct, index: number) => (
           <Card
@@ -163,9 +155,6 @@ const AllProductsPage = () => {
 
                 {/* Quick Actions */}
                 <div className="absolute top-3 right-3 flex flex-col space-y-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  {/* <button className="h-8 w-8 bg-white/90 hover:bg-white rounded-full flex items-center justify-center">
-                    <Heart className="h-4 w-4" />
-                  </button> */}
                   <Link href={`/products/${product.id}`}>
                     <button className="h-8 w-8 bg-white/90 hover:bg-white rounded-full flex items-center justify-center">
                       <Eye className="h-4 w-4" />
@@ -254,4 +243,4 @@ const AllProductsPage = () => {
   );
 };
 
-export default AllProductsPage;
+export default OffersPage;

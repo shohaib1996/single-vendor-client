@@ -254,8 +254,8 @@ const PaymentsPage = () => {
 
         {/* Search and Controls */}
         <motion.div variants={itemVariants}>
-          <Card className="shadow-lg">
-            <CardContent className="py-0 p-6">
+          <Card className="shadow-lg py-0">
+            <CardContent className=" p-4">
               <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
                 <div className="relative flex-1 max-w-md">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />

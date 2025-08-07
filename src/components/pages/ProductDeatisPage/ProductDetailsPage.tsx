@@ -101,9 +101,11 @@ const ProductDetailsPage = ({ id }: ProductDetailsPageProps) => {
 
     try {
       const res = await addToWishlist(wilshListData).unwrap();
+      console.log(res)
       toast.success(`Added ${product?.name} to wishlist`);
       return;
     } catch (error: any) {
+      console.log(error)
       toast.error(`Duplicate item`)
     }
   };

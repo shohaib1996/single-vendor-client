@@ -239,7 +239,7 @@ export function TestimonialsSection() {
                   className="flex-shrink-0 px-3"
                   style={{ width: `${slideWidth}%` }}
                 >
-                  <Card className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 h-full p-0">
+                  <Card className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 h-full p-0 dark:border-gray-400">
                     <CardContent className="p-6 h-full flex flex-col">
                       {/* Quote Icon */}
                       <div className="mb-4">

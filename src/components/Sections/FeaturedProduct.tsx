@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Heart, ShoppingCart, Eye, Clock } from "lucide-react"
+import { ShoppingCart, Eye, Clock } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useGetAllProductsQuery } from "@/redux/api/product/productApi"
@@ -92,7 +92,7 @@ export function FeaturedProducts() {
           {featuredProducts.map((product: IProduct, index: number) => (
             <Card
               key={product.id}
-              className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 animate-in slide-in-from-bottom-10 bg-card/50 backdrop-blur-sm border-border/50 p-0"
+              className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 animate-in slide-in-from-bottom-10 bg-card/50 backdrop-blur-sm border-border dark:border-gray-400 p-0"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <CardContent className="p-0">
@@ -134,9 +134,9 @@ export function FeaturedProducts() {
 
                   {/* Quick Actions */}
                   <div className="absolute top-3 right-3 flex flex-col space-y-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <Button size="icon" variant="secondary" className="h-8 w-8 bg-white/90 hover:bg-white">
+                    {/* <Button size="icon" variant="secondary" className="h-8 w-8 bg-white/90 hover:bg-white">
                       <Heart className="h-4 w-4" />
-                    </Button>
+                    </Button> */}
                     <Button size="icon" variant="secondary" className="h-8 w-8 bg-white/90 hover:bg-white" asChild>
                       <Link href={`/products/${product.id}`}>
                         <Eye className="h-4 w-4" />

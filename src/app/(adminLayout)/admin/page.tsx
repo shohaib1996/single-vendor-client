@@ -242,7 +242,7 @@ const AdminDashboard = () => {
         className="container mx-auto space-y-6"
       >
         {/* Header */}
-        <motion.div variants={itemVariants} className="text-left space-y-4">
+        <motion.div variants={itemVariants} className="text-center space-y-4">
           <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
             Admin Dashboard
           </h1>

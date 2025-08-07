@@ -1,15 +1,10 @@
-
-
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  ChevronLeft,
-  ChevronRight,
-  Users,
-} from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 const heroSlides = [
   {
@@ -17,20 +12,20 @@ const heroSlides = [
     title: "STARLINK UPCOMING",
     subtitle: "Order From Our Website or Physical Store",
     description: "TAKING PRE-ORDER",
-    image:
-      "https://images.vexels.com/content/195908/preview/german-text-ecommerce-web-slider-9dba41.png",
+    image: "https://i.imgur.com/H2A438s.jpeg",
     cta: "Pre-Order Now",
     badge: "New Launch",
+    link: "/products/0ab0c15e-e59e-4fb1-8ae2-125dc9632a0c",
   },
   {
     id: 2,
     title: "PREMIUM COLLECTION",
     subtitle: "Discover Our Latest Tech Products",
     description: "EXCLUSIVE DEALS",
-    image:
-      "https://images.vexels.com/content/194700/preview/buy-online-slider-template-4261dd.png",
+    image: "https://i.imgur.com/Mjm37Wk.jpeg",
     cta: "Shop Now",
     badge: "Limited Time",
+    link: "/products/52e87388-f119-4efd-a98f-d3be39bd6cbc",
   },
   {
     id: 3,
@@ -41,6 +36,7 @@ const heroSlides = [
       "https://images.vexels.com/content/194698/preview/shop-online-slider-template-4f2c60.png",
     cta: "Explore",
     badge: "Best Seller",
+    link: "/products",
   },
 ];
 
@@ -89,17 +85,20 @@ export function HeroSection() {
                       className="absolute inset-0"
                     >
                       {/* Background Image */}
-                      <div className="absolute inset-0">
-                        <Image
-                          src={
-                            heroSlides[currentSlide].image || "/placeholder.svg"
-                          }
-                          alt={heroSlides[currentSlide].title}
-                          fill
-                          className="object-fill object-center"
-                          priority
-                        />
-                      </div>
+                      <Link href={heroSlides[currentSlide].link}>
+                        <div className="absolute inset-0">
+                          <Image
+                            src={
+                              heroSlides[currentSlide].image ||
+                              "/placeholder.svg"
+                            }
+                            alt={heroSlides[currentSlide].title}
+                            fill
+                            className="object-fill object-center"
+                            priority
+                          />
+                        </div>
+                      </Link>
                     </motion.div>
                   </AnimatePresence>
 
@@ -149,37 +148,17 @@ export function HeroSection() {
               transition={{ delay: 0.8 }}
               className="flex-1 min-h-0"
             >
-              <Card className="bg-gradient-to-br from-purple-600 to-purple-800 border-purple-500 text-white overflow-hidden relative h-full">
-                <CardContent className="p-4 sm:p-6 relative z-10 flex flex-col justify-between h-full">
-                  <div className="flex items-center justify-between mb-4">
-                    <div>
-                      <h3 className="text-lg sm:text-xl font-bold mb-1">
-                        Shape Your
-                      </h3>
-                      <h3 className="text-xl sm:text-2xl font-bold text-yellow-400">
-                        Career
-                      </h3>
-                      <p className="text-xs sm:text-sm text-purple-100">
-                        with Us
-                      </p>
-                    </div>
-                    <div className="w-12 sm:w-16 h-12 sm:h-16 bg-white/20 rounded-full flex items-center justify-center">
-                      <Users className="h-6 w-6 sm:h-8 sm:w-8 text-yellow-400" />
-                    </div>
-                  </div>
-
-                  <Button
-                    size="sm"
-                    className="bg-yellow-400 hover:bg-yellow-500 text-purple-900 font-semibold text-xs sm:text-sm"
-                  >
-                    JOIN US!
-                  </Button>
-
-                  {/* Decorative Elements */}
-                  <div className="absolute -top-4 -right-4 w-16 sm:w-20 h-16 sm:h-20 bg-yellow-400/20 rounded-full"></div>
-                  <div className="absolute -bottom-4 sm:-bottom-6 -left-4 sm:-left-6 w-12 sm:w-16 h-12 sm:h-16 bg-purple-400/20 rounded-full"></div>
-                </CardContent>
-              </Card>
+              <div className="flex items-center justify-between mb-4 rounded-2xl">
+                <Link href="/products/22b1b30c-2ab5-4894-b5fd-02754ac4b27c">
+                  <Image
+                    src="https://i.imgur.com/A8mLhHj.png"
+                    alt="image"
+                    height={218}
+                    width={444}
+                    className="rounded-2xl"
+                  />
+                </Link>
+              </div>
             </motion.div>
 
             {/* Stats Section */}

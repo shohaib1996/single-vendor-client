@@ -63,7 +63,7 @@ export function ServicesSection() {
           {services.map((service, index) => (
             <Card
               key={index}
-              className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 animate-in slide-in-from-bottom-10 p-0"
+              className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 animate-in slide-in-from-bottom-10 p-0 dark:border-gray-400"
               style={{ animationDelay: `${index * 150}ms` }}
             >
               <CardContent className="p-8 text-center">

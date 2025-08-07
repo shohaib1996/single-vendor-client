@@ -18,7 +18,7 @@ const CategoryFlex = () => {
   }
 
   return (
-    <div className="hidden sm:hidden md:hidden lg:flex">
+    <div className="hidden sm:hidden md:hidden lg:hidden xl:flex">
       <div className="container mx-auto py-4 bg-background">
         <nav className="flex flex-wrap items-center justify-center">
           {categoryList.map((category) => (

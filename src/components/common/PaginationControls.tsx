@@ -162,7 +162,7 @@ export function PaginationControls({
                       isActive={page === currentPage}
                       className={`cursor-pointer text-sm px-3 py-1 ${
                         page === currentPage
-                          ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                          ? "bg-primary text-white dark:text-primary hover:bg-primary/90"
                           : "hover:bg-accent"
                       }`}
                     >

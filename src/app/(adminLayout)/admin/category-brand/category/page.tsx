@@ -40,7 +40,6 @@ import Link from "next/link";
 import {
   Tags,
   Plus,
-  Search,
   Edit,
   Trash2,
   Eye,

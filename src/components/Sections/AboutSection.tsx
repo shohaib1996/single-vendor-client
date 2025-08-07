@@ -61,7 +61,7 @@ export function AboutSection() {
         <div className="grid lg:grid-cols-3 gap-8 items-start">
           {/* Left Content - Story */}
           <div className="lg:col-span-1 space-y-6 animate-in slide-in-from-left-10 duration-1000 delay-300">
-            <Card className="bg-card/50 backdrop-blur-sm border-border/50 p-0">
+            <Card className="bg-card/50 backdrop-blur-sm border-border dark:border-gray-400 p-0">
               <CardContent className="p-4">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center">
@@ -84,7 +84,7 @@ export function AboutSection() {
               {stats.map((stat, index) => (
                 <Card
                   key={index}
-                  className="bg-gradient-to-br from-primary/5 to-accent/5 border-primary/10 animate-in slide-in-from-bottom-10 p-0"
+                  className="bg-background border-primary/10 animate-in slide-in-from-bottom-10 p-0 dark:border-gray-400"
                   style={{ animationDelay: `${(index + 2) * 150}ms` }}
                 >
                   <CardContent className="p-4 text-center">
@@ -99,14 +99,14 @@ export function AboutSection() {
           {/* Center Content - Image */}
           <div className="lg:col-span-1 animate-in slide-in-from-bottom-10 duration-1000 delay-500">
             <div className="relative">
-              <Card className="overflow-hidden border-0 shadow-2xl p-0">
+              <Card className="overflow-hidden border-0 shadow-2xl p-0 ">
                 <CardContent className="p-0">
                   <Image
                     src="https://st.depositphotos.com/1038076/4908/i/450/depositphotos_49080337-stock-photo-about-us.jpg"
                     alt="About EcoShop"
                     width={400}
                     height={400}
-                    className="w-full h-80 object-cover"
+                    className="w-full h-[400px] object-cover"
                   />
                 </CardContent>
               </Card>
@@ -129,7 +129,7 @@ export function AboutSection() {
             {features.map((feature, index) => (
               <Card
                 key={index}
-                className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-card/50 backdrop-blur-sm border-border/50 animate-in slide-in-from-right-10 p-0"
+                className="group hover:shadow-lg dark:border-gray-400 transition-all duration-300 hover:-translate-y-1 bg-card/50 backdrop-blur-sm border-border animate-in slide-in-from-right-10 p-0"
                 style={{ animationDelay: `${(index + 8) * 100}ms` }}
               >
                 <CardContent className="p-4">

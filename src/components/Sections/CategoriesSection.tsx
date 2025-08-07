@@ -74,7 +74,7 @@ const CategoriesSection = () => {
             <Link href={`/category/${category.slug}~${category.id}`} key={category.id}>
               <Card
                 key={category.id}
-                className="group cursor-pointer hover:shadow-xl transition-all duration-300 hover:-translate-y-2 bg-card/50 backdrop-blur-sm border-border/50 animate-in slide-in-from-bottom-10 p-0"
+                className="group cursor-pointer hover:shadow-xl transition-all duration-300 hover:-translate-y-2 bg-card/50 backdrop-blur-sm border dark:border-gray-400 animate-in slide-in-from-bottom-10 p-0"
                 style={{ animationDelay: `${index * 50}ms` }}
               >
                 <CardContent className="p-2 text-center">
@@ -88,11 +88,11 @@ const CategoriesSection = () => {
                     />
                   </div>
 
-                  <h3 className="font-semibold text-sm md:text-base mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                  <h3 className="font-semibold text-sm md:text-base mb-2 group-hover:text-primary transition-colors line-clamp-2 truncate max-w-[150px]">
                     {category.name}
                   </h3>
 
-                  <p className="text-xs text-muted-foreground mb-3 line-clamp-2 hidden md:block">
+                  <p className="text-xs text-muted-foreground mb-3 line-clamp-2 hidden md:block truncate max-w-[150px]">
                     {category.description}
                   </p>
                   {/* Hover Effect */}

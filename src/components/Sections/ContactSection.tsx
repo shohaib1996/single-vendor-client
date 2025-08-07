@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { MapPin, Phone, Mail, Clock, Send, MessageCircle } from "lucide-react"
+import { MapPin, Phone, Mail, Clock, Send, MessageCircle, Headphones } from "lucide-react"
 import { toast } from "sonner"
 import emailjs from "@emailjs/browser"
 
@@ -36,8 +36,19 @@ const contactInfo = [
     detail: "Mon - Fri: 9 AM - 6 PM",
     color: "text-orange-600 dark:text-orange-400",
   },
+  {
+    icon: MessageCircle,
+    title: "Live Chat",
+    detail: "Available 24/7 for instant help",
+    color: "text-pink-600 dark:text-pink-400",
+  },
+  {
+    icon: Headphones,
+    title: "Support Center",
+    detail: "Browse FAQs & tutorials",
+    color: "text-indigo-600 dark:text-indigo-400",
+  },
 ]
-
 export function ContactSection() {
   const form = useRef<HTMLFormElement>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -101,7 +112,7 @@ export function ContactSection() {
 
         <div className="grid lg:grid-cols-2 gap-8">
           <div className="space-y-6">
-            <Card className="bg-gradient-to-br from-primary/10 to-muted p-0">
+            <Card className="bg-background p-5 dark:border-gray-400">
               <CardContent className="p-6 text-center">
                 <h3 className="text-xl font-semibold mb-3">We&apos;re Here for You</h3>
                 <p className="text-sm text-muted-foreground mb-4">
@@ -114,9 +125,9 @@ export function ContactSection() {
               </CardContent>
             </Card>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {contactInfo.map((info, index) => (
-                <Card key={index} className="hover:shadow-md transition-shadow duration-300 p-0">
+                <Card key={index} className="hover:shadow-md transition-shadow duration-300 p-0 dark:border-gray-400">
                   <CardContent className="p-4 flex items-center space-x-3">
                     <div className={`p-1.5 rounded-lg bg-muted ${info.color}`}>
                       <info.icon className="h-4 w-4" />
@@ -132,7 +143,7 @@ export function ContactSection() {
           </div>
 
           <div>
-            <Card className="p-0">
+            <Card className="p-0 dark:border-gray-400">
               <CardContent className="p-6">
                 <h3 className="text-xl font-semibold mb-4">Send a Message</h3>
                 <form ref={form} onSubmit={handleSubmit} className="space-y-4">
