@@ -121,6 +121,10 @@
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 /* Custom animations */
 @keyframes float {
   0%,

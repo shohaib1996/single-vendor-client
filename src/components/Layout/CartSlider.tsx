@@ -1,98 +1,113 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
-import { X, Plus, Minus, ShoppingBag, Trash2 } from "lucide-react"
-import { cn } from "@/lib/utils"
-import { toast } from "sonner"
-import { useDeleteCartItemMutation, useGetCartQuery, useUpdateCartItemMutation } from "@/redux/api/cart/cartApi"
+import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { X, Plus, Minus, ShoppingBag, Trash2 } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { toast } from "sonner";
+import {
+  useDeleteCartItemMutation,
+  useGetCartQuery,
+  useUpdateCartItemMutation,
+} from "@/redux/api/cart/cartApi";
+import { useAppSelector } from "@/redux/hooks/hooks";
 
 interface CartItem {
-  id: string
-  cartId: string
-  productId: string
-  quantity: number
+  id: string;
+  cartId: string;
+  productId: string;
+  quantity: number;
   product: {
-    id: string
-    name: string
-    price: number
+    id: string;
+    name: string;
+    price: number;
     brand: {
-      id: string
-      name: string
-    }
-    images: string[]
-  }
+      id: string;
+      name: string;
+    };
+    images: string[];
+  };
 }
 
 interface CartSliderProps {
-  isOpen: boolean
-  onClose: () => void
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 const CartSlider = ({ isOpen, onClose }: CartSliderProps) => {
-  const { data, isLoading } = useGetCartQuery({})
-  const [deleteCart, { isLoading: deleteCartLoading }] = useDeleteCartItemMutation()
-  const [updateCartItemQuantity, { isLoading: updateQuantityLoading }] = useUpdateCartItemMutation()
+  const { user } = useAppSelector((state) => state.auth);
+  const { data, isLoading } = useGetCartQuery({});
+  const [deleteCart, { isLoading: deleteCartLoading }] =
+    useDeleteCartItemMutation();
+  const [updateCartItemQuantity, { isLoading: updateQuantityLoading }] =
+    useUpdateCartItemMutation();
 
-  const cartItems: CartItem[] = data?.data[0]?.items || []
+  let cartItems: CartItem[] = [];
+  if (user?.role === "USER") {
+    cartItems = data?.data[0]?.items || [];
+  }
 
-  console.log(cartItems)
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
       currency: "USD",
-    }).format(price)
-  }
+    }).format(price);
+  };
 
   const updateQuantity = async (id: string, newQuantity: number) => {
-    if (newQuantity < 1) return
+    if (newQuantity < 1) return;
 
-    console.log(id, newQuantity, "from cart")
+    console.log(id, newQuantity, "from cart");
 
     try {
-      await updateCartItemQuantity({ id, data: { quantity: newQuantity } }).unwrap()
-      toast.success("Quantity updated")
+      await updateCartItemQuantity({
+        id,
+        data: { quantity: newQuantity },
+      }).unwrap();
+      toast.success("Quantity updated");
     } catch (error) {
-      console.log(error)
-      toast.error("Failed to update quantity")
+      console.log(error);
+      toast.error("Failed to update quantity");
     }
-  }
+  };
 
   const removeItem = async (id: string) => {
     try {
-      await deleteCart(id).unwrap()
-      toast.success("Item removed from cart")
+      await deleteCart(id).unwrap();
+      toast.success("Item removed from cart");
     } catch (error) {
-      console.log(error)
-      toast.error("Failed to remove item")
+      console.log(error);
+      toast.error("Failed to remove item");
     }
-  }
+  };
 
   const getTotalPrice = () => {
     return cartItems.reduce((total, item) => {
-      return total + item.product.price * item.quantity
-    }, 0)
-  }
+      return total + item.product.price * item.quantity;
+    }, 0);
+  };
 
   const getTotalItems = () => {
-    return cartItems.reduce((total, item) => total + item.quantity, 0)
-  }
+    return cartItems.reduce((total, item) => total + item.quantity, 0);
+  };
 
   return (
     <>
       {/* Backdrop */}
-      {isOpen && <div className="fixed inset-0 bg-black/50 z-40" onClick={onClose} />}
+      {isOpen && (
+        <div className="fixed inset-0 bg-black/50 z-40" onClick={onClose} />
+      )}
 
       {/* Slider */}
       <div
         className={cn(
           "fixed top-0 right-0 h-full w-full sm:w-96 bg-background border-l shadow-xl z-50 transform transition-transform duration-300 ease-in-out",
-          isOpen ? "translate-x-0" : "translate-x-full",
+          isOpen ? "translate-x-0" : "translate-x-full"
         )}
       >
         <div className="flex flex-col h-full">
@@ -116,11 +131,15 @@ const CartSlider = ({ isOpen, onClose }: CartSliderProps) => {
               <div className="flex flex-col items-center justify-center h-full text-center">
                 <p>Loading cart items...</p>
               </div>
-            ) : cartItems.length === 0 ? (
+            ) :  cartItems.length === 0 ? (
               <div className="flex flex-col items-center justify-center h-full text-center">
                 <ShoppingBag className="h-16 w-16 text-muted-foreground mb-4" />
-                <h3 className="text-lg font-semibold mb-2">Your cart is empty</h3>
-                <p className="text-muted-foreground mb-4">Add some products to get started!</p>
+                <h3 className="text-lg font-semibold mb-2">
+                  Your cart is empty
+                </h3>
+                <p className="text-muted-foreground mb-4">
+                  Add some products to get started!
+                </p>
                 <Button onClick={onClose} asChild>
                   <Link href="/products">Continue Shopping</Link>
                 </Button>
@@ -145,7 +164,9 @@ const CartSlider = ({ isOpen, onClose }: CartSliderProps) => {
                         <div className="flex-1 min-w-0">
                           <div className="flex justify-between items-start mb-2">
                             <div>
-                              <h3 className="font-medium text-sm line-clamp-2">{item?.product?.name}</h3>
+                              <h3 className="font-medium text-sm line-clamp-2">
+                                {item?.product?.name}
+                              </h3>
                             </div>
                             <Button
                               variant="ghost"
@@ -172,8 +193,12 @@ const CartSlider = ({ isOpen, onClose }: CartSliderProps) => {
                                 variant="ghost"
                                 size="icon"
                                 className="h-7 w-7"
-                                onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                                disabled={item.quantity <= 1 || updateQuantityLoading}
+                                onClick={() =>
+                                  updateQuantity(item.id, item.quantity - 1)
+                                }
+                                disabled={
+                                  item.quantity <= 1 || updateQuantityLoading
+                                }
                               >
                                 <Minus className="h-3 w-3" />
                               </Button>
@@ -183,8 +208,10 @@ const CartSlider = ({ isOpen, onClose }: CartSliderProps) => {
                               <Button
                                 variant="ghost"
                                 size="icon"
-                                className="h-7 w-7" 
-                                onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                className="h-7 w-7"
+                                onClick={() =>
+                                  updateQuantity(item.id, item.quantity + 1)
+                                }
                                 disabled={updateQuantityLoading}
                               >
                                 <Plus className="h-3 w-3" />
@@ -211,7 +238,9 @@ const CartSlider = ({ isOpen, onClose }: CartSliderProps) => {
               {/* Total */}
               <div className="flex justify-between items-center">
                 <span className="text-lg font-semibold">Total:</span>
-                <span className="text-xl font-bold text-primary">{formatPrice(getTotalPrice())}</span>
+                <span className="text-xl font-bold text-primary">
+                  {formatPrice(getTotalPrice())}
+                </span>
               </div>
 
               {/* Action Buttons */}
@@ -229,7 +258,12 @@ const CartSlider = ({ isOpen, onClose }: CartSliderProps) => {
               </div>
 
               {/* Continue Shopping */}
-              <Button variant="ghost" className="w-full text-sm" onClick={onClose} asChild>
+              <Button
+                variant="ghost"
+                className="w-full text-sm"
+                onClick={onClose}
+                asChild
+              >
                 <Link href="/products">Continue Shopping</Link>
               </Button>
             </div>
@@ -237,7 +271,7 @@ const CartSlider = ({ isOpen, onClose }: CartSliderProps) => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default CartSlider
+export default CartSlider;

@@ -1,57 +1,67 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { X, Heart,Trash2 } from "lucide-react"
-import { cn } from "@/lib/utils"
-import { toast } from "sonner"
-import { useDeleteWishlistMutation, useGetWishlistQuery } from "@/redux/api/wishlist/wishlistApi"
+import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { X, Heart, Trash2 } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { toast } from "sonner";
+import {
+  useDeleteWishlistMutation,
+  useGetWishlistQuery,
+} from "@/redux/api/wishlist/wishlistApi";
+import { useAppSelector } from "@/redux/hooks/hooks";
 
 // Define interfaces based on provided data structure
 interface Product {
-  id: string
-  name: string
-  price: number
-  images: string[]
+  id: string;
+  name: string;
+  price: number;
+  images: string[];
 }
 
 interface WishlistItem {
-  id: string
-  userId: string
-  productId: string
-  product: Product
+  id: string;
+  userId: string;
+  productId: string;
+  product: Product;
 }
 
 interface WishlistSliderProps {
-  isOpen: boolean
-  onClose: () => void
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 const WishlistSlider = ({ isOpen, onClose }: WishlistSliderProps) => {
-  const { data: wishlist } = useGetWishlistQuery({})
-  const [deleteWishlist, { isLoading: wishlistDeleteLoading }] = useDeleteWishlistMutation()
+  const { user } = useAppSelector((state) => state.auth);
+  const { data: wishlist } = useGetWishlistQuery({});
+  const [deleteWishlist, { isLoading: wishlistDeleteLoading }] =
+    useDeleteWishlistMutation();
 
-  const wishlistItems: WishlistItem[] = wishlist?.data || []
+  let wishlistItems: WishlistItem[] = [];
+
+  if (user?.role === "USER") {
+    wishlistItems = wishlist?.data;
+  }
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
       currency: "USD",
-    }).format(price)
-  }
+    }).format(price);
+  };
 
   const removeItem = async (id: string) => {
     try {
-      await deleteWishlist(id).unwrap()
-      toast.success("Item removed from wishlist")
+      await deleteWishlist(id).unwrap();
+      toast.success("Item removed from wishlist");
     } catch (error) {
-      console.log(error)
-      toast.error("Failed to remove item from wishlist")
+      console.log(error);
+      toast.error("Failed to remove item from wishlist");
     }
-  }
+  };
 
   // const renderStars = (rating: number = 0) => {
   //   return Array.from({ length: 5 }, (_, i) => (
@@ -62,13 +72,15 @@ const WishlistSlider = ({ isOpen, onClose }: WishlistSliderProps) => {
   return (
     <>
       {/* Backdrop */}
-      {isOpen && <div className="fixed inset-0 bg-black/50 z-40" onClick={onClose} />}
+      {isOpen && (
+        <div className="fixed inset-0 bg-black/50 z-40" onClick={onClose} />
+      )}
 
       {/* Slider */}
       <div
         className={cn(
           "fixed top-0 right-0 h-full w-full sm:w-96 bg-background border-l shadow-xl z-50 transform transition-transform duration-300 ease-in-out",
-          isOpen ? "translate-x-0" : "translate-x-full",
+          isOpen ? "translate-x-0" : "translate-x-full"
         )}
       >
         <div className="flex flex-col h-full">
@@ -78,7 +90,7 @@ const WishlistSlider = ({ isOpen, onClose }: WishlistSliderProps) => {
               <Heart className="h-5 w-5 fill-current text-red-500" />
               <h2 className="text-lg font-semibold">Wishlist</h2>
               <Badge variant="secondary" className="ml-2">
-                {wishlistItems.length}
+                {wishlistItems?.length}
               </Badge>
             </div>
             <Button variant="ghost" size="icon" onClick={onClose}>
@@ -88,18 +100,22 @@ const WishlistSlider = ({ isOpen, onClose }: WishlistSliderProps) => {
 
           {/* Wishlist Items */}
           <div className="flex-1 overflow-y-auto p-4">
-            {wishlistItems.length === 0 ? (
+            {wishlistItems?.length === 0 ? (
               <div className="flex flex-col items-center justify-center h-full text-center">
                 <Heart className="h-16 w-16 text-muted-foreground mb-4" />
-                <h3 className="text-lg font-semibold mb-2">Your wishlist is empty</h3>
-                <p className="text-muted-foreground mb-4">Save items you love for later!</p>
+                <h3 className="text-lg font-semibold mb-2">
+                  Your wishlist is empty
+                </h3>
+                <p className="text-muted-foreground mb-4">
+                  Save items you love for later!
+                </p>
                 <Button onClick={onClose} asChild>
                   <Link href="/products">Browse Products</Link>
                 </Button>
               </div>
             ) : (
               <div className="space-y-4">
-                {wishlistItems.map((item) => (
+                {wishlistItems?.map((item) => (
                   <Card key={item.id} className="overflow-hidden p-0">
                     <CardContent className="p-3">
                       <div className="flex gap-3">
@@ -117,7 +133,10 @@ const WishlistSlider = ({ isOpen, onClose }: WishlistSliderProps) => {
                         <div className="flex-1 min-w-0">
                           <div className="flex justify-between items-start mb-2">
                             <div>
-                              <Link href={`/products/${item.productId}`} onClick={onClose}>
+                              <Link
+                                href={`/products/${item.productId}`}
+                                onClick={onClose}
+                              >
                                 <h3 className="font-medium text-sm line-clamp-2 hover:text-primary cursor-pointer">
                                   {item.product.name}
                                 </h3>
@@ -150,12 +169,17 @@ const WishlistSlider = ({ isOpen, onClose }: WishlistSliderProps) => {
           </div>
 
           {/* Footer */}
-          {wishlistItems.length > 0 && (
+          {wishlistItems?.length > 0 && (
             <div className="border-t p-4 space-y-3">
               {/* <Button className="w-full bg-transparent" variant="outline" onClick={onClose} asChild>
                 <Link href="/wishlist">View Full Wishlist</Link>
               </Button> */}
-              <Button variant="ghost" className="w-full text-sm" onClick={onClose} asChild>
+              <Button
+                variant="ghost"
+                className="w-full text-sm"
+                onClick={onClose}
+                asChild
+              >
                 <Link href="/products">Continue Shopping</Link>
               </Button>
             </div>
@@ -163,7 +187,7 @@ const WishlistSlider = ({ isOpen, onClose }: WishlistSliderProps) => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default WishlistSlider
+export default WishlistSlider;

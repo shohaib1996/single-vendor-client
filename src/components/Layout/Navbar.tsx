@@ -25,11 +25,16 @@ import {
   Settings,
   Package,
   LayoutDashboard,
+  BadgePercent,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { logout } from "@/redux/features/auth/authSlice";
 import { ModeToggle } from "../ModeToggle/ModeToggle";
-import { useAppDispatch, useAppSelector, useDebounced } from "@/redux/hooks/hooks";
+import {
+  useAppDispatch,
+  useAppSelector,
+  useDebounced,
+} from "@/redux/hooks/hooks";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import CartSlider from "./CartSlider";
@@ -40,8 +45,13 @@ import { useGetAllProductsQuery } from "@/redux/api/product/productApi";
 import { useGetUserProfileQuery } from "@/redux/api/user/userApi";
 import { IProduct } from "@/types";
 
-
-export function Navbar() {
+export function Navbar({
+  onCartClick,
+  onWishlistClick,
+}: {
+  onCartClick: () => void;
+  onWishlistClick: () => void;
+}) {
   const router = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -81,8 +91,11 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-    const handleClickOutside = (event: MouseEvent) => {
-    if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+  const handleClickOutside = (event: MouseEvent) => {
+    if (
+      searchRef.current &&
+      !searchRef.current.contains(event.target as Node)
+    ) {
       setIsFocused(false);
     }
   };
@@ -97,17 +110,17 @@ export function Navbar() {
   const navItems = [
     { name: "Home", href: "/" },
     { name: "Products", href: "/products" },
-    { name: "Categories", href: "/categories" },
-    { name: "About", href: "/about" },
-    { name: "Contact", href: "/contact" },
+    { name: "Categories", href: "#category" },
+    { name: "About", href: "#about" },
+    { name: "Contact", href: "#contact" },
   ];
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    if(searchQuery.trim()){
+    if (searchQuery.trim()) {
       router.push(`/products?searchTerm=${searchQuery}`);
       setSearchQuery("");
-      setIsFocused(false)
+      setIsFocused(false);
     }
   };
 
@@ -149,7 +162,7 @@ export function Navbar() {
         )}
       >
         <div className="container mx-auto px-2 sm:px-4">
-          <div className="flex h-14 sm:h-16 items-center justify-between gap-2 sm:gap-4">
+          <div className="flex h-14 sm:h-16 items-center justify-between gap-2 sm:gap-2">
             {/* Logo */}
             <Link
               href="/"
@@ -160,10 +173,67 @@ export function Navbar() {
                   E
                 </span>
               </div>
-              <span className={`font-bold text-lg sm:text-xl ${isScrolled ? "bg-gradient-to-r from-white to-accent" : "bg-gradient-to-r from-primary to-accent"} bg-clip-text text-transparent`}>
+              <span
+                className={`font-bold text-lg sm:text-xl hidden lg:flex ${
+                  isScrolled
+                    ? "bg-gradient-to-r from-white to-accent"
+                    : "bg-gradient-to-r from-primary to-accent"
+                } bg-clip-text text-transparent`}
+              >
                 EcoShop
               </span>
             </Link>
+
+            {/* Mobile Search */}
+            <div className=" flex md:hidden lg:hidden w-full">
+              <form onSubmit={handleSearch} className="relative w-full">
+                <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  type="text"
+                  placeholder="Search products..."
+                  value={searchQuery}
+                  onFocus={() => setIsFocused(true)}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-8 pr-3 h-8 text-xs bg-muted/50 border-muted-foreground/20 min-w-[230px] w-full max-w-full"
+                />
+                {isFocused && debouncedTerm && (
+                  <div className="absolute top-full mt-2 w-full bg-background border rounded-md shadow-lg z-[1000] max-h-80 overflow-y-auto pointer-events-auto">
+                    {isLoading ? (
+                      <div className="p-4 text-center">Loading...</div>
+                    ) : (
+                      <>
+                        {productsData && productsData.data.length > 0 ? (
+                          <ul>
+                            {productsData.data.map((product: IProduct) => (
+                              <li
+                                key={product.id}
+                                className="pointer-events-auto"
+                              >
+                                <Link
+                                  href={`/products/${product.id}`}
+                                  className="block p-2 hover:bg-muted pointer-events-auto"
+                                  onTouchStart={() => {
+                                    router.push(`/products/${product.id}`);
+                                    setIsFocused(false);
+                                    setSearchQuery("");
+                                  }}
+                                >
+                                  {product.name}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <div className="p-4 text-center">
+                            No products found
+                          </div>
+                        )}
+                      </>
+                    )}
+                  </div>
+                )}
+              </form>
+            </div>
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center space-x-4 xl:space-x-6">
@@ -180,7 +250,10 @@ export function Navbar() {
             </nav>
 
             {/* Search Bar */}
-            <div className="flex-1 max-w-xs sm:max-w-sm md:max-w-md mx-2 sm:mx-4 hidden sm:block" ref={searchRef}>
+            <div
+              className="flex-1 max-w-xs sm:max-w-sm md:max-w-md mx-2 sm:mx-4 hidden sm:block"
+              ref={searchRef}
+            >
               <form onSubmit={handleSearch} className="relative">
                 <Search className="absolute left-2 sm:left-3 top-1/2 transform -translate-y-1/2 h-3 sm:h-4 w-3 sm:w-4 text-muted-foreground" />
                 <Input
@@ -206,7 +279,7 @@ export function Navbar() {
                                   className="block p-2 hover:bg-muted"
                                   onClick={() => {
                                     setIsFocused(false);
-                                    setSearchQuery("")
+                                    setSearchQuery("");
                                   }}
                                 >
                                   {product.name}
@@ -215,7 +288,9 @@ export function Navbar() {
                             ))}
                           </ul>
                         ) : (
-                          <div className="p-4 text-center">No products found</div>
+                          <div className="p-4 text-center">
+                            No products found
+                          </div>
                         )}
                       </>
                     )}
@@ -226,20 +301,20 @@ export function Navbar() {
 
             {/* Right Side Actions */}
             <div className="flex items-center space-x-1 sm:space-x-2">
-              {/* Mobile Search */}
+              {/* Offer */}
+
               <Button
                 variant="ghost"
                 size="icon"
-                className="sm:hidden p-1 sm:p-2"
+                className="relative group p-1 sm:p-2 hidden lg:flex"
               >
-                <Search className="h-4 sm:h-5 w-4 sm:w-5" />
+                <BadgePercent className="h-4 sm:h-5 w-4 sm:w-5 transition-colors group-hover:text-primary" />
               </Button>
-
               {/* Wishlist */}
               <Button
                 variant="ghost"
                 size="icon"
-                className="relative group p-1 sm:p-2"
+                className="relative group p-1 sm:p-2 mr-0 hidden lg:flex"
                 onClick={handleWishlistClick}
               >
                 <Heart className="h-4 sm:h-5 w-4 sm:w-5 transition-colors group-hover:text-primary" />
@@ -247,7 +322,9 @@ export function Navbar() {
                   {user?.role === "ADMIN" ? (
                     0
                   ) : (
-                    <span> {!user ? 0 : <span>{wishlist?.data.length}</span>}</span>
+                    <span>
+                      {!user ? 0 : <span>{wishlist?.data.length}</span>}
+                    </span>
                   )}
                 </span>
               </Button>
@@ -256,7 +333,7 @@ export function Navbar() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="relative group p-1 sm:p-2"
+                className="relative group p-1 sm:p-2 hidden lg:flex"
                 onClick={handleCartClick}
               >
                 <ShoppingCart className="h-4 sm:h-5 w-4 sm:w-5 transition-colors group-hover:text-primary" />
@@ -264,7 +341,13 @@ export function Navbar() {
                   {user?.role === "ADMIN" ? (
                     0
                   ) : (
-                    <span> {!user ? 0 : <span>{cartData?.data[0]?.items.length}</span>}</span>
+                    <span>
+                      {!user ? (
+                        0
+                      ) : (
+                        <span>{cartData?.data[0]?.items.length}</span>
+                      )}
+                    </span>
                   )}
                 </span>
               </Button>
@@ -275,7 +358,7 @@ export function Navbar() {
                   <DropdownMenuTrigger asChild>
                     <Button
                       variant="ghost"
-                      className="relative h-8 w-8 rounded-full p-0"
+                      className="relative h-8 w-8 rounded-full p-0 hidden lg:flex"
                     >
                       <Avatar className="h-8 w-8">
                         <AvatarImage
@@ -363,20 +446,6 @@ export function Navbar() {
           {/* Mobile Navigation */}
           {isMobileMenuOpen && (
             <div className="lg:hidden border-t py-3 sm:py-4 animate-in slide-in-from-top-2">
-              {/* Mobile Search */}
-              <div className="mb-3 sm:mb-4 sm:hidden">
-                <form onSubmit={handleSearch} className="relative">
-                  <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    type="text"
-                    placeholder="Search products..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-8 pr-3 h-8 text-xs bg-muted/50 border-muted-foreground/20"
-                  />
-                </form>
-              </div>
-
               <nav className="flex flex-col space-y-3 sm:space-y-4">
                 {navItems.map((item) => (
                   <Link
@@ -396,7 +465,9 @@ export function Navbar() {
                       <div className="flex items-center space-x-3 px-2 py-2">
                         <Avatar className="h-8 w-8">
                           <AvatarImage
-                            src={user.avatarUrl || "/placeholder.svg"}
+                            src={
+                              userData?.data?.avatarUrl || "/placeholder.svg"
+                            }
                             alt={user.name}
                           />
                           <AvatarFallback className="bg-gradient-to-br from-primary to-accent text-primary-foreground text-xs font-semibold">
