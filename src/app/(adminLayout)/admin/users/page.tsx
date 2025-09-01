@@ -143,7 +143,7 @@ const UsersPage = () => {
                     Total Users
                   </p>
                   <p className="text-3xl font-bold text-foreground">
-                    {totalUsers.toLocaleString()}
+                    {totalUsers?.toLocaleString()}
                   </p>
                 </div>
                 <div className="p-3 rounded-full bg-blue-100 dark:bg-blue-900/30">
@@ -161,7 +161,7 @@ const UsersPage = () => {
                     Admin Users
                   </p>
                   <p className="text-3xl font-bold text-foreground">
-                    {adminUsers.toLocaleString()}
+                    {adminUsers?.toLocaleString()}
                   </p>
                 </div>
                 <div className="p-3 rounded-full bg-green-100 dark:bg-green-900/30">
@@ -179,7 +179,7 @@ const UsersPage = () => {
                     Regular Users
                   </p>
                   <p className="text-3xl font-bold text-foreground">
-                    {regularUsers.toLocaleString()}
+                    {regularUsers?.toLocaleString()}
                   </p>
                 </div>
                 <div className="p-3 rounded-full bg-purple-100 dark:bg-purple-900/30">

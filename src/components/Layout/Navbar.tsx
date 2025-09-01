@@ -157,12 +157,7 @@ export function Navbar({
   return (
     <>
       <header
-        className={cn(
-          "sticky top-0 z-50 w-full border-b transition-all duration-300",
-          isScrolled
-            ? "bg-primary/90 backdrop-blur-md shadow-lg"
-            : "bg-background"
-        )}
+       className="border-b"
       >
         <div className="container mx-auto px-2 sm:px-4">
           <div className="flex h-14 sm:h-16 items-center justify-between gap-2 sm:gap-2">

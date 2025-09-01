@@ -122,7 +122,7 @@ const CartItemsPage = () => {
                     Total Carts
                   </p>
                   <p className="text-2xl md:text-3xl font-bold text-foreground">
-                    {totalCarts.toLocaleString()}
+                    {totalCarts?.toLocaleString()}
                   </p>
                 </div>
                 <div className="p-3 rounded-full text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/20">
@@ -140,7 +140,7 @@ const CartItemsPage = () => {
                     Total Items
                   </p>
                   <p className="text-2xl md:text-3xl font-bold text-foreground">
-                    {totalItems.toLocaleString()}
+                    {totalItems?.toLocaleString()}
                   </p>
                 </div>
                 <div className="p-3 rounded-full text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-950/20">

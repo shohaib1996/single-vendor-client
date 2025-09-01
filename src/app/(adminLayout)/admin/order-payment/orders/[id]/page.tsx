@@ -88,7 +88,7 @@ const OrderDetails = () => {
             <div>
               <p className="text-sm text-gray-500">Created At</p>
               <p className="font-medium">
-                {new Date(order.createdAt).toLocaleString()}
+                {new Date(order.createdAt)?.toLocaleString()}
               </p>
             </div>
           </div>
@@ -157,7 +157,7 @@ const OrderDetails = () => {
               <p className="text-sm text-gray-500">Paid At</p>
               <p className="font-medium">
                 {order.payment.paidAt
-                  ? new Date(order.payment.paidAt).toLocaleString()
+                  ? new Date(order.payment.paidAt)?.toLocaleString()
                   : 'N/A'}
               </p>
             </div>

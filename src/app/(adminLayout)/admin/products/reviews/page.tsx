@@ -245,7 +245,7 @@ const ReviewsPage = () => {
                     Total Reviews
                   </p>
                   <p className="text-3xl font-bold text-blue-600 dark:text-blue-400">
-                    {meta?.total.toLocaleString()}
+                    {meta?.total?.toLocaleString()}
                   </p>
                 </div>
                 <div className="p-3 rounded-full bg-blue-100 dark:bg-blue-900/30">

@@ -109,15 +109,15 @@ export function PaginationControls({
           <>
             Showing{" "}
             <span className="font-medium text-foreground">
-              {startItem.toLocaleString()}
+              {startItem?.toLocaleString()}
             </span>{" "}
             to{" "}
             <span className="font-medium text-foreground">
-              {endItem.toLocaleString()}
+              {endItem?.toLocaleString()}
             </span>{" "}
             of{" "}
             <span className="font-medium text-foreground">
-              {totalItems.toLocaleString()}
+              {totalItems?.toLocaleString()}
             </span>{" "}
             results
           </>

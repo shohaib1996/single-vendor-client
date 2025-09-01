@@ -188,7 +188,7 @@ const OrdersPage = () => {
                 <div className="space-y-2">
                   <p className="text-sm font-medium text-muted-foreground">Total Orders</p>
                   <p className="text-2xl md:text-3xl font-bold text-foreground">
-                    {totalOrders.toLocaleString()}
+                    {totalOrders?.toLocaleString()}
                   </p>
                 </div>
                 <div className="p-3 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400">
@@ -204,7 +204,7 @@ const OrdersPage = () => {
                 <div className="space-y-2">
                   <p className="text-sm font-medium text-muted-foreground">Pending Orders</p>
                   <p className="text-2xl md:text-3xl font-bold text-foreground">
-                    {pendingOrders.toLocaleString()}
+                    {pendingOrders?.toLocaleString()}
                   </p>
                 </div>
                 <div className="p-3 rounded-full bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400">
@@ -225,7 +225,7 @@ const OrdersPage = () => {
                 <div className="space-y-2">
                   <p className="text-sm font-medium text-muted-foreground">Total Revenue</p>
                   <p className="text-2xl md:text-3xl font-bold text-foreground">
-                    ${totalRevenue.toLocaleString()}
+                    ${totalRevenue?.toLocaleString()}
                   </p>
                 </div>
                 <div className="p-3 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400">
