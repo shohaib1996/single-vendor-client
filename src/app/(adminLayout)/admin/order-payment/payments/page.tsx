@@ -162,7 +162,7 @@ const PaymentsPage = () => {
                       Total Payments
                     </p>
                     <p className="text-2xl md:text-3xl font-bold text-foreground">
-                      {totalPayments.toLocaleString()}
+                      {totalPayments?.toLocaleString()}
                     </p>
                   </div>
                   <div className="p-3 rounded-full text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-900/20">
@@ -186,7 +186,7 @@ const PaymentsPage = () => {
                       Completed
                     </p>
                     <p className="text-2xl md:text-3xl font-bold text-foreground">
-                      {completedPayments.toLocaleString()}
+                      {completedPayments?.toLocaleString()}
                     </p>
                   </div>
                   <div className="p-3 rounded-full text-green-600 dark:text-green-400 bg-green-100 dark:bg-green-900/20">
@@ -211,7 +211,7 @@ const PaymentsPage = () => {
                       Pending
                     </p>
                     <p className="text-2xl md:text-3xl font-bold text-foreground">
-                      {pendingPayments.toLocaleString()}
+                      {pendingPayments?.toLocaleString()}
                     </p>
                   </div>
                   <div className="p-3 rounded-full text-yellow-600 dark:text-yellow-400 bg-yellow-100 dark:bg-yellow-900/20">
@@ -240,7 +240,7 @@ const PaymentsPage = () => {
                       Total Amount
                     </p>
                     <p className="text-2xl md:text-3xl font-bold text-foreground">
-                      ${totalAmount.toLocaleString()}
+                      ${totalAmount?.toLocaleString()}
                     </p>
                   </div>
                   <div className="p-3 rounded-full text-purple-600 dark:text-purple-400 bg-purple-100 dark:bg-purple-900/20">

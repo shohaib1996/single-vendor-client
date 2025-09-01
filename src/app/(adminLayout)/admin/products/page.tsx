@@ -196,7 +196,7 @@ const AllProductsPage = () => {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="max-w-[1200px] 3xl:container  mx-auto space-y-6"
+        className="container  mx-auto space-y-6"
       >
         {/* Header */}
         <motion.div variants={itemVariants}>

@@ -109,7 +109,7 @@ function Counter({ end, duration = 2000, isDecimal = false, suffix = "", isVisib
     if (isDecimal) {
       return num.toFixed(1)
     }
-    return Math.floor(num).toLocaleString()
+    return Math.floor(num)?.toLocaleString()
   }
 
   return (

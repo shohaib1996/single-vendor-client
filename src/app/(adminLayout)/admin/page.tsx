@@ -94,7 +94,7 @@ const AdminDashboard = () => {
   const kpiCards = [
     {
       title: "Total Revenue",
-      value: `$${analytics.totalRevenue.toLocaleString()}`,
+      value: `$${analytics.totalRevenue?.toLocaleString()}`,
       icon: DollarSign,
       color: "text-green-600 dark:text-green-400",
       bgColor: "bg-green-50 dark:bg-green-950/20",
@@ -102,7 +102,7 @@ const AdminDashboard = () => {
     },
     {
       title: "Total Orders",
-      value: analytics.totalOrders.toLocaleString(),
+      value: analytics.totalOrders?.toLocaleString(),
       icon: ShoppingCart,
       color: "text-blue-600 dark:text-blue-400",
       bgColor: "bg-blue-50 dark:bg-blue-950/20",
@@ -110,7 +110,7 @@ const AdminDashboard = () => {
     },
     {
       title: "Total Customers",
-      value: analytics.totalCustomers.toLocaleString(),
+      value: analytics.totalCustomers?.toLocaleString(),
       icon: Users,
       color: "text-purple-600 dark:text-purple-400",
       bgColor: "bg-purple-50 dark:bg-purple-950/20",
@@ -118,7 +118,7 @@ const AdminDashboard = () => {
     },
     {
       title: "Total Products",
-      value: analytics.totalProducts.toLocaleString(),
+      value: analytics.totalProducts?.toLocaleString(),
       icon: Package,
       color: "text-orange-600 dark:text-orange-400",
       bgColor: "bg-orange-50 dark:bg-orange-950/20",
@@ -126,7 +126,7 @@ const AdminDashboard = () => {
     },
     {
       title: "Pending Orders",
-      value: analytics.pendingOrders.toLocaleString(),
+      value: analytics.pendingOrders?.toLocaleString(),
       icon: Clock,
       color: "text-yellow-600 dark:text-yellow-400",
       bgColor: "bg-yellow-50 dark:bg-yellow-950/20",
@@ -134,7 +134,7 @@ const AdminDashboard = () => {
     },
     {
       title: "Out of Stock",
-      value: analytics.outOfStock.toLocaleString(),
+      value: analytics.outOfStock?.toLocaleString(),
       icon: AlertTriangle,
       color: "text-red-600 dark:text-red-400",
       bgColor: "bg-red-50 dark:bg-red-950/20",
@@ -142,7 +142,7 @@ const AdminDashboard = () => {
     },
     {
       title: "New Customers",
-      value: analytics.newCustomers.toLocaleString(),
+      value: analytics.newCustomers?.toLocaleString(),
       icon: UserPlus,
       color: "text-emerald-600 dark:text-emerald-400",
       bgColor: "bg-emerald-50 dark:bg-emerald-950/20",
@@ -150,7 +150,7 @@ const AdminDashboard = () => {
     },
     {
       title: "Unanswered Questions",
-      value: analytics.unansweredQuestions.toLocaleString(),
+      value: analytics.unansweredQuestions?.toLocaleString(),
       icon: HelpCircle,
       color: "text-indigo-600 dark:text-indigo-400",
       bgColor: "bg-indigo-50 dark:bg-indigo-950/20",
@@ -349,7 +349,7 @@ const AdminDashboard = () => {
                     <YAxis
                       className="text-xs"
                       tick={{ fontSize: 12 }}
-                      tickFormatter={(value) => `$${value.toLocaleString()}`}
+                      tickFormatter={(value) => `$${value?.toLocaleString()}`}
                     />
                     <Tooltip
                       contentStyle={{
@@ -358,7 +358,7 @@ const AdminDashboard = () => {
                         borderRadius: "8px",
                       }}
                       formatter={(value) => [
-                        `$${value.toLocaleString()}`,
+                        `$${value?.toLocaleString()}`,
                         "Sales",
                       ]}
                     />
@@ -437,7 +437,7 @@ const AdminDashboard = () => {
                       type="number"
                       className="text-xs"
                       tick={{ fontSize: 12 }}
-                      tickFormatter={(value) => value.toLocaleString()}
+                      tickFormatter={(value) => value?.toLocaleString()}
                     />
                     <YAxis
                       type="category"
@@ -455,7 +455,7 @@ const AdminDashboard = () => {
                         color: "hsl(var(--foreground))",
                       }}
                       formatter={(value) => [
-                        value.toLocaleString(),
+                        value?.toLocaleString(),
                         "Quantity Sold",
                       ]}
                       labelStyle={{ color: "hsl(var(--foreground))" }}
@@ -542,7 +542,7 @@ const AdminDashboard = () => {
                     <YAxis
                       className="text-xs"
                       tick={{ fontSize: 12 }}
-                      tickFormatter={(value) => `$${value.toLocaleString()}`}
+                      tickFormatter={(value) => `$${value?.toLocaleString()}`}
                     />
                     <Tooltip
                       contentStyle={{
@@ -551,7 +551,7 @@ const AdminDashboard = () => {
                         borderRadius: "8px",
                       }}
                       formatter={(value) => [
-                        `$${value.toLocaleString()}`,
+                        `$${value?.toLocaleString()}`,
                         "Total Sales",
                       ]}
                     />

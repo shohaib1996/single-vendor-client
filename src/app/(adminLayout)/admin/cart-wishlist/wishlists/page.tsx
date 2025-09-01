@@ -134,7 +134,7 @@ const WishlistsPage = () => {
                       Total Wishlists
                     </p>
                     <p className="text-2xl md:text-3xl font-bold text-foreground">
-                      {totalWishlists.toLocaleString()}
+                      {totalWishlists?.toLocaleString()}
                     </p>
                   </div>
                   <div className="p-3 rounded-full text-pink-600 dark:text-pink-400 bg-pink-100 dark:bg-pink-900/20 group-hover:scale-110 transition-transform duration-300">
@@ -158,7 +158,7 @@ const WishlistsPage = () => {
                       Total Value
                     </p>
                     <p className="text-2xl md:text-3xl font-bold text-foreground">
-                      ${totalValue.toLocaleString()}
+                      ${totalValue?.toLocaleString()}
                     </p>
                   </div>
                   <div className="p-3 rounded-full text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-900/20 group-hover:scale-110 transition-transform duration-300">
