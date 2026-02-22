@@ -20,7 +20,13 @@ import { useDebounced } from "@/redux/hooks/hooks";
 import { IWishlistItem } from "@/types/wishlist/wishlist";
 import { PaginationControls } from "@/components/common/PaginationControls";
 import { CopyButton } from "@/components/common/CopyButton";
-import { Heart, Search, Package, DollarSign, AlertTriangle } from 'lucide-react';
+import {
+  Heart,
+  Search,
+  Package,
+  DollarSign,
+  AlertTriangle,
+} from "lucide-react";
 
 const WishlistsPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -42,11 +48,11 @@ const WishlistsPage = () => {
   const meta = data?.meta;
   const totalPages = Math.ceil(meta?.total / meta?.limit) || 1;
 
-  // Calculate stats
+  // Calculate stats for wishlists
   const totalWishlists = meta?.total || 0;
   const totalValue = wishlists.reduce(
     (sum: number, item: IWishlistItem) => sum + item.product.price,
-    0
+    0,
   );
   const averagePrice = totalWishlists > 0 ? totalValue / totalWishlists : 0;
 
@@ -297,7 +303,7 @@ const WishlistsPage = () => {
                               </Badge>
                             </TableCell>
                           </motion.tr>
-                        )
+                        ),
                       )}
                     </TableBody>
                   </Table>

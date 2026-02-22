@@ -20,7 +20,14 @@ import { useDebounced } from "@/redux/hooks/hooks";
 import { ICart } from "@/types/cart/cart";
 import { PaginationControls } from "@/components/common/PaginationControls";
 import { CopyButton } from "@/components/common/CopyButton";
-import { ShoppingCart, Search, Users, Package, AlertTriangle, ShoppingBag } from 'lucide-react';
+import {
+  ShoppingCart,
+  Search,
+  Users,
+  Package,
+  AlertTriangle,
+  ShoppingBag,
+} from "lucide-react";
 
 const CartItemsPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -42,10 +49,13 @@ const CartItemsPage = () => {
   const meta = data?.meta;
   const totalPages = Math.ceil(meta?.total / meta?.limit) || 1;
 
-  // Calculate stats
   const totalCarts = meta?.total || 0;
-  const totalItems = carts.reduce((sum: number, cart: ICart) => sum + cart.items.length, 0);
-  const averageItemsPerCart = totalCarts > 0 ? (totalItems / totalCarts).toFixed(1) : "0";
+  const totalItems = carts.reduce(
+    (sum: number, cart: ICart) => sum + cart.items.length,
+    0,
+  );
+  const averageItemsPerCart =
+    totalCarts > 0 ? (totalItems / totalCarts).toFixed(1) : "0";
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -78,8 +88,12 @@ const CartItemsPage = () => {
         <div className="flex items-center justify-center min-h-[400px]">
           <div className="text-center">
             <AlertTriangle className="h-12 w-12 text-destructive mx-auto mb-4" />
-            <h3 className="text-lg font-semibold mb-2">Failed to load cart items</h3>
-            <p className="text-muted-foreground">Please try refreshing the page</p>
+            <h3 className="text-lg font-semibold mb-2">
+              Failed to load cart items
+            </h3>
+            <p className="text-muted-foreground">
+              Please try refreshing the page
+            </p>
           </div>
         </div>
       </div>
@@ -94,7 +108,7 @@ const CartItemsPage = () => {
         animate="visible"
         className="space-y-6"
       >
-        {/* Header */}
+        {/* Headers */}
         <motion.div variants={itemVariants} className="text-center space-y-4">
           <div className="flex items-center justify-center space-x-3">
             <div className="p-3 rounded-full bg-primary/10">
@@ -203,9 +217,12 @@ const CartItemsPage = () => {
                   <div className="p-4 rounded-full bg-muted/50 mb-4">
                     <ShoppingCart className="h-12 w-12 text-muted-foreground" />
                   </div>
-                  <h3 className="text-lg font-semibold mb-2">No cart items found</h3>
+                  <h3 className="text-lg font-semibold mb-2">
+                    No cart items found
+                  </h3>
                   <p className="text-muted-foreground max-w-md">
-                    No cart items match your search criteria. Try adjusting your search terms.
+                    No cart items match your search criteria. Try adjusting your
+                    search terms.
                   </p>
                 </div>
               ) : (
@@ -230,7 +247,10 @@ const CartItemsPage = () => {
                         >
                           <TableCell>
                             <div className="flex items-center space-x-2">
-                              <Badge variant="outline" className="font-mono text-xs">
+                              <Badge
+                                variant="outline"
+                                className="font-mono text-xs"
+                              >
                                 {cart.id.slice(0, 8)}...
                               </Badge>
                               <CopyButton text={cart.id} />
@@ -247,15 +267,21 @@ const CartItemsPage = () => {
                                     .toUpperCase() || "U"}
                                 </AvatarFallback>
                               </Avatar>
-                              <span className="font-medium">{cart.user.name}</span>
+                              <span className="font-medium">
+                                {cart.user.name}
+                              </span>
                             </div>
                           </TableCell>
                           <TableCell>
-                            <span className="text-muted-foreground">{cart.user.email}</span>
+                            <span className="text-muted-foreground">
+                              {cart.user.email}
+                            </span>
                           </TableCell>
                           <TableCell>
-                            <Badge 
-                              variant={cart.items.length > 5 ? "default" : "secondary"}
+                            <Badge
+                              variant={
+                                cart.items.length > 5 ? "default" : "secondary"
+                              }
                               className="font-semibold"
                             >
                               {cart.items.length} items
