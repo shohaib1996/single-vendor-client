@@ -52,7 +52,18 @@ import {
 } from "@/redux/api/filterOption/filterOptionApi";
 import { useGetAllCategoriesQuery } from "@/redux/api/category/categoryApi";
 import { ICategory, IFilterOption } from "@/types/category/category";
-import { Loader2, PlusCircle, Search, Trash2, Edit, Filter, AlertCircle, Plus, X, Settings } from 'lucide-react';
+import {
+  Loader2,
+  PlusCircle,
+  Search,
+  Trash2,
+  Edit,
+  Filter,
+  AlertCircle,
+  Plus,
+  X,
+  Settings,
+} from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
   AlertDialog,
@@ -69,15 +80,21 @@ import { toast } from "sonner";
 import { CopyButton } from "@/components/common/CopyButton";
 import { PaginationControls } from "@/components/common/PaginationControls";
 
-// Update formSchema to include 'TEXT' type
+// Update formSchema to include 'TEXT'types
 const formSchema = z.object({
   categoryId: z.string().min(1, { message: "Category is required" }),
-  filters: z.array(z.object({
-    name: z.string().min(1, { message: "Name is required" }),
-    type: z.enum(["DROPDOWN", "RANGE", "TEXT"], { message: "Type is required" }),
-    unit: z.string().optional(),
-    options: z.string().optional(),
-  })).min(1, { message: "At least one filter is required" }),
+  filters: z
+    .array(
+      z.object({
+        name: z.string().min(1, { message: "Name is required" }),
+        type: z.enum(["DROPDOWN", "RANGE", "TEXT"], {
+          message: "Type is required",
+        }),
+        unit: z.string().optional(),
+        options: z.string().optional(),
+      }),
+    )
+    .min(1, { message: "At least one filter is required" }),
 });
 
 const FiltersManagement = () => {
@@ -106,7 +123,7 @@ const FiltersManagement = () => {
   });
 
   const { data, isLoading, isError } = useGetFilterOptionsQuery(
-    debouncedSearchTerm ? { ...query, searchTerm: debouncedSearchTerm } : query
+    debouncedSearchTerm ? { ...query, searchTerm: debouncedSearchTerm } : query,
   );
 
   const filterOptions = data?.data;
@@ -120,7 +137,9 @@ const FiltersManagement = () => {
   const [deleteFilterOption] = useDeleteFilterOptionMutation();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingFilter, setEditingFilter] = useState<IFilterOption | null>(null);
+  const [editingFilter, setEditingFilter] = useState<IFilterOption | null>(
+    null,
+  );
   const [loadingItemId, setLoadingItemId] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -133,7 +152,7 @@ const FiltersManagement = () => {
           type: "DROPDOWN",
           unit: "",
           options: "",
-        }
+        },
       ],
     },
   });
@@ -147,22 +166,26 @@ const FiltersManagement = () => {
     if (editingFilter) {
       form.reset({
         categoryId: editingFilter.categoryId,
-        filters: [{
-          name: editingFilter.name,
-          type: editingFilter.type,
-          unit: editingFilter.unit || "",
-          options: editingFilter.options?.join(", ") || "",
-        }],
+        filters: [
+          {
+            name: editingFilter.name,
+            type: editingFilter.type,
+            unit: editingFilter.unit || "",
+            options: editingFilter.options?.join(", ") || "",
+          },
+        ],
       });
     } else {
       form.reset({
         categoryId: "",
-        filters: [{
-          name: "",
-          type: "DROPDOWN",
-          unit: "",
-          options: "",
-        }],
+        filters: [
+          {
+            name: "",
+            type: "DROPDOWN",
+            unit: "",
+            options: "",
+          },
+        ],
       });
     }
   }, [editingFilter, form]);
@@ -197,10 +220,14 @@ const FiltersManagement = () => {
           categoryId: values.categoryId,
           name: values.filters[0].name,
           type: values.filters[0].type,
-          unit: values.filters[0].type === "RANGE" ? values.filters[0].unit : undefined,
-          options: values.filters[0].type === "DROPDOWN"
-            ? values.filters[0].options?.split(",").map((s) => s.trim())
-            : undefined,
+          unit:
+            values.filters[0].type === "RANGE"
+              ? values.filters[0].unit
+              : undefined,
+          options:
+            values.filters[0].type === "DROPDOWN"
+              ? values.filters[0].options?.split(",").map((s) => s.trim())
+              : undefined,
         };
         await updateFilterOption({
           id: editingFilter.id,
@@ -208,17 +235,20 @@ const FiltersManagement = () => {
         }).unwrap();
         toast.success("Filter option updated successfully!");
       } else {
-        const payloads = values.filters.map(filter => ({
+        const payloads = values.filters.map((filter) => ({
           categoryId: values.categoryId,
           name: filter.name,
           type: filter.type,
           unit: filter.type === "RANGE" ? filter.unit : undefined,
-          options: filter.type === "DROPDOWN"
-            ? filter.options?.split(",").map((s) => s.trim())
-            : undefined,
+          options:
+            filter.type === "DROPDOWN"
+              ? filter.options?.split(",").map((s) => s.trim())
+              : undefined,
         }));
         await createFilterOption(payloads).unwrap();
-        toast.success(`${payloads.length} filter option(s) created successfully!`);
+        toast.success(
+          `${payloads.length} filter option(s) created successfully!`,
+        );
       }
       setIsModalOpen(false);
       setEditingFilter(null);
@@ -255,10 +285,10 @@ const FiltersManagement = () => {
 
   const handleCategorySearch = (value: string) => {
     const newSearchParams = new URLSearchParams(searchParams.toString());
-    if (value && value !== 'all') {
-      newSearchParams.set('categoryId', value);
+    if (value && value !== "all") {
+      newSearchParams.set("categoryId", value);
     } else {
-      newSearchParams.delete('categoryId');
+      newSearchParams.delete("categoryId");
     }
     newSearchParams.set("page", "1");
     router.push(`?${newSearchParams.toString()}`);
@@ -418,7 +448,8 @@ const FiltersManagement = () => {
                       }}
                       className="w-full sm:w-auto"
                     >
-                      <PlusCircle className="mr-2 h-4 w-4" /> Add New Filter Option
+                      <PlusCircle className="mr-2 h-4 w-4" /> Add New Filter
+                      Option
                     </Button>
                   </DialogTrigger>
                   <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-y-auto">
@@ -426,7 +457,9 @@ const FiltersManagement = () => {
                       <DialogTitle className="flex items-center space-x-2">
                         <Filter className="h-5 w-5 text-primary" />
                         <span>
-                          {editingFilter ? "Edit Filter Option" : "Add New Filter Options"}
+                          {editingFilter
+                            ? "Edit Filter Option"
+                            : "Add New Filter Options"}
                         </span>
                       </DialogTitle>
                       <DialogDescription>
@@ -465,11 +498,16 @@ const FiltersManagement = () => {
                                       </SelectTrigger>
                                     </FormControl>
                                     <SelectContent>
-                                      {categories?.map((category: ICategory) => (
-                                        <SelectItem key={category.id} value={category.id}>
-                                          {category.name}
-                                        </SelectItem>
-                                      ))}
+                                      {categories?.map(
+                                        (category: ICategory) => (
+                                          <SelectItem
+                                            key={category.id}
+                                            value={category.id}
+                                          >
+                                            {category.name}
+                                          </SelectItem>
+                                        ),
+                                      )}
                                     </SelectContent>
                                   </Select>
                                   <FormMessage />
@@ -492,12 +530,14 @@ const FiltersManagement = () => {
                                   type="button"
                                   variant="outline"
                                   size="sm"
-                                  onClick={() => append({
-                                    name: "",
-                                    type: "DROPDOWN",
-                                    unit: "",
-                                    options: "",
-                                  })}
+                                  onClick={() =>
+                                    append({
+                                      name: "",
+                                      type: "DROPDOWN",
+                                      unit: "",
+                                      options: "",
+                                    })
+                                  }
                                 >
                                   <Plus className="h-3 w-3 mr-1" />
                                   Add More
@@ -507,7 +547,10 @@ const FiltersManagement = () => {
                           </CardHeader>
                           <CardContent className="pt-0 space-y-4">
                             {fields.map((field: any, index: number) => (
-                              <div key={field.id} className="space-y-4 p-4 border rounded-lg relative">
+                              <div
+                                key={field.id}
+                                className="space-y-4 p-4 border rounded-lg relative"
+                              >
                                 {!editingFilter && fields.length > 1 && (
                                   <Button
                                     type="button"
@@ -519,7 +562,7 @@ const FiltersManagement = () => {
                                     <X className="h-3 w-3" />
                                   </Button>
                                 )}
-                                
+
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                   <FormField
                                     control={form.control}
@@ -528,13 +571,16 @@ const FiltersManagement = () => {
                                       <FormItem>
                                         <FormLabel>Name</FormLabel>
                                         <FormControl>
-                                          <Input placeholder="Filter name" {...field} />
+                                          <Input
+                                            placeholder="Filter name"
+                                            {...field}
+                                          />
                                         </FormControl>
                                         <FormMessage />
                                       </FormItem>
                                     )}
                                   />
-                                  
+
                                   <FormField
                                     control={form.control}
                                     name={`filters.${index}.type`}
@@ -551,9 +597,15 @@ const FiltersManagement = () => {
                                             </SelectTrigger>
                                           </FormControl>
                                           <SelectContent>
-                                            <SelectItem value="DROPDOWN">Dropdown</SelectItem>
-                                            <SelectItem value="RANGE">Range</SelectItem>
-                                            <SelectItem value="TEXT">Text</SelectItem>
+                                            <SelectItem value="DROPDOWN">
+                                              Dropdown
+                                            </SelectItem>
+                                            <SelectItem value="RANGE">
+                                              Range
+                                            </SelectItem>
+                                            <SelectItem value="TEXT">
+                                              Text
+                                            </SelectItem>
                                           </SelectContent>
                                         </Select>
                                         <FormMessage />
@@ -562,15 +614,21 @@ const FiltersManagement = () => {
                                   />
                                 </div>
 
-                                {form.watch(`filters.${index}.type`) === "RANGE" && (
+                                {form.watch(`filters.${index}.type`) ===
+                                  "RANGE" && (
                                   <FormField
                                     control={form.control}
                                     name={`filters.${index}.unit`}
                                     render={({ field }) => (
                                       <FormItem>
-                                        <FormLabel>Unit (e.g., kg, cm, $, etc.)</FormLabel>
+                                        <FormLabel>
+                                          Unit (e.g., kg, cm, $, etc.)
+                                        </FormLabel>
                                         <FormControl>
-                                          <Input placeholder="Unit" {...field} />
+                                          <Input
+                                            placeholder="Unit"
+                                            {...field}
+                                          />
                                         </FormControl>
                                         <FormMessage />
                                       </FormItem>
@@ -578,13 +636,16 @@ const FiltersManagement = () => {
                                   />
                                 )}
 
-                                {form.watch(`filters.${index}.type`) === "DROPDOWN" && (
+                                {form.watch(`filters.${index}.type`) ===
+                                  "DROPDOWN" && (
                                   <FormField
                                     control={form.control}
                                     name={`filters.${index}.options`}
                                     render={({ field }) => (
                                       <FormItem>
-                                        <FormLabel>Options (comma-separated)</FormLabel>
+                                        <FormLabel>
+                                          Options (comma-separated)
+                                        </FormLabel>
                                         <FormControl>
                                           <Input
                                             placeholder="Option1, Option2, Option3"
@@ -602,11 +663,16 @@ const FiltersManagement = () => {
                         </Card>
 
                         <DialogFooter>
-                          <Button type="submit" disabled={form.formState.isSubmitting}>
+                          <Button
+                            type="submit"
+                            disabled={form.formState.isSubmitting}
+                          >
                             {form.formState.isSubmitting ? (
                               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                             ) : null}
-                            {editingFilter ? "Save Changes" : `Create Filter${fields.length > 1 ? 's' : ''}`}
+                            {editingFilter
+                              ? "Save Changes"
+                              : `Create Filter${fields.length > 1 ? "s" : ""}`}
                           </Button>
                         </DialogFooter>
                       </form>
@@ -653,121 +719,154 @@ const FiltersManagement = () => {
                         </TableCell>
                       </TableRow>
                     ) : (
-                      filterOptions?.map((filterOption: IFilterOption, index: number) => (
-                        <motion.tr
-                          key={filterOption.id}
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: index * 0.05 }}
-                          className="group hover:bg-muted/50 transition-colors"
-                        >
-                          <TableCell>
-                            <div className="flex items-center space-x-2">
-                              <Badge variant="secondary" className="font-mono text-xs">
-                                {filterOption.id.slice(0, 8)}...
-                              </Badge>
-                              <CopyButton text={filterOption.id} />
-                            </div>
-                          </TableCell>
-                          <TableCell className="font-medium">
-                            {filterOption.name}
-                          </TableCell>
-                          <TableCell>
-                            <Badge variant="outline">
-                              {filterOption.category?.name || "N/A"}
-                            </Badge>
-                          </TableCell>
-                          <TableCell>
-                            <Badge 
-                              variant={
-                                filterOption.type === "DROPDOWN" ? "default" :
-                                filterOption.type === "RANGE" ? "secondary" : "outline"
-                              }
-                            >
-                              {filterOption.type}
-                            </Badge>
-                          </TableCell>
-                          <TableCell>
-                            {filterOption.unit ? (
-                              <Badge variant="outline">{filterOption.unit}</Badge>
-                            ) : (
-                              <span className="text-muted-foreground">N/A</span>
-                            )}
-                          </TableCell>
-                          <TableCell>
-                            {filterOption.options && filterOption.options.length > 0 ? (
-                              <div className="flex flex-wrap gap-1">
-                                {filterOption.options.slice(0, 2).map((option, idx) => (
-                                  <Badge key={idx} variant="outline" className="text-xs">
-                                    {option}
-                                  </Badge>
-                                ))}
-                                {filterOption.options.length > 2 && (
-                                  <Badge variant="outline" className="text-xs">
-                                    +{filterOption.options.length - 2} more
-                                  </Badge>
-                                )}
+                      filterOptions?.map(
+                        (filterOption: IFilterOption, index: number) => (
+                          <motion.tr
+                            key={filterOption.id}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: index * 0.05 }}
+                            className="group hover:bg-muted/50 transition-colors"
+                          >
+                            <TableCell>
+                              <div className="flex items-center space-x-2">
+                                <Badge
+                                  variant="secondary"
+                                  className="font-mono text-xs"
+                                >
+                                  {filterOption.id.slice(0, 8)}...
+                                </Badge>
+                                <CopyButton text={filterOption.id} />
                               </div>
-                            ) : (
-                              <span className="text-muted-foreground">N/A</span>
-                            )}
-                          </TableCell>
-                          <TableCell className="text-right">
-                            <div className="flex justify-end space-x-2">
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={() => {
-                                  setEditingFilter(filterOption);
-                                  setIsModalOpen(true);
-                                }}
-                                disabled={loadingItemId === filterOption.id}
+                            </TableCell>
+                            <TableCell className="font-medium">
+                              {filterOption.name}
+                            </TableCell>
+                            <TableCell>
+                              <Badge variant="outline">
+                                {filterOption.category?.name || "N/A"}
+                              </Badge>
+                            </TableCell>
+                            <TableCell>
+                              <Badge
+                                variant={
+                                  filterOption.type === "DROPDOWN"
+                                    ? "default"
+                                    : filterOption.type === "RANGE"
+                                      ? "secondary"
+                                      : "outline"
+                                }
                               >
-                                {loadingItemId === filterOption.id ? (
-                                  <Loader2 className="h-4 w-4 animate-spin" />
-                                ) : (
-                                  <Edit className="h-4 w-4" />
-                                )}
-                              </Button>
-                              <AlertDialog>
-                                <AlertDialogTrigger asChild>
-                                  <Button
-                                    variant="destructive"
-                                    size="sm"
-                                    disabled={loadingItemId === filterOption.id}
-                                  >
-                                    {loadingItemId === filterOption.id ? (
-                                      <Loader2 className="h-4 w-4 animate-spin" />
-                                    ) : (
-                                      <Trash2 className="h-4 w-4" />
-                                    )}
-                                  </Button>
-                                </AlertDialogTrigger>
-                                <AlertDialogContent>
-                                  <AlertDialogHeader>
-                                    <AlertDialogTitle className="flex items-center space-x-2">
-                                      <AlertCircle className="h-5 w-5 text-destructive" />
-                                      <span>Are you absolutely sure?</span>
-                                    </AlertDialogTitle>
-                                    <AlertDialogDescription>
-                                      This action cannot be undone. This will permanently delete the filter option &quot;{filterOption.name}&quot; and remove its data from our servers.
-                                    </AlertDialogDescription>
-                                  </AlertDialogHeader>
-                                  <AlertDialogFooter>
-                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                    <AlertDialogAction
-                                      onClick={() => handleDelete(filterOption.id)}
-                                      className="bg-red-500 hover:bg-red-600"
+                                {filterOption.type}
+                              </Badge>
+                            </TableCell>
+                            <TableCell>
+                              {filterOption.unit ? (
+                                <Badge variant="outline">
+                                  {filterOption.unit}
+                                </Badge>
+                              ) : (
+                                <span className="text-muted-foreground">
+                                  N/A
+                                </span>
+                              )}
+                            </TableCell>
+                            <TableCell>
+                              {filterOption.options &&
+                              filterOption.options.length > 0 ? (
+                                <div className="flex flex-wrap gap-1">
+                                  {filterOption.options
+                                    .slice(0, 2)
+                                    .map((option, idx) => (
+                                      <Badge
+                                        key={idx}
+                                        variant="outline"
+                                        className="text-xs"
+                                      >
+                                        {option}
+                                      </Badge>
+                                    ))}
+                                  {filterOption.options.length > 2 && (
+                                    <Badge
+                                      variant="outline"
+                                      className="text-xs"
                                     >
-                                      Delete Filter
-                                    </AlertDialogAction>
-                                  </AlertDialogFooter>
-                                </AlertDialogContent>
-                              </AlertDialog>
-                            </div>
-                          </TableCell>
-                        </motion.tr>
-                      ))
+                                      +{filterOption.options.length - 2} more
+                                    </Badge>
+                                  )}
+                                </div>
+                              ) : (
+                                <span className="text-muted-foreground">
+                                  N/A
+                                </span>
+                              )}
+                            </TableCell>
+                            <TableCell className="text-right">
+                              <div className="flex justify-end space-x-2">
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => {
+                                    setEditingFilter(filterOption);
+                                    setIsModalOpen(true);
+                                  }}
+                                  disabled={loadingItemId === filterOption.id}
+                                >
+                                  {loadingItemId === filterOption.id ? (
+                                    <Loader2 className="h-4 w-4 animate-spin" />
+                                  ) : (
+                                    <Edit className="h-4 w-4" />
+                                  )}
+                                </Button>
+                                <AlertDialog>
+                                  <AlertDialogTrigger asChild>
+                                    <Button
+                                      variant="destructive"
+                                      size="sm"
+                                      disabled={
+                                        loadingItemId === filterOption.id
+                                      }
+                                    >
+                                      {loadingItemId === filterOption.id ? (
+                                        <Loader2 className="h-4 w-4 animate-spin" />
+                                      ) : (
+                                        <Trash2 className="h-4 w-4" />
+                                      )}
+                                    </Button>
+                                  </AlertDialogTrigger>
+                                  <AlertDialogContent>
+                                    <AlertDialogHeader>
+                                      <AlertDialogTitle className="flex items-center space-x-2">
+                                        <AlertCircle className="h-5 w-5 text-destructive" />
+                                        <span>Are you absolutely sure?</span>
+                                      </AlertDialogTitle>
+                                      <AlertDialogDescription>
+                                        This action cannot be undone. This will
+                                        permanently delete the filter option
+                                        &quot;{filterOption.name}&quot; and
+                                        remove its data from our servers.
+                                      </AlertDialogDescription>
+                                    </AlertDialogHeader>
+                                    <AlertDialogFooter>
+                                      <AlertDialogCancel>
+                                        Cancel
+                                      </AlertDialogCancel>
+                                      <AlertDialogAction
+                                        onClick={() =>
+                                          handleDelete(filterOption.id)
+                                        }
+                                        className="bg-red-500 hover:bg-red-600"
+                                      >
+                                        Delete Filter
+                                      </AlertDialogAction>
+                                    </AlertDialogFooter>
+                                  </AlertDialogContent>
+                                </AlertDialog>
+                              </div>
+                            </TableCell>
+                          </motion.tr>
+                        ),
+                      )
                     )}
                   </TableBody>
                 </Table>
