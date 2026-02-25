@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import Link from 'next/link'
-import { easeInOut, easeOut, motion } from 'framer-motion'
-import { Home, ArrowLeft } from 'lucide-react'
-import Image from 'next/image'
+import Link from "next/link";
+import { easeInOut, easeOut, motion } from "framer-motion";
+import { Home, ArrowLeft } from "lucide-react";
+import Image from "next/image";
 
 export default function NotFound() {
   const containerVariants = {
@@ -12,10 +12,10 @@ export default function NotFound() {
       opacity: 1,
       transition: {
         delayChildren: 0.3,
-        staggerChildren: 0.2
-      }
-    }
-  }
+        staggerChildren: 0.2,
+      },
+    },
+  };
 
   const itemVariants = {
     hidden: { y: 20, opacity: 0 },
@@ -24,10 +24,10 @@ export default function NotFound() {
       opacity: 1,
       transition: {
         duration: 0.5,
-        ease: easeOut
-      }
-    }
-  }
+        ease: easeOut,
+      },
+    },
+  };
 
   const floatingVariants = {
     animate: {
@@ -35,10 +35,10 @@ export default function NotFound() {
       transition: {
         duration: 3,
         repeat: Infinity,
-        ease: easeInOut
-      }
-    }
-  }
+        ease: easeInOut,
+      },
+    },
+  };
 
   const glitchVariants = {
     animate: {
@@ -47,14 +47,13 @@ export default function NotFound() {
         duration: 0.5,
         repeat: Infinity,
         repeatDelay: 3,
-        ease: easeInOut
-      }
-    }
-  }
+        ease: easeInOut,
+      },
+    },
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 flex items-center justify-center p-4 overflow-hidden relative">
-      {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
         {[...Array(20)].map((_, i) => (
           <motion.div
@@ -123,7 +122,8 @@ export default function NotFound() {
           className="text-lg text-gray-300 mb-8 leading-relaxed"
           variants={itemVariants}
         >
-          Looks like you&apos;ve ventured into the digital void. The page you&apos;re looking for has drifted away into cyberspace.
+          Looks like you&apos;ve ventured into the digital void. The page
+          you&apos;re looking for has drifted away into cyberspace.
         </motion.p>
 
         <motion.div
@@ -133,16 +133,14 @@ export default function NotFound() {
           <Link href="/">
             <motion.button
               className="group relative px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-full shadow-lg overflow-hidden"
-              whileHover={{ 
+              whileHover={{
                 scale: 1.05,
-                boxShadow: "0 20px 40px rgba(168, 85, 247, 0.4)"
+                boxShadow: "0 20px 40px rgba(168, 85, 247, 0.4)",
               }}
               whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.2 }}
             >
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-pink-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-              />
+              <motion.div className="absolute inset-0 bg-gradient-to-r from-pink-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <span className="relative flex items-center gap-2">
                 <Home className="w-5 h-5" />
                 Return Home
@@ -198,5 +196,5 @@ export default function NotFound() {
         transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
       />
     </div>
-  )
+  );
 }

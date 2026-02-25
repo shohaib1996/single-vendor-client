@@ -1,27 +1,43 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { useUserRegisterMutation } from "@/redux/api/user/userApi"
-import { toast } from "sonner"
-import Link from "next/link"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Checkbox } from "@/components/ui/checkbox"
-import signupAnimation from "@/assets/lottie/signup.json"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Eye, EyeOff, Mail, Lock, User, ArrowRight, Home, CheckCircle } from "lucide-react"
+import { useState } from "react";
+import { useUserRegisterMutation } from "@/redux/api/user/userApi";
+import { toast } from "sonner";
+import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
+import signupAnimation from "@/assets/lottie/signup.json";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import {
+  Eye,
+  EyeOff,
+  Mail,
+  Lock,
+  User,
+  ArrowRight,
+  Home,
+  CheckCircle,
+} from "lucide-react";
 
-import dynamic from "next/dynamic"
-import { ModeToggle } from "@/components/ModeToggle/ModeToggle"
-import { useRouter } from "next/navigation"
+import dynamic from "next/dynamic";
+import { ModeToggle } from "@/components/ModeToggle/ModeToggle";
+import { useRouter } from "next/navigation";
 
-// Dynamically import Lottie to avoid SSR issues
-const Lottie = dynamic(() => import("lottie-react"), { ssr: false })
+// Dynamically import Lottie to avoid SSR issues for lottie animation
+const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 
 // Zod schema for sign-up validation
 const signUpSchema = z
@@ -31,7 +47,10 @@ const signUpSchema = z
       .min(1, "Full name is required")
       .min(2, "Name must be at least 2 characters")
       .max(50, "Name must be less than 50 characters"),
-    email: z.string().min(1, "Email is required").email("Please enter a valid email address"),
+    email: z
+      .string()
+      .min(1, "Email is required")
+      .email("Please enter a valid email address"),
     password: z
       .string()
       .min(1, "Password is required")
@@ -44,16 +63,16 @@ const signUpSchema = z
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
     path: ["confirmPassword"],
-  })
+  });
 
-type SignUpFormValues = z.infer<typeof signUpSchema>
+type SignUpFormValues = z.infer<typeof signUpSchema>;
 
 export default function SignUpPage() {
-    const router = useRouter()
-  const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const [userRegister, { isLoading }] = useUserRegisterMutation()
+  const [userRegister, { isLoading }] = useUserRegisterMutation();
 
   const form = useForm<SignUpFormValues>({
     resolver: zodResolver(signUpSchema),
@@ -64,27 +83,26 @@ export default function SignUpPage() {
       confirmPassword: "",
       acceptTerms: false,
     },
-  })
+  });
 
   const onSubmit = async (data: SignUpFormValues) => {
     try {
-      const res = await userRegister(data).unwrap()
-      console.log("Registration response:", res.data)
+      const res = await userRegister(data).unwrap();
+      console.log("Registration response:", res.data);
       if (res.success) {
-        toast.success("Registration successful!")
-        form.reset()
-        router.push("/signin")
+        toast.success("Registration successful!");
+        form.reset();
+        router.push("/signin");
       } else {
-        toast.error(res.data.message || "Registration failed.")
+        toast.error(res.data.message || "Registration failed.");
       }
     } catch (error: any) {
-      toast.error(error.data?.message || "An unexpected error occurred.")
+      toast.error(error.data?.message || "An unexpected error occurred.");
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-background flex items-center justify-center p-4 relative overflow-hidden">
-      {/* Background Elements */}
       <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
       <div className="absolute top-10 right-10 w-20 h-20 bg-accent/10 rounded-full animate-float"></div>
       <div className="absolute bottom-10 left-10 w-16 h-16 bg-primary/10 rounded-full animate-float delay-1000"></div>
@@ -117,7 +135,12 @@ export default function SignUpPage() {
           <div className="relative">
             <div className="w-96 h-96 bg-gradient-to-br from-accent/10 to-primary/10 rounded-3xl flex items-center justify-center backdrop-blur-sm border border-accent/20">
               <div className="w-80 h-80">
-                <Lottie animationData={signupAnimation} loop={true} autoplay={true} className="w-full h-full" />
+                <Lottie
+                  animationData={signupAnimation}
+                  loop={true}
+                  autoplay={true}
+                  className="w-full h-full"
+                />
               </div>
             </div>
             {/* Decorative elements */}
@@ -130,7 +153,8 @@ export default function SignUpPage() {
               Join EcoShop Today!
             </h1>
             <p className="text-lg text-muted-foreground max-w-md">
-              Create your account and start your amazing shopping journey with exclusive deals and premium products.
+              Create your account and start your amazing shopping journey with
+              exclusive deals and premium products.
             </p>
             <div className="flex items-center justify-center space-x-2">
               <Badge variant="outline" className="text-xs">
@@ -152,13 +176,20 @@ export default function SignUpPage() {
               <div className="mx-auto w-16 h-16 bg-gradient-to-br from-accent to-primary rounded-2xl flex items-center justify-center mb-4 shadow-lg">
                 <User className="h-8 w-8 text-white" />
               </div>
-              <CardTitle className="text-2xl font-bold">Create Account</CardTitle>
-              <p className="text-muted-foreground">Join thousands of happy customers</p>
+              <CardTitle className="text-2xl font-bold">
+                Create Account
+              </CardTitle>
+              <p className="text-muted-foreground">
+                Join thousands of happy customers
+              </p>
             </CardHeader>
 
             <CardContent className="space-y-6">
               <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="space-y-6"
+                >
                   {/* Name Field */}
                   <FormField
                     control={form.control}
@@ -169,7 +200,12 @@ export default function SignUpPage() {
                         <FormControl>
                           <div className="relative">
                             <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                            <Input type="text" placeholder="Sahrukh Khan" className="pl-10 h-12" {...field} />
+                            <Input
+                              type="text"
+                              placeholder="Sahrukh Khan"
+                              className="pl-10 h-12"
+                              {...field}
+                            />
                           </div>
                         </FormControl>
                         <FormMessage />
@@ -187,7 +223,12 @@ export default function SignUpPage() {
                         <FormControl>
                           <div className="relative">
                             <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                            <Input type="email" placeholder="sahrukh@khan.com" className="pl-10 h-12" {...field} />
+                            <Input
+                              type="email"
+                              placeholder="sahrukh@khan.com"
+                              className="pl-10 h-12"
+                              {...field}
+                            />
                           </div>
                         </FormControl>
                         <FormMessage />
@@ -216,7 +257,11 @@ export default function SignUpPage() {
                               onClick={() => setShowPassword(!showPassword)}
                               className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                             >
-                              {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                              {showPassword ? (
+                                <EyeOff className="h-4 w-4" />
+                              ) : (
+                                <Eye className="h-4 w-4" />
+                              )}
                             </button>
                           </div>
                         </FormControl>
@@ -243,10 +288,16 @@ export default function SignUpPage() {
                             />
                             <button
                               type="button"
-                              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                              onClick={() =>
+                                setShowConfirmPassword(!showConfirmPassword)
+                              }
                               className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                             >
-                              {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                              {showConfirmPassword ? (
+                                <EyeOff className="h-4 w-4" />
+                              ) : (
+                                <Eye className="h-4 w-4" />
+                              )}
                             </button>
                           </div>
                         </FormControl>
@@ -262,16 +313,25 @@ export default function SignUpPage() {
                     render={({ field }) => (
                       <FormItem className="flex flex-row items-start space-x-3 space-y-0">
                         <FormControl>
-                          <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                          <Checkbox
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
                         </FormControl>
                         <div className="space-y-1 leading-none">
                           <FormLabel className="text-sm leading-relaxed">
                             I agree to the{" "}
-                            <Link href="/terms" className="text-primary hover:underline">
+                            <Link
+                              href="/terms"
+                              className="text-primary hover:underline"
+                            >
                               Terms of Service
                             </Link>{" "}
                             and{" "}
-                            <Link href="/privacy" className="text-primary hover:underline">
+                            <Link
+                              href="/privacy"
+                              className="text-primary hover:underline"
+                            >
                               Privacy Policy
                             </Link>
                           </FormLabel>
@@ -302,13 +362,14 @@ export default function SignUpPage() {
                 </form>
               </Form>
 
-         
-
               {/* Sign In Link */}
               <div className="text-center">
                 <p className="text-sm text-muted-foreground">
                   Already have an account?{" "}
-                  <Link href="/signin" className="text-primary hover:underline font-medium">
+                  <Link
+                    href="/signin"
+                    className="text-primary hover:underline font-medium"
+                  >
                     Sign in here
                   </Link>
                 </p>
@@ -318,5 +379,5 @@ export default function SignUpPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }
