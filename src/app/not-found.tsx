@@ -97,7 +97,7 @@ export default function NotFound() {
           />
         </motion.div>
 
-        {/* Glitch effect on 404 */}
+        {/* Glitch effect on 404   */}
         <motion.div
           variants={glitchVariants}
           animate="animate"
@@ -160,8 +160,6 @@ export default function NotFound() {
             </span>
           </motion.button>
         </motion.div>
-
-        {/* Animated decorative elements */}
         <motion.div
           className="mt-12 flex justify-center space-x-4"
           variants={itemVariants}
