@@ -1,3 +1,4 @@
+// category/[slug]/page.tsx
 import CategoryWiseProduct from "@/components/pages/CategoryWiseProduct/CategoryWiseProduct";
 
 const Category = async ({ params }: { params: Promise<{ slug: string }> }) => {
