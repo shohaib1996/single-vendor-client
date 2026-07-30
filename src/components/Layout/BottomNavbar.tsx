@@ -40,7 +40,7 @@ export function BottomNavbar({ onCartClick, onWishlistClick }: { onCartClick: ()
   const { data: wishlist } = useGetWishlistQuery({});
   const { data: userData } = useGetUserProfileQuery({});
   const dispatch = useAppDispatch();
-
+//  const { data: wishlist } = useGetWishlistQuery({});
   const navItems = [
     {
       name: "Home",
