@@ -7,6 +7,7 @@ import { BottomNavbar } from "@/components/Layout/BottomNavbar";
 import { useState } from "react";
 import CartSlider from "@/components/Layout/CartSlider";
 import WishlistSlider from "@/components/Layout/WishlistSlider";
+import { ChatWidget } from "@/components/Chat/ChatWidget";
 
 export default function MainLayout({
   children,
@@ -37,6 +38,7 @@ export default function MainLayout({
         isOpen={isWishlistOpen}
         onClose={() => setIsWishlistOpen(false)}
       />
+      <ChatWidget />
     </div>
   );
 }

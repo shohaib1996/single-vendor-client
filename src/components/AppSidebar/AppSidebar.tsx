@@ -20,6 +20,8 @@ import {
   Star,
   Wrench,
   Boxes,
+  Sparkles,
+  GraduationCap,
 } from "lucide-react";
 
 import {
@@ -65,6 +67,16 @@ const items: MenuItem[] = [
     title: "Admin Dashboard",
     icon: LayoutDashboard,
     url: "/admin",
+  },
+  {
+    title: "AI Insights",
+    icon: Sparkles,
+    url: "/admin/ai-insights",
+  },
+  {
+    title: "Train Bot",
+    icon: GraduationCap,
+    url: "/admin/train-bot",
   },
   {
     title: "Product Management",

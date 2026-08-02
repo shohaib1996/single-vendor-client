@@ -3,6 +3,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 import rootReducer from '../rootReducer';
 import { baseApi } from '../api/baseApi';
+import { trainApi } from '../api/train/trainApi';
 
 const persistConfig = {
   key: 'root',
@@ -20,7 +21,7 @@ export const makeStore = () => {
         serializableCheck: {
           ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE', 'persist/PAUSE', 'persist/PURGE', 'persist/REGISTER', 'persist/FLUSH'],
         },
-      }).concat(baseApi.middleware),
+      }).concat(baseApi.middleware, trainApi.middleware),
   });
 
   const persistor = persistStore(store);

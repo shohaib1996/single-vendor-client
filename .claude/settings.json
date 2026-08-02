@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(kill %1)",
+      "Bash(jobs -l)",
+      "Read(//tmp/**)",
+      "Bash(grep -o 'error' /tmp/home3001.html -A2 -B2 2>&1 | head -5 *)",
+      "Bash(node verify.js)"
+    ],
+    "additionalDirectories": [
+      "\\tmp"
+    ]
+  }
+}
