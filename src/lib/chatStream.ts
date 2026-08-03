@@ -9,6 +9,18 @@ export interface ChatTokenEvent {
   content: string;
 }
 
+export interface ChatProduct {
+  id: string;
+  name: string;
+  price: number;
+  discountedPrice: number | null;
+  stock: number;
+  category: string | null;
+  brand: string | null;
+  product_url: string;
+  image_url: string | null;
+}
+
 export interface ChatFinalEvent {
   type: "final";
   conversation_id: string;
@@ -17,6 +29,7 @@ export interface ChatFinalEvent {
   content: string;
   tool_calls: unknown[];
   chart?: { type: string; data: unknown } | null;
+  products?: ChatProduct[];
 }
 
 export type ChatEvent = ChatTokenEvent | ChatFinalEvent;

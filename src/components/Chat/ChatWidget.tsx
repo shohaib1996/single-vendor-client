@@ -12,12 +12,15 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
-import { streamCustomerChat, type ChatEvent } from "@/lib/chatStream";
+import { streamCustomerChat, type ChatEvent, type ChatProduct } from "@/lib/chatStream";
+import { ChatMarkdown } from "@/components/Chat/ChatMarkdown";
+import { ProductCard } from "@/components/Chat/ProductCard";
 
 interface Message {
   id: string;
   role: "user" | "assistant";
   content: string;
+  products?: ChatProduct[];
 }
 
 export function ChatWidget() {
@@ -53,6 +56,11 @@ export function ChatWidget() {
           );
         } else if (event.type === "final") {
           conversationIdRef.current = event.conversation_id;
+          if (event.products?.length) {
+            setMessages((prev) =>
+              prev.map((m) => (m.id === assistantId ? { ...m, products: event.products } : m))
+            );
+          }
         }
       });
     } catch {
@@ -103,14 +111,16 @@ export function ChatWidget() {
               </p>
             )}
             {messages.map((m) => (
-              <div key={m.id} className={cn("flex", m.role === "user" ? "justify-end" : "justify-start")}>
+              <div key={m.id} className={cn("flex flex-col gap-2", m.role === "user" ? "items-end" : "items-start")}>
                 <div
                   className={cn(
-                    "max-w-[80%] rounded-lg px-3 py-2 text-sm whitespace-pre-wrap break-words",
+                    "max-w-[80%] rounded-lg px-3 py-2 text-sm break-words",
                     m.role === "user" ? "bg-primary text-primary-foreground" : "bg-muted text-foreground"
                   )}
                 >
-                  {m.content || (
+                  {m.content ? (
+                    <ChatMarkdown content={m.content} />
+                  ) : (
                     <span className="inline-flex gap-1">
                       <span className="w-1.5 h-1.5 rounded-full bg-current animate-bounce [animation-delay:-0.3s]" />
                       <span className="w-1.5 h-1.5 rounded-full bg-current animate-bounce [animation-delay:-0.15s]" />
@@ -118,6 +128,13 @@ export function ChatWidget() {
                     </span>
                   )}
                 </div>
+                {m.products && m.products.length > 0 && (
+                  <div className="flex gap-2 overflow-x-auto max-w-full pb-1">
+                    {m.products.map((p) => (
+                      <ProductCard key={p.id} product={p} />
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
           </div>

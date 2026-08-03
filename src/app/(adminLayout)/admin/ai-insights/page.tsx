@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { streamAdminChat, type ChatEvent } from "@/lib/chatStream";
+import { ChatMarkdown } from "@/components/Chat/ChatMarkdown";
 
 interface Message {
   id: string;
@@ -100,11 +101,13 @@ export default function AiInsightsPage() {
             <div key={m.id} className={cn("flex", m.role === "user" ? "justify-end" : "justify-start")}>
               <div
                 className={cn(
-                  "max-w-[85%] rounded-lg px-3 py-2 text-sm whitespace-pre-wrap break-words",
+                  "max-w-[85%] rounded-lg px-3 py-2 text-sm break-words",
                   m.role === "user" ? "bg-primary text-primary-foreground" : "bg-muted text-foreground"
                 )}
               >
-                {m.content || (
+                {m.content ? (
+                  <ChatMarkdown content={m.content} />
+                ) : (
                   <span className="inline-flex gap-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-current animate-bounce [animation-delay:-0.3s]" />
                     <span className="w-1.5 h-1.5 rounded-full bg-current animate-bounce [animation-delay:-0.15s]" />
