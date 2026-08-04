@@ -22,7 +22,7 @@ interface Message {
   content: string;
   products?: ChatProduct[];
 }
-
+// chat widget component that allows users to chat with the assistant and receive product recommendations based on their queries. It uses a sliding sheet for the chat interface and supports streaming responses from the assistant.
 export function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
