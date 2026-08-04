@@ -5,7 +5,10 @@
       "Bash(jobs -l)",
       "Read(//tmp/**)",
       "Bash(grep -o 'error' /tmp/home3001.html -A2 -B2 2>&1 | head -5 *)",
-      "Bash(node verify.js)"
+      "Bash(node verify.js)",
+      "Bash(npm view *)",
+      "Bash(npm audit *)",
+      "Bash(node -e ' *)"
     ],
     "additionalDirectories": [
       "\\tmp"
