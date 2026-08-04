@@ -50,9 +50,9 @@ export function Footer() {
           <div className="lg:col-span-2 space-y-6">
             <Link href="/" className="flex items-center space-x-2">
               <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-lg">E</span>
+                <span className="text-primary-foreground font-bold text-lg">D</span>
               </div>
-              <span className="font-bold text-xl">EcoShop</span>
+              <span className="font-bold text-xl">DeviceMart</span>
             </Link>
             <p className="text-muted-foreground max-w-sm">
               Your trusted shopping partner since 2020. We provide quality products at unbeatable prices with
@@ -71,7 +71,7 @@ export function Footer() {
               </div>
               <div className="flex items-center space-x-2 text-sm text-muted-foreground">
                 <Mail className="h-4 w-4" />
-                <span>support@ecoshop.com</span>
+                <span>support@devicemart.com</span>
               </div>
             </div>
 
@@ -155,7 +155,7 @@ export function Footer() {
       <div className="container mx-auto px-4 py-6">
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-6">
-            <p className="text-sm text-muted-foreground">© 2024 EcoShop. All rights reserved.</p>
+            <p className="text-sm text-muted-foreground">© 2024 DeviceMart. All rights reserved.</p>
             <div className="flex space-x-6">
               {footerLinks.legal.map((link, index) => (
                 <Link
@@ -172,7 +172,7 @@ export function Footer() {
           <div className="flex items-center space-x-2 text-sm text-muted-foreground">
             <span>Made with</span>
             <Heart className="h-4 w-4 text-red-500 fill-current" />
-            <span>by EcoShop Team</span>
+            <span>by DeviceMart Team</span>
           </div>
         </div>
       </div>

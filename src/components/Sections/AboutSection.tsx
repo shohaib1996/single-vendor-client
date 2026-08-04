@@ -46,7 +46,7 @@ export function AboutSection() {
         {/* Section Header */}
         <div className="text-center mb-12 animate-in slide-in-from-bottom-10 duration-1000">
           <Badge variant="outline" className="mb-4 border-primary/20 text-primary">
-            About EcoShop
+            About DeviceMart
           </Badge>
           <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent">
             Your Trusted Shopping Partner Since 2020
@@ -103,7 +103,7 @@ export function AboutSection() {
                 <CardContent className="p-0">
                   <Image
                     src="https://st.depositphotos.com/1038076/4908/i/450/depositphotos_49080337-stock-photo-about-us.jpg"
-                    alt="About EcoShop"
+                    alt="About DeviceMart"
                     width={400}
                     height={400}
                     className="w-full h-[400px] object-cover"

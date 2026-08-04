@@ -1,9 +1,9 @@
 
-# 🛍️ EcoShop – Single Vendor E-commerce Platform
+# 🛍️ DeviceMart – Single Vendor E-commerce Platform
 
-**EcoShop** is a modern, full-featured e-commerce platform built with a single vendor in mind. It includes product browsing, cart and wishlist features, order tracking, Stripe-powered checkout, and a dynamic admin dashboard for seamless store management.
+**DeviceMart** is a modern, full-featured e-commerce platform built with a single vendor in mind. It includes product browsing, cart and wishlist features, order tracking, Stripe-powered checkout, and a dynamic admin dashboard for seamless store management.
 
-Built with performance and scalability in mind using **Next.js**, **TypeScript**, **Redux**, **ShadCN UI**, and **Framer Motion**, EcoShop delivers a responsive, intuitive shopping experience.
+Built with performance and scalability in mind using **Next.js**, **TypeScript**, **Redux**, **ShadCN UI**, and **Framer Motion**, DeviceMart delivers a responsive, intuitive shopping experience.
 
 ---
 
@@ -62,7 +62,7 @@ NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=
 
 ```bash
 # Clone the repo
-git clone https://github.com/your-username/ecoshop-frontend.git
+git clone https://github.com/your-username/devicemart-frontend.git
 
 # Install dependencies
 npm install

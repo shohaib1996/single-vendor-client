@@ -97,7 +97,7 @@ const PaymentSuccessContent = ({ paymentData }: PaymentSuccessContentProps) => {
     </head>
     <body>
       <div class="header">
-        <h1>EcoShop</h1>
+        <h1>DeviceMart</h1>
         <div class="success-badge">Payment Successful</div>
         <h2>Payment Receipt</h2>
       </div>
@@ -141,7 +141,7 @@ const PaymentSuccessContent = ({ paymentData }: PaymentSuccessContentProps) => {
       
       <div class="footer">
         <p>Thank you for your purchase!</p>
-        <p>EcoShop - Your trusted shopping partner</p>
+        <p>DeviceMart - Your trusted shopping partner</p>
       </div>
     </body>
     </html>

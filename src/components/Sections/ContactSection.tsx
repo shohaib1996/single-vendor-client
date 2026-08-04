@@ -27,7 +27,7 @@ const contactInfo = [
   {
     icon: Mail,
     title: "Email Us",
-    detail: "support@ecoshop.com",
+    detail: "support@devicemart.com",
     color: "text-purple-600 dark:text-purple-400",
   },
   {
@@ -116,7 +116,7 @@ export function ContactSection() {
               <CardContent className="p-6 text-center">
                 <h3 className="text-xl font-semibold mb-3">We&apos;re Here for You</h3>
                 <p className="text-sm text-muted-foreground mb-4">
-                  At EcoShop, we value your feedback and inquiries. Whether it&apos;s about our products, services, or just a friendly hello, we&apos;re excited to hear from you!
+                  At DeviceMart, we value your feedback and inquiries. Whether it&apos;s about our products, services, or just a friendly hello, we&apos;re excited to hear from you!
                 </p>
                 <Button variant="outline" className="text-sm">
                   <Mail className="mr-2 h-3 w-3" />

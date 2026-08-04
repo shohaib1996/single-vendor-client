@@ -52,7 +52,7 @@ export function ServicesSection() {
           <Badge variant="outline" className="mb-4 text-primary border-primary/20">
               Our Services
             </Badge>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Choose EcoShop?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Choose DeviceMart?</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             We provide exceptional services to ensure your shopping experience is smooth and enjoyable
           </p>

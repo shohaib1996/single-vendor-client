@@ -168,7 +168,7 @@ export function Navbar({
             >
               <div className="h-7 sm:h-8 w-7 sm:w-8 rounded-lg bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-md">
                 <span className="text-primary-foreground font-bold text-base sm:text-lg">
-                  E
+                  D
                 </span>
               </div>
               <span
@@ -178,7 +178,7 @@ export function Navbar({
                     : "bg-gradient-to-r from-primary to-accent"
                 } bg-clip-text text-transparent`}
               >
-                EcoShop
+                DeviceMart
               </span>
             </Link>
 

@@ -229,11 +229,11 @@ export function AppSidebar() {
           <Link href="/" className="flex items-center space-x-2 flex-shrink-0">
             <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-md">
               <span className="text-primary-foreground font-bold text-lg">
-                E
+                D
               </span>
             </div>
             <span className="font-bold text-xl bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              EcoShop
+              DeviceMart
             </span>
           </Link>
           <div>

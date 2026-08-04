@@ -112,10 +112,10 @@ export default function SignUpPage() {
       <div className="absolute top-6 left-6 right-6 flex justify-between items-center z-10">
         <Link href="/" className="flex items-center space-x-2 group">
           <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-            <span className="text-primary-foreground font-bold text-lg">E</span>
+            <span className="text-primary-foreground font-bold text-lg">D</span>
           </div>
           <span className="font-bold text-xl bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            EcoShop
+            DeviceMart
           </span>
         </Link>
         <div className="flex items-center space-x-4">
@@ -150,7 +150,7 @@ export default function SignUpPage() {
 
           <div className="text-center space-y-4">
             <h1 className="text-4xl font-bold bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
-              Join EcoShop Today!
+              Join DeviceMart Today!
             </h1>
             <p className="text-lg text-muted-foreground max-w-md">
               Create your account and start your amazing shopping journey with

@@ -17,7 +17,7 @@ const testimonials = [
     avatar: "https://picsum.photos/seed/user1/80/80",
     rating: 5,
     content:
-      "EcoShop has completely transformed my shopping experience. The quality of products is exceptional, and the customer service is outstanding. I've been a loyal customer for over 2 years now!",
+      "DeviceMart has completely transformed my shopping experience. The quality of products is exceptional, and the customer service is outstanding. I've been a loyal customer for over 2 years now!",
     verified: true,
   },
   {
@@ -27,7 +27,7 @@ const testimonials = [
     avatar: "https://picsum.photos/seed/user2/80/80",
     rating: 5,
     content:
-      "As someone who's very particular about electronics, I'm impressed by EcoShop's product selection and authenticity. Fast shipping and great prices make it my go-to store.",
+      "As someone who's very particular about electronics, I'm impressed by DeviceMart's product selection and authenticity. Fast shipping and great prices make it my go-to store.",
     verified: true,
   },
   {
@@ -37,7 +37,7 @@ const testimonials = [
     avatar: "https://picsum.photos/seed/user3/80/80",
     rating: 5,
     content:
-      "The variety and quality of products available on EcoShop is amazing. I've furnished my entire office through their platform. Highly recommend to anyone looking for reliable shopping.",
+      "The variety and quality of products available on DeviceMart is amazing. I've furnished my entire office through their platform. Highly recommend to anyone looking for reliable shopping.",
     verified: true,
   },
   {
@@ -47,7 +47,7 @@ const testimonials = [
     avatar: "https://picsum.photos/seed/user4/80/80",
     rating: 5,
     content:
-      "EcoShop's user-friendly platform and eco-conscious products make shopping a breeze. Their support team is always ready to help, making every purchase a pleasure!",
+      "DeviceMart's user-friendly platform and carefully vetted products make shopping a breeze. Their support team is always ready to help, making every purchase a pleasure!",
     verified: true,
   },
   {
@@ -57,7 +57,7 @@ const testimonials = [
     avatar: "https://picsum.photos/seed/user5/80/80",
     rating: 5,
     content:
-      "I love the curated selection at EcoShop. The products are high-quality, and the eco-friendly focus aligns perfectly with my values. Highly recommend!",
+      "I love the curated selection at DeviceMart. The products are high-quality, and the attention to detail aligns perfectly with my expectations. Highly recommend!",
     verified: true,
   },
 ]
