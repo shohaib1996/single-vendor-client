@@ -71,8 +71,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData, onSubmit, onCanc
       isDiscountActive,
       discountPercentage: isDiscountActive ? discountPercentage : undefined,
       discountValidUntil: isDiscountActive ? discountValidUntil : undefined,
-      categoryId,
-      brandId,
+      categoryId: categoryId || undefined,
+      brandId: brandId || undefined,
     });
   };
 
