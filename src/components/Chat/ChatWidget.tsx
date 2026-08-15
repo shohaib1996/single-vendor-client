@@ -85,7 +85,7 @@ export function ChatWidget() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 20 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="fixed bottom-20 left-6 md:bottom-8 md:left-8 z-50"
+            className="fixed bottom-20 right-6 md:bottom-8 md:right-8 z-50"
           >
             <Button
               onClick={() => setIsOpen(true)}

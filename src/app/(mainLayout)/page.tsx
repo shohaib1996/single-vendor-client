@@ -1,6 +1,5 @@
 "use client"
 
-import { ScrollToTop } from "@/components/common/ScrollToTop"
 import { AboutSection } from "@/components/Sections/AboutSection"
 import CategoriesSection from "@/components/Sections/CategoriesSection"
 import CategoryFlex from "@/components/Sections/CategoryFlex"
@@ -28,7 +27,6 @@ export default function HomePage() {
       {/* <BlogSection /> */}
       <NewsletterSection />
       <ContactSection />
-      <ScrollToTop/>
     </div>
   )
 }
