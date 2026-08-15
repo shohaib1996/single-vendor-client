@@ -23,7 +23,7 @@ const CheckoutPage = () => {
   const [paymentMethod, setPaymentMethod] = useState<"pay_now" | "pay_later">("pay_now")
   const { user } = useAppSelector((state) => state.auth)
   const { data, isLoading, error } = useGetCartQuery({})
-  const cartItems: ICartItem[] = data?.data?.items || []
+  const cartItems: ICartItem[] = data?.data?.[0]?.items || []
   const [createOrderToDb] = useCreateOrderMutation()
   const [createPayment] = useCreateCheckoutSessionMutation()
   const router = useRouter()
