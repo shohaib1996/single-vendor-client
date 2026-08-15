@@ -136,8 +136,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData, onSubmit, onCanc
             <SelectValue placeholder="Select a category" />
           </SelectTrigger>
           <SelectContent>
-            {categoriesLoading && <SelectItem value="" disabled>Loading categories...</SelectItem>}
-            {categoriesError && <SelectItem value="" disabled>Error loading categories</SelectItem>}
+            {categoriesLoading && <SelectItem value="loading" disabled>Loading categories...</SelectItem>}
+            {categoriesError && <SelectItem value="error" disabled>Error loading categories</SelectItem>}
             {!categoriesLoading && !categoriesError && categories.map((cat) => (
               <SelectItem key={cat.id} value={cat.id}>
                 {cat.name}
@@ -153,8 +153,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData, onSubmit, onCanc
             <SelectValue placeholder="Select a brand" />
           </SelectTrigger>
           <SelectContent>
-            {brandsLoading && <SelectItem value="" disabled>Loading brands...</SelectItem>}
-            {brandsError && <SelectItem value="" disabled>Error loading brands</SelectItem>}
+            {brandsLoading && <SelectItem value="loading" disabled>Loading brands...</SelectItem>}
+            {brandsError && <SelectItem value="error" disabled>Error loading brands</SelectItem>}
             {!brandsLoading && !brandsError && brands.map((brand) => (
               <SelectItem key={brand.id} value={brand.id}>
                 {brand.name}
